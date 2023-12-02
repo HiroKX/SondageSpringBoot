@@ -15,7 +15,7 @@
     <description>MySurvey</description>
     <properties>
         <java.version>21.0.1</java.version>
-        <jacoco.version>0.8.11</jacoco.version>
+        <jacoco.version>0.8.7</jacoco.version>
         <sonar.host.url>https://sonarqube.cedricmtta.com</sonar.host.url>
         <sonar.projectName>My Survey</sonar.projectName>
         <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>3.2.0</version>
+            <version>2.4.5</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.6</version>
+            <version>0.2.2</version>
         </dependency>
     </dependencies>
 </project>
