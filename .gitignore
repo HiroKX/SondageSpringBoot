@@ -33,7 +33,7 @@ build/
 
 ### Database Local data ###
 data/
-./src/main/resources/application-local.properties
+src/main/resources/application-local.properties
 
 ### Mac OS ###
 .DS_Store
