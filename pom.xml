@@ -14,7 +14,7 @@
     <name>MySurvey</name>
     <description>MySurvey</description>
     <properties>
-        <java.version>21.0.1</java.version>
+        <java.version>19</java.version>
         <jacoco.version>0.8.11</jacoco.version>
         <sonar.host.url>https://sonarqube.cedricmtta.com</sonar.host.url>
         <sonar.projectName>My Survey</sonar.projectName>
@@ -42,6 +42,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
