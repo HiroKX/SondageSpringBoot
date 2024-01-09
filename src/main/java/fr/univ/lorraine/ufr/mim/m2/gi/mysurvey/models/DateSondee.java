@@ -1,6 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "date_sondee", uniqueConstraints = {@UniqueConstraint(columnNames = {"date_sondage_id", "participant_id"})})
