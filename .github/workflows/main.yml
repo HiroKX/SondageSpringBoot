@@ -1,0 +1,34 @@
+name: Checkstyle
+
+on:
+  push:
+    branches:
+      - main  # Remplacez "main" par la branche principale de votre projet
+  pull_request:
+    branches:
+      - main  # Remplacez "main" par la branche principale de votre projet
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: 19  # Remplacez par la version Java que vous utilisez
+
+    - name: Build with Maven
+      run: mvn clean install -B -DskipTests=true
+
+    - name: Run Checkstyle
+      run: mvn checkstyle:check
+
+    - name: Upload Checkstyle results
+      uses: actions/upload-artifact@v2
+      with:
+        name: checkstyle-results
+        path: target/checkstyle-result.xml
