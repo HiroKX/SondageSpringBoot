@@ -6,14 +6,18 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER : postgres
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER : username
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: MySurvey
+      # You can modify the db name but don't forget that it is mentioned in the application-local.properties -> spring.datasource.url
     ports:
       - 5432:5432
+        # You can choose your own port
+
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+        # You can choose your own port
