@@ -5,7 +5,7 @@ Ce fichier va instancier un conteneur avec une base de données **PostgreSQL** a
 
 Pour déployer ce conteneur : 
 * Installer docker.
-* Allez dans le fichier `/db/.env` et éditez la configuration : 
+* Aller dans le fichier `/db/.env` et éditez la configuration : 
 ```
 POSTGRES_USER=
 POSTGRES_PASSWORD=
@@ -18,8 +18,6 @@ Configuration des ports par défaut :
 * La base **postgreSQL** : ```5432:5432```
 
 **/!\ Les ports sont un couple de deux ports XXXX:YYYY avec XXXX le port de sortie du conteneur et YYYY le port d'entrée du conteneur**
-
-
 
 Les champs sont libres mais il faudra faire correspondre les valeurs dans la prochaine étape, les champs à changer seront indiqués avec les noms de variables ci-dessus
 
