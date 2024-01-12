@@ -28,6 +28,7 @@ Les champs sont libres mais il faudra faire correspondre les valeurs dans la pro
 
 Créez un fichier `application-local.properties` et éditez sa configuration : 
 
+Mettre les mêmes valeurs que pour ces variables du .env
 ```
 server.port = [Au choix]
 spring.datasource.url = jdbc:postgresql://localhost:[DB_PORTS]/[POSTGRES_DB]
