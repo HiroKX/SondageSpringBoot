@@ -23,8 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfiguration
 class ParticipantServiceE2ETest {
+
+    @Autowired
+    private ParticipantService service;
+
     @BeforeEach
     void setup() {
+        RestAssured.baseURI="http://localhost";
+        RestAssured.port=666;
+    }
 
     @Autowired
     private ParticipantService service;
