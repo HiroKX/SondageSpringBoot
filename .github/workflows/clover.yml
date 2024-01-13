@@ -28,4 +28,4 @@ jobs:
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/reports/jacoco/test/html
+          folder: target/site/jacoco
