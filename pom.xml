@@ -13,6 +13,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>MySurvey</name>
     <description>MySurvey</description>
+    <scm>
+        <connection>scm:git:https://github.com/HiroKX/SondageSpringBoot</connection>
+        <developerConnection>scm:git:https://thomas-felker@github.com/HiroKX/SondageSpringBoot</developerConnection>
+        <url>https://github.com/HiroKX/SondageSpringBoot</url>
+    </scm>
     <properties>
         <java.version>19</java.version>
         <jacoco.version>0.8.11</jacoco.version>
@@ -78,6 +83,18 @@
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>LATEST</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
