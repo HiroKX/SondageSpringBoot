@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfiguration
 class ParticipantServiceE2ETest {
+    @BeforeEach
+    void setup() {
 
     @Autowired
     private ParticipantService service;
