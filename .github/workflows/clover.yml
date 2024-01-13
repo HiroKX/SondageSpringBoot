@@ -16,10 +16,13 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Build with Maven
+        run: mvn -B test
+
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
         with:
-          jacoco-csv-file: target/site/jacoco/jacoco.csv
+          jacoco-csv-file: /target/site/jacoco/jacoco.csv
           badges-directory: build/reports/jacoco/test/html/badges
 
       - name: Publish coverage report to GitHub Pages
