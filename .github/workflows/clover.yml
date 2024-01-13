@@ -23,7 +23,7 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2
         with:
           jacoco-csv-file: target/site/jacoco/jacoco.csv
-          badges-directory: build/reports/jacoco/test/html/badges
+          badges-directory: target/site/jacoco/
 
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
