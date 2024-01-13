@@ -96,6 +96,13 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.MySurveyApplication</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
