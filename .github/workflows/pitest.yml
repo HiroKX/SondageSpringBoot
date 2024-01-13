@@ -28,5 +28,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Run Pitest
-        run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
+        run: mvn org.pitest:pitest-maven:scmMutationCoverage -Dinclude=ADDED,UNKNOWN -DmutationThreshold=50
 
