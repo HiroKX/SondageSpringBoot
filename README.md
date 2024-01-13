@@ -39,8 +39,6 @@ DB_PORTS=5432
 SERVER_PORT=8090
 ```
 
-**/!\ Pour l'url, seul le port de sortie doit être indiqué et non le couple**
-
 # Lancement du projet
 
 ## Tests
