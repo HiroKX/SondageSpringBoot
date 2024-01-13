@@ -94,6 +94,9 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>reports/jacoco</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
