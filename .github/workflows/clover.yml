@@ -25,10 +25,10 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2
         with:
           jacoco-csv-file: build/jacoco/jacoco.csv
-          badges-directory: build/reports/jacoco
+          badges-directory: build/jacoco/
 
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/reports/jacoco
+          folder: build/jacoco
           ssh-key: ${{ secrets.DEPLOY_KEY }}
