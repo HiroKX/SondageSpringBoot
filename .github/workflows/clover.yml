@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:
@@ -26,6 +24,6 @@ jobs:
           badges-directory: reports/jacoco
 
       - name: Publish coverage report to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.5
         with:
           folder: reports/jacoco
