@@ -1,6 +1,8 @@
-name: Clover Code Coverage
+name: JACOCO Code Coverage
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches: [ "develop" ]
 
 jobs:
   build:
@@ -22,11 +24,11 @@ jobs:
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
         with:
-          jacoco-csv-file: reports/jacoco/jacoco.csv
-          badges-directory: reports/jacoco
+          jacoco-csv-file: build/jacoco/jacoco.csv
+          badges-directory: build/reports/jacoco
 
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: reports/jacoco
+          folder: build/reports/jacoco
           ssh-key: ${{ secrets.DEPLOY_KEY }}
