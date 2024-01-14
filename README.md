@@ -26,22 +26,18 @@ Les champs sont libres mais il faudra faire correspondre les valeurs dans la pro
 
 ## Configuration locale
 
-Créez un fichier `application-local.properties` et éditez sa configuration : 
+Créez un fichier `.env` et éditez sa configuration (Exemple de configuration) : 
 
-Mettre les mêmes valeurs que pour ces variables du .env
 ```
-server.port = [Au choix]
-spring.datasource.url = jdbc:postgresql://localhost:[DB_PORTS]/[POSTGRES_DB]
-spring.datasource.username = [POSTGRES_USER]
-spring.datasource.password = [POSTGRES_PASSWORD]
-spring.datasource.driver-class-name = org.postgresql.Driver
-spring.jpa.show-sql = true
-spring.jpa.hibernate.ddl-auto = update
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
-spring.main.banner-mode = off
+SPRING_PROFILES_ACTIVE=local
+DB_USERNAME=post
+DB_PASSWORD=admin
+DB_NAME=MySurvey
+DB_URL="jdbc:postgresql://db:5432/"
+ADMINER_PORTS=8081
+DB_PORTS=5432
+SERVER_PORT=8090
 ```
-
-**/!\ Pour l'url, seul le port de sortie doit être indiqué et non le couple**
 
 # Lancement du projet
 
