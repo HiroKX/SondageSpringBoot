@@ -49,8 +49,8 @@ Pour lancer les tests d'intégrations du projet : `mvn test`
 
 Une fois le projet démarré : 
 
-* Accès à l'api Swagger : http://localhost:8080/swagger-ui.html (dépend du port que vous avez set)
+* Accès à l'api Swagger : http://localhost:8080/swagger-ui.html (dépend du port serveur que vous avez set)
 
-* Documentation de l'api : http://localhost:8080/v3/api-docs (dépend du port que vous avez set)
+* Documentation de l'api : http://localhost:8080/v3/api-docs (dépend du port serveur  que vous avez set)
 
-* Interface adminer pour consulter la DB : http://localhost:8080/ (dépend du port que vous avez set)
+* Interface adminer pour consulter la DB : http://localhost:8080/ (dépend du port serveur que vous avez set)
