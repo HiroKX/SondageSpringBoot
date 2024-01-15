@@ -17,6 +17,8 @@ DB_PORTS= # Ex : 5432
 SERVER_PORT= # Ex : 8090
 ```
 
+Il vous faut également dans le fichier Dockerfile, changer la variable d'environnement **EXPOSE** (Ligne 21) par votre port.
+
 * Ouvrer un **CMD** dans le root du projet et effectuer la commande : 
 ``` docker-compose up --build```
 
