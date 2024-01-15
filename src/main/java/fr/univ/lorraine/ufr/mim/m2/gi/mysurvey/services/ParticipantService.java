@@ -15,7 +15,7 @@ public class ParticipantService {
     }
 
     public Participant getById(Long id) {
-        return repository.getById(id);
+        return repository.getReferenceById(id);
     }
 
     public List<Participant> getAll() {
@@ -34,11 +34,11 @@ public class ParticipantService {
         return null;
     }
 
-    public int delete(Long id) {
+    public boolean delete(Long id) {
         if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
-            return 1;
+            return false;
         }
-        return 0;
+        return true;
     }
 }
