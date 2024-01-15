@@ -2,6 +2,8 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+db/.env
+.env
 
 ### STS ###
 .apt_generated
@@ -33,7 +35,6 @@ build/
 
 ### Database Local data ###
 data/
-src/main/resources/application-local.properties
 
 ### Mac OS ###
 .DS_Store
