@@ -36,11 +36,11 @@ class SondageServiceTest {
     void givenAnId_whenGetById_thenSondageRepositoryIsCalled() {
         Long sondageId = 1L;
         Sondage expectedSondage = new Sondage();
-        when(sondageRepository.getById(sondageId)).thenReturn(expectedSondage);
+        when(sondageRepository.getReferenceById(sondageId)).thenReturn(expectedSondage);
 
         Sondage result = sondageService.getById(sondageId);
 
-        verify(sondageRepository, times(1)).getById(same(sondageId));
+        verify(sondageRepository, times(1)).getReferenceById(same(sondageId));
         assertEquals(expectedSondage, result);
     }
 

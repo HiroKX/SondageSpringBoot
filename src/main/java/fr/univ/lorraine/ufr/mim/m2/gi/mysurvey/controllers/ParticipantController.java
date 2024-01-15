@@ -6,6 +6,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class ParticipantController {
     @ResponseBody
     public ParticipantDto get(@PathVariable("id") Long id) {
         var model = service.getById(id);
+        if(model == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return mapper.map(model, ParticipantDto.class);
     }
 
@@ -44,6 +46,7 @@ public class ParticipantController {
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
         var model = mapper.map(participantDto, Participant.class);
         var result = service.create(model);
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return mapper.map(result, ParticipantDto.class);
     }
 
@@ -52,12 +55,13 @@ public class ParticipantController {
     public ParticipantDto update(@PathVariable("id") Long id, @RequestBody ParticipantDto participantDto) {
         var model = mapper.map(participantDto, Participant.class);
         var result = service.update(id, model);
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return mapper.map(result, ParticipantDto.class);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
-        service.delete(id);
+        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);;
     }
 }

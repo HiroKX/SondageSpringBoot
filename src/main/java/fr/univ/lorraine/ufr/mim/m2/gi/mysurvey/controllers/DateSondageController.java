@@ -7,6 +7,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(value = "/api/date")
@@ -25,7 +26,7 @@ public class DateSondageController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
-        service.delete(id);
+        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/{id}/participer")
@@ -34,6 +35,7 @@ public class DateSondageController {
     public DateSondeeDto createParticipation(@PathVariable("id") Long id, @RequestBody DateSondeeDto dto) {
         var model = mapper.map(dto, DateSondee.class);
         var result = sds.create(id, dto.getParticipant(), model);
+        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return mapper.map(result, DateSondeeDto.class);
     }
 }

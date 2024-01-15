@@ -32,11 +32,11 @@ class ParticipantServiceTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant expectedParticipant = new Participant();
-        when(repository.getById(id)).thenReturn(expectedParticipant);
+        when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
 
         Participant result = service.getById(id);
 
-        verify(repository, times(1)).getById(id);
+        verify(repository, times(1)).getReferenceById(id);
         assertEquals(expectedParticipant, result);
     }
 
@@ -94,11 +94,11 @@ class ParticipantServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.of(new Participant()));
 
-        int result = service.delete(id);
+        boolean result = service.delete(id);
 
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).deleteById(id);
-        assertEquals(1, result);
+        assertTrue(result);
     }
 
     @Test
@@ -106,10 +106,10 @@ class ParticipantServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        int result = service.delete(id);
+        boolean result = service.delete(id);
 
         verify(repository, times(1)).findById(id);
         verify(repository, never()).deleteById(id);
-        assertEquals(0, result);
+        assertFalse(result);
     }
 }
