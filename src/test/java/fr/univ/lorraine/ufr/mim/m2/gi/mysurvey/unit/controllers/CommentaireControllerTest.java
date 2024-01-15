@@ -91,7 +91,7 @@ public class CommentaireControllerTest {
     public void testUpdateFailed() throws Exception {
         long IdEdited = 2L;
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.update(id, commentaire)).thenReturn(null);
+        when(service.update(IdEdited, commentaire)).thenReturn(null);
         MockHttpServletResponse response = mvc.perform(
                         put("/api/commentaire/"+IdEdited)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -100,7 +100,7 @@ public class CommentaireControllerTest {
                 .andReturn().getResponse();
 
         verify(mapper,times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service,times(1)).update(eq(id), eq(commentaire));
+        verify(service,times(1)).update(eq(IdEdited), eq(commentaire));
         verify(mapper,times(0)).map(eq(commentaire), eq(CommentaireDto.class));
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }

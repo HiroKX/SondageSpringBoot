@@ -36,11 +36,11 @@ class DateSondageServiceTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         DateSondage expectedDateSondage = new DateSondage();
-        when(repository.getById(id)).thenReturn(expectedDateSondage);
+        when(repository.getReferenceById(id)).thenReturn(expectedDateSondage);
 
         DateSondage result = service.getById(id);
 
-        verify(repository, times(1)).getById(same(id));
+        verify(repository, times(1)).getReferenceById(same(id));
         assertEquals(expectedDateSondage, result);
     }
 

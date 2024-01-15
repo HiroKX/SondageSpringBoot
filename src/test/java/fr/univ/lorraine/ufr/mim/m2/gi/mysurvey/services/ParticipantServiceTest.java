@@ -32,11 +32,11 @@ class ParticipantServiceTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant expectedParticipant = new Participant();
-        when(repository.getById(id)).thenReturn(expectedParticipant);
+        when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
 
         Participant result = service.getById(id);
 
-        verify(repository, times(1)).getById(id);
+        verify(repository, times(1)).getReferenceById(id);
         assertEquals(expectedParticipant, result);
     }
 

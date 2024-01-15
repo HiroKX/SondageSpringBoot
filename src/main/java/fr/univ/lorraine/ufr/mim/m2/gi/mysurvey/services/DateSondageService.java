@@ -33,9 +33,9 @@ public class DateSondageService {
     public boolean delete(Long id) {
         if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 }
