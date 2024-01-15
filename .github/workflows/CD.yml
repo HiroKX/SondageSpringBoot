@@ -20,5 +20,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/html/SondageSpringBoot
+            git pull
             docker-compose down
             docker-compose up -d --build
