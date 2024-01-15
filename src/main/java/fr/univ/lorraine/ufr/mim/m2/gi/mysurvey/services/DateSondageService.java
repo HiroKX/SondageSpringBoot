@@ -18,7 +18,7 @@ public class DateSondageService {
     }
 
     public DateSondage getById(Long id) {
-        return repository.getById(id);
+        return repository.getReferenceById(id);
     }
 
     public List<DateSondage> getBySondageId(Long sondageId) {
