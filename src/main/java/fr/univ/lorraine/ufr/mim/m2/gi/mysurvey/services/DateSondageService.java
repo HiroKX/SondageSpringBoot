@@ -30,11 +30,12 @@ public class DateSondageService {
         return repository.save(date);
     }
 
-    public int delete(Long id) {
+    public boolean delete(Long id) {
         if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
-            return 1;
+            return false;
         }
-        return 0;
+        return true;
     }
+
 }

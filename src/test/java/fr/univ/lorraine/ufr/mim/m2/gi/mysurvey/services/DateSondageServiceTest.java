@@ -82,11 +82,11 @@ class DateSondageServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.of(new DateSondage()));
 
-        int result = service.delete(id);
+        boolean result = service.delete(id);
 
         verify(repository, times(1)).findById(same(id));
         verify(repository, times(1)).deleteById(id);
-        assertEquals(1, result);
+        assertTrue(result);
     }
 
     @Test
@@ -94,10 +94,10 @@ class DateSondageServiceTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        int result = service.delete(id);
+        boolean result = service.delete(id);
 
         verify(repository, times(1)).findById(same(id));
         verify(repository, never()).deleteById(id);
-        assertEquals(0, result);
+        assertFalse(result);
     }
 }
