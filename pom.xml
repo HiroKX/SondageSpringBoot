@@ -106,7 +106,7 @@
                 </executions>
             </plugin>
             <plugin>
-            <groupId>org.pitest</groupId>
+                <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
                 <dependencies>
