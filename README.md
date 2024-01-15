@@ -6,34 +6,21 @@ Ce fichier va instancier un conteneur avec une base de données **PostgreSQL**, 
 Pour déployer ce conteneur : 
 * Installer docker.
 * Créer un fichier .env dans le root du projet et éditer la configuration : 
+```bash
+SPRING_PROFILES_ACTIVE=local
+DB_USERNAME= # Ex : postgres
+DB_PASSWORD= # Ex : admin
+DB_NAME= # Ex : MySurvey
+DB_URL="jdbc:postgresql://db:5432"
+ADMINER_PORTS= # Ex : 8081
+DB_PORTS= # Ex : 5432
+SERVER_PORT= # Ex : 8090
 ```
-SPRING_PROFILES_ACTIVE= local / test
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=
-DB_URL="jdbc:postgresql://db:5432/"
-ADMINER_PORTS=
-DB_PORTS=
-SERVER_PORT=
-```
+
+Il vous faut également dans le fichier Dockerfile, changer la variable d'environnement **EXPOSE** (Ligne 21) par votre port.
 
 * Ouvrer un **CMD** dans le root du projet et effectuer la commande : 
-``` docker-compose up -d --build```
-
-## Configuration locale
-
-Editer la configuration du fichier .env (Exemple de configuration) : 
-
-```
-SPRING_PROFILES_ACTIVE=local
-DB_USERNAME=post
-DB_PASSWORD=admin
-DB_NAME=MySurvey
-DB_URL="jdbc:postgresql://db:5432"
-ADMINER_PORTS=8081
-DB_PORTS=5432
-SERVER_PORT=8090
-```
+``` docker-compose up --build```
 
 # Lancement du projet
 
@@ -45,8 +32,14 @@ Pour lancer les tests d'intégrations du projet : `mvn test`
 
 Une fois le projet démarré : 
 
-* Accès à l'api Swagger : http://localhost:8080/swagger-ui.html (dépend du SERVER_PORT que vous avez set)
+* Accès à l'api Swagger : http://localhost:VOTREPORT/swagger-ui.html (dépend du SERVER_PORT que vous avez set)
 
-* Documentation de l'api : http://localhost:8080/v3/api-docs (dépend du port SERVER_PORT que vous avez set)
+* Documentation de l'api : http://localhost:VOTREPORT/v3/api-docs (dépend du port SERVER_PORT que vous avez set)
 
-* Interface adminer pour consulter la DB : http://localhost:8080/ (dépend du port SERVER_PORT vous avez set)
+* Interface adminer pour consulter la DB : http://localhost:VOTREPORT/ (dépend du port SERVER_PORT vous avez set)
+
+## Accès au projet en ligne :
+
+Vous pouvez accéder à notre projet directement en ligne ! 
+
+Voici un lien pour y accéder : https://sondage.ronde-lingons.fr/swagger-ui.html
