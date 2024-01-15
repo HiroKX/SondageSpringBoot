@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Copy JAR to Server
+      - name: Deploy Server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
