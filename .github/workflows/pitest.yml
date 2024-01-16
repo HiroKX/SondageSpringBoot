@@ -40,7 +40,7 @@ jobs:
         run: mvn package -Ppitest org.pitest:pitest-maven:mutationCoverage
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.DEPLOY_KEY }}
-          publish_dir: ./target/pit-reports/*/
+          folder: target/pit-reports
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
