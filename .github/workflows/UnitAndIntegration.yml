@@ -42,7 +42,7 @@ jobs:
       uses: cicirello/jacoco-badge-generator@v2
       with:
         jacoco-csv-file: target/coverage/jacoco/jacoco.csv
-        badges-directory: target/coverage
+        badges-directory: target/coverage/jacoco
 
     - name: Run Mutation Testing
       run: mvn org.pitest:pitest-maven:mutationCoverage
