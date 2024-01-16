@@ -14,7 +14,7 @@ jobs:
       DB_PORTS: 5432
       SERVER_PORT: 666
       ADMINER_PORTS: 8089
-      DB_URL: "jdbc:postgresql://localhost:5432"
+      DB_URL: "jdbc:postgresql://db:5432"
 
     steps:
       - name: Checkout repository code
