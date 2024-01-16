@@ -50,10 +50,10 @@ jobs:
         run: |
           cd src/test/resources
           touch application-local.properties
-          echo 'DB_USERNAME=${{ env.DB_USERNAME }}' >> application-local.properties
-          echo 'DB_PASSWORD=${{ env.DB_PASSWORD }}' >> application-local.properties
-          echo 'DB_PORTS=${{ env.DB_PORTS }}' >> application-local.properties
-          echo 'DB_URL=${{ env.DB_URL }}' >> application-local.properties
+          echo 'SPRING_DATASOURCE_USERNAME=${{ env.DB_USERNAME }}' >> application-local.properties
+          echo 'SPRING_DATASOURCE_PASSWORD=${{ env.DB_PASSWORD }}' >> application-local.properties
+          echo 'SPRING_SERVER_PORT=${{ env.DB_PORTS }}' >> application-local.properties
+          echo 'SPRING_DATASOURCE_URL=${{ env.DB_URL }}' >> application-local.properties
 
       - name: Build with maven
         run: mvn -B clean install
