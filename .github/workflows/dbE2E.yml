@@ -15,20 +15,6 @@ jobs:
       SERVER_PORT: 666
       ADMINER_PORTS: 8089
       DB_URL: "jdbc:postgresql://localhost:5432"
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: ${{ env.DB_NAME }}
-          POSTGRES_USER: ${{ env.DB_USERNAME }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: Checkout repository code
@@ -40,6 +26,13 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
           cache: maven
+      - name: create application-local.properties
+        run: |
+          touch .env
+          echo 'DB_USERNAME=${{ env.DB_USERNAME }}' >> .env
+          echo 'DB_PASSWORD=${{ env.DB_PASSWORD }}' >> .env
+          echo 'DB_PORTS=${{ env.DB_PORTS }}' >> .env
+          echo 'DB_URL=${{ env.DB_URL }}' >> .env
 
       - name: Build with docker
         run: docker-compose up -d --build
