@@ -1,0 +1,63 @@
+# This workflow sets a PostgreSQL database for the project so it can execute the E2E Tests
+name: Tests E2E
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  Testing_E2E:
+    runs-on: ubuntu-latest
+    env:
+      DB_USERNAME: post
+      DB_PASSWORD: admin
+      DB_NAME: MySurvey
+      DB_PORTS: 5432
+      SERVER_PORT: 666
+      DB_URL: "jdbc:postgresql://localhost:5432"
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: ${{ env.DB_NAME }}
+          POSTGRES_USER: ${{ env.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+        ports:
+          - ${{ DB_PORTS }}:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: create.env for the db
+        run: |
+          touch .env
+          echo 'SERVER_PORT=${{ env.SERVER_PORT }}' >> .env
+
+      - name: create application-local.properties
+        run: |
+          cd src/test/resources
+          touch application-local.properties
+          echo 'DB_USERNAME=${{ env.DB_USERNAME }}' >> application-local.properties
+          echo 'DB_PASSWORD=${{ env.DB_PASSWORD }}' >> application-local.properties
+          echo 'DB_PORTS=${{ env.DB_PORTS }}' >> application-local.properties
+          echo 'DB_URL=${{ env.DB_URL }}' >> application-local.properties
+
+      - name: Build with maven
+        run: mvn -B clean install
+
+      - name: Run Tests
+        run: mvn test
+
