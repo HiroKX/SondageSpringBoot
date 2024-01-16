@@ -118,7 +118,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>build/jacoco</outputDirectory>
+                            <outputDirectory>target/coverage/jacoco</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -128,6 +128,7 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
                 <configuration>
+                    <reportsDirectory>target/coverage/pitest</reportsDirectory>
                     <mutationThreshold>65</mutationThreshold>
                     <excludedClasses>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
