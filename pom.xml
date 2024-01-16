@@ -135,7 +135,6 @@
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
                     </excludedClasses>
                     <excludedTestClasses>
-                        <param>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.*</param>
                         <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.*</excludedTestClass>
                     </excludedTestClasses>
                 </configuration>
