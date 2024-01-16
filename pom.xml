@@ -133,10 +133,8 @@
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedClass>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.**</excludedClass>
                     </excludedClasses>
-                    <excludedTestClasses>
-                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.**</excludedTestClass>
-                    </excludedTestClasses>
                 </configuration>
                 <dependencies>
                     <dependency>
