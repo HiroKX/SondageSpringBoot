@@ -41,8 +41,8 @@ jobs:
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
       with:
-        jacoco-csv-file: build/jacoco/jacoco.csv
-        badges-directory: build/jacoco/
+        jacoco-csv-file: target/coverage/jacoco/jacoco.csv
+        badges-directory: target/coverage
 
     - name: Run Mutation Testing
       run: mvn org.pitest:pitest-maven:mutationCoverage
