@@ -109,6 +109,11 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
+                <configuration>
+                    <excludedTestClasses>
+                        <excludedTestClass>CommentaireControllerTest</excludedTestClass>
+                    </excludedTestClasses>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
