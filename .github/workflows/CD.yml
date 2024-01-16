@@ -2,7 +2,7 @@ name: CD Springboot
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
 jobs:
   deploy:
