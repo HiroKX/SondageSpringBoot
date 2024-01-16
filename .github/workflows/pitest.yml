@@ -9,8 +9,6 @@
 name: Pitest
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -44,3 +42,4 @@ jobs:
         with:
           folder: target/pit-reports
           ssh-key: ${{ secrets.DEPLOY_KEY }}
+          branch: gh-pages-pitest
