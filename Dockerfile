@@ -9,7 +9,7 @@ COPY pom.xml /home/app
 WORKDIR /home/app
 
 # Construire le projet et empaqueter l'application
-RUN mvn clean package -DskipTests
+RUN mvn clean install -B -DskipTests=true
 
 # Étape d'exécution: Utiliser une image de base avec JDK 19 pour exécuter l'application
 FROM openjdk:19-jdk-slim
