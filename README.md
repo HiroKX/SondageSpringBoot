@@ -1,4 +1,6 @@
-[![Test Coverage](https://github.com/HiroKX/SondageSpringBoot/blob/gh-pages/jacoco.svg)](https://hirokx.github.io/SondageSpringBoot/)
+[![Test Coverage](https://github.com/HiroKX/SondageSpringBoot/blob/gh-pages/jacoco.svg)](https://hirokx.github.io/SondageSpringBoot/jacoco)
+
+[Pitest Mutation Coverage](https://hirokx.github.io/SondageSpringBoot/pitest)
 # Setup du projet
 Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker via 
 Ce fichier va instancier un conteneur avec une base de données **PostgreSQL**, **adminer**, un gestionnaire de database simple en php et héberger l'application entière.
