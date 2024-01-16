@@ -26,7 +26,7 @@ class ParticipantE2ETest {
     }
     @Test
     void participantPOST_GET_GETID_PUTID_DELETEID() {
-        // TEST DU GET QUAND PAS DE PARTICIPANTS
+        // GET WHEN NO DATA IN DB
         Response response = given()
                 .header("accept", "*/*")
                 .when()
@@ -36,7 +36,7 @@ class ParticipantE2ETest {
         assertEquals(200, response.statusCode());
         assertEquals("[]", response.getBody().print());
 
-        // TEST DU POST PARTICIPANT
+        // TEST POST PARTICIPANT
         Participant participant = new Participant(1L,"Reeves","Keanu");
         String requestBody = dataSample.generateParticipantPOSTBody(participant);
         response = given()
@@ -52,7 +52,7 @@ class ParticipantE2ETest {
         assertEquals("Reeves", response.jsonPath().getString("nom"));
         assertEquals("Keanu", response.jsonPath().getString("prenom"));
 
-        // TEST DU GET ALL
+        // TEST GET ALL
         response = given()
                 .header("accept", "*/*")
                 .when()
@@ -63,7 +63,7 @@ class ParticipantE2ETest {
         String expectedString = "[{\"participantId\":" + createdID + ",\"nom\":\"" + participant.getNom() + "\",\"prenom\":\"" + participant.getPrenom() + "\"}]";
         assertEquals(expectedString, response.getBody().print());
 
-        // TEST DU PUT PARTICIPANT
+        // TEST PUT PARTICIPANT
         participant.setNom("Wick");
         participant.setPrenom("John");
         requestBody = dataSample.generateParticipantPOSTBody(participant);
@@ -81,7 +81,7 @@ class ParticipantE2ETest {
         assertEquals("John", response.jsonPath().getString("prenom"));
 
 
-        // TEST DU GET PARTICIPANT
+        // TEST GET PARTICIPANT ID
         response = given()
                 .header("accept", "*/*")
                 .when()
@@ -92,7 +92,7 @@ class ParticipantE2ETest {
         assertEquals("Wick", response.jsonPath().getString("nom"));
         assertEquals("John", response.jsonPath().getString("prenom"));
 
-        // TEST DU DELETE PARTICIPANT
+        // TEST DELETE PARTICIPANT
         response = given()
                 .header("accept", "*/*")
                 .when()
@@ -101,5 +101,45 @@ class ParticipantE2ETest {
                 .extract().response();
         assertEquals(200, response.statusCode());
 
+        // TEST GET PARTICIPANT WHEN NO ID MATCH
+        response = given()
+                .header("accept", "*/*")
+                .when()
+                .get("/api/participant/99")
+                .then()
+                .extract().response();
+        assertEquals(500, response.statusCode());
+
+        // TEST DELETE PARTICIPANT WHEN NO ID MATCH
+        response = given()
+                .header("accept", "*/*")
+                .when()
+                .delete("/api/participant/99")
+                .then()
+                .extract().response();
+        assertEquals(404, response.statusCode());
+
+        // TEST PUT PARTICIPANT WHEN NO ID MATCH
+        response = given()
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .put("api/participant/99")
+                .then()
+                .extract().response();
+        assertEquals(404, response.statusCode());
+
+        // TEST INCOMPLETE POST PARTICIPANT - no name
+        requestBody = "[{\"participantId\":" + ",\"nom\":" + ",\"prenom\":\"" + participant.getPrenom() + "\"}]";
+        response = given()
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .post("/api/participant/")
+                .then()
+                .extract().response();
+        assertEquals(400, response.statusCode());
     }
 }
