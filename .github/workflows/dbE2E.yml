@@ -26,13 +26,16 @@ jobs:
           java-version: '19'
           distribution: 'temurin'
           cache: maven
-      - name: create application-local.properties
+
+      - name: create .env
         run: |
           touch .env
           echo 'DB_USERNAME=${{ env.DB_USERNAME }}' >> .env
           echo 'DB_PASSWORD=${{ env.DB_PASSWORD }}' >> .env
           echo 'DB_PORTS=${{ env.DB_PORTS }}' >> .env
+          echo 'DB_NAME=${{ env.DB_NAME }}' >> .env
           echo 'DB_URL=${{ env.DB_URL }}' >> .env
+          echo 'SERVER_PORT=${{ env.SERVER_PORT }}' >> .env
 
       - name: Build with docker
         run: docker-compose up -d --build
