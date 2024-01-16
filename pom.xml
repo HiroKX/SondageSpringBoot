@@ -111,20 +111,11 @@
                 <version>1.15.3</version>
                 <configuration>
                     <excludedTestClasses>
-                        <excludedTestClass>ModelMapperConfig</excludedTestClass>
+                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedTestClass>
 
-                        <excludedTestClass>CommentaireDto</excludedTestClass>
-                        <excludedTestClass>DateSondageDto</excludedTestClass>
-                        <excludedTestClass>DateSondeeDto</excludedTestClass>
-                        <excludedTestClass>ParticipantDto</excludedTestClass>
-                        <excludedTestClass>SondageDto</excludedTestClass>
+                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedTestClass>
 
-                        <excludedTestClass>Choix</excludedTestClass>
-                        <excludedTestClass>Commentaire</excludedTestClass>
-                        <excludedTestClass>DateSondage</excludedTestClass>
-                        <excludedTestClass>DateSondee</excludedTestClass>
-                        <excludedTestClass>Participant</excludedTestClass>
-                        <excludedTestClass>Sondage</excludedTestClass>
+                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedTestClass>
                     </excludedTestClasses>
                 </configuration>
                 <dependencies>
