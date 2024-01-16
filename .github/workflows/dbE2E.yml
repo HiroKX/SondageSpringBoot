@@ -41,6 +41,6 @@ jobs:
       - name: Build with docker
         run: |
           docker-compose up -d --build
-          mvn test
+          mvn test -Dtest=*E2ETest -DfailIfNoTests=true
 
 
