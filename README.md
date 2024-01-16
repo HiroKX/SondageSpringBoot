@@ -1,4 +1,4 @@
-[![Test Coverage](https://github.com/HiroKX/SondageSpringBoot/blob/gh-pages/jacoco.svg)](https://hirokx.github.io/SondageSpringBoot/jacoco)
+[![Test Coverage](https://github.com/HiroKX/SondageSpringBoot/blob/gh-pages/jacoco/jacoco.svg)](https://hirokx.github.io/SondageSpringBoot/jacoco)
 
 [Pitest Mutation Coverage](https://hirokx.github.io/SondageSpringBoot/pitest)
 # Setup du projet
