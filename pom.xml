@@ -110,13 +110,11 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
                 <configuration>
-                    <excludedTestClasses>
-                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedTestClass>
-
-                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedTestClass>
-
-                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedTestClass>
-                    </excludedTestClasses>
+                    <excludedClasses>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
+                    </excludedClasses>
                 </configuration>
                 <dependencies>
                     <dependency>
