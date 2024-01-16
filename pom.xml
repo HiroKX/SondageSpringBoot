@@ -111,7 +111,11 @@
                 <version>1.15.3</version>
                 <configuration>
                     <excludedTestClasses>
-                        <excludedTestClass>CommentaireControllerTest</excludedTestClass>
+                        <excludedTestClass>configurations.**</excludedTestClass>
+                        <excludedTestClass>dtos.**</excludedTestClass>
+                        <excludedTestClass>models.**</excludedTestClass>
+                        <excludedTestClass></excludedTestClass>
+                        <excludedTestClass></excludedTestClass>
                     </excludedTestClasses>
                 </configuration>
                 <dependencies>
