@@ -30,3 +30,16 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        jacoco-csv-file: build/jacoco/jacoco.csv
+        badges-directory: build/jacoco/
+
+    - name: Publish coverage report to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build/jacoco
+        ssh-key: ${{ secrets.DEPLOY_KEY }}
+        branch: gh-pages
+        target-folder: jacoco

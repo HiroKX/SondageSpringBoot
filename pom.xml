@@ -109,6 +109,13 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
+                <configuration>
+                    <excludedClasses>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
+                    </excludedClasses>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
