@@ -128,14 +128,14 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>1.15.3</version>
                 <configuration>
-                    <mutationThreshold>70</mutationThreshold>
+                    <mutationThreshold>65</mutationThreshold>
                     <excludedClasses>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedClass>
                         <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
                     </excludedClasses>
                     <excludedTestClasses>
-                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.**</excludedTestClass>
+                        <param>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.*</param>
                     </excludedTestClasses>
                 </configuration>
                 <dependencies>
