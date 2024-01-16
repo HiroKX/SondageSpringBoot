@@ -38,8 +38,8 @@ jobs:
           echo 'SERVER_PORT=${{ env.SERVER_PORT }}' >> .env
 
       - name: Build with docker
-        run: docker-compose up -d --build
+        run: |
+          docker-compose up -d --build
+          mvn test
 
-      - name: Run Tests
-        run: mvn test
 
