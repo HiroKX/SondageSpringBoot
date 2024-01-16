@@ -7,7 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      DB_USERNAME: post
+      DB_PASSWORD: admin
+      DB_NAME: MySurvey
+      DB_PORTS: 5432
+      SERVER_PORT: 666
+      DB_URL: "jdbc:postgresql://localhost:5432/MySurvey"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -38,6 +44,7 @@ jobs:
 
   Testing_E2E:
     runs-on: ubuntu-latest
+    needs: build
     env:
       DB_USERNAME: post
       DB_PASSWORD: admin
