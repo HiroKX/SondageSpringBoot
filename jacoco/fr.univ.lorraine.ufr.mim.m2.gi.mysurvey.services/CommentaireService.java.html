@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentaireService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MySurvey</a> &gt; <a href="index.source.html" class="el_package">fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services</a> &gt; <span class="el_source">CommentaireService.java</span></div><h1>CommentaireService.java</h1><pre class="source lang-java linenums">package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
+
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CommentaireService {
+
+    private final CommentaireRepository repository;
+    private final SondageService sondageService;
+    private final ParticipantService participantService;
+
+<span class="fc" id="L16">    public CommentaireService(CommentaireRepository repository, SondageService s, ParticipantService p) {</span>
+<span class="fc" id="L17">        this.repository = repository;</span>
+<span class="fc" id="L18">        this.sondageService = s;</span>
+<span class="fc" id="L19">        this.participantService = p;</span>
+<span class="fc" id="L20">    }</span>
+
+    public List&lt;Commentaire&gt; getBySondageId(Long sondageId) {
+<span class="fc" id="L23">        return repository.getAllBySondage(sondageId);</span>
+    }
+
+    public Commentaire addCommantaire(Long idSondage, Long idParticipant, Commentaire commentaire) {
+<span class="fc" id="L27">        commentaire.setSondage(sondageService.getById(idSondage));</span>
+<span class="fc" id="L28">        commentaire.setParticipant(participantService.getById(idParticipant));</span>
+<span class="fc" id="L29">        return repository.save(commentaire);</span>
+    }
+
+    public Commentaire update(Long id, Commentaire commentaire) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
+<span class="fc" id="L34">            commentaire.setCommentaireId(id);</span>
+<span class="fc" id="L35">            return repository.save(commentaire);</span>
+        }
+<span class="fc" id="L37">        return null;</span>
+    }
+
+    public boolean delete(Long id) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
+<span class="fc" id="L42">            repository.deleteById(id);</span>
+<span class="fc" id="L43">            return true;</span>
+        }
+<span class="fc" id="L45">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

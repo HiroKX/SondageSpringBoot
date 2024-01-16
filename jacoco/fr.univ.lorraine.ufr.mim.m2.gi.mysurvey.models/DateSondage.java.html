@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateSondage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MySurvey</a> &gt; <a href="index.source.html" class="el_package">fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models</a> &gt; <span class="el_source">DateSondage.java</span></div><h1>DateSondage.java</h1><pre class="source lang-java linenums">package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
+
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Liste des dates du {@link Sondage}
+ */
+@Entity
+@Table(name = &quot;date_sondage&quot;, uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;date&quot;, &quot;sondage_id&quot;})})
+public class DateSondage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;date_sondage_id&quot;)
+    private Long dateSondageId;
+
+    @Column(name = &quot;date&quot;)
+    private Date date;
+
+<span class="pc" id="L23">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;sondage_id&quot;)
+    private Sondage sondage = new Sondage();
+
+<span class="pc" id="L27">    @OneToMany(mappedBy = &quot;dateSondage&quot;, cascade = CascadeType.ALL)</span>
+    private List&lt;DateSondee&gt; dateSondee = new ArrayList&lt;&gt;();
+
+<span class="fc" id="L30">    public DateSondage() {}</span>
+
+<span class="nc" id="L32">    public DateSondage(Long dateSondageId, Date date, Sondage sondage, List&lt;DateSondee&gt; dateSondee) {</span>
+<span class="nc" id="L33">        this.dateSondageId = dateSondageId;</span>
+<span class="nc" id="L34">        this.date = date;</span>
+<span class="nc" id="L35">        this.sondage = sondage;</span>
+<span class="nc" id="L36">        this.dateSondee = dateSondee;</span>
+<span class="nc" id="L37">    }</span>
+
+    public Long getDateSondageId() {
+<span class="nc" id="L40">        return dateSondageId;</span>
+    }
+
+    public void setDateSondageId(Long dateSondageId) {
+<span class="nc" id="L44">        this.dateSondageId = dateSondageId;</span>
+<span class="nc" id="L45">    }</span>
+
+    public Date getDate() {
+<span class="nc" id="L48">        return date;</span>
+    }
+
+    public void setDate(Date date) {
+<span class="nc" id="L52">        this.date = date;</span>
+<span class="nc" id="L53">    }</span>
+
+    public Sondage getSondage() {
+<span class="fc" id="L56">        return sondage;</span>
+    }
+
+    public void setSondage(Sondage sondage) {
+<span class="fc" id="L60">        this.sondage = sondage;</span>
+<span class="fc" id="L61">    }</span>
+
+    public List&lt;DateSondee&gt; getDateSondee() {
+<span class="nc" id="L64">        return dateSondee;</span>
+    }
+
+    public void setDateSondee(List&lt;DateSondee&gt; dateSondee) {
+<span class="nc" id="L68">        this.dateSondee = dateSondee;</span>
+<span class="nc" id="L69">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
