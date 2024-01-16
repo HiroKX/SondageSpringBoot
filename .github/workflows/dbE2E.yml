@@ -14,7 +14,7 @@ jobs:
       DB_NAME: MySurvey
       DB_PORTS: 5432
       SERVER_PORT: 666
-      DB_URL: "jdbc:postgresql://localhost:5432"
+      DB_URL: "jdbc:postgresql://localhost:5432/MySurvey"
     services:
       postgres:
         image: postgres:latest
