@@ -1,13 +1,18 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.services.participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.participant.DataSampleE2E;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
+import io.github.cdimascio.dotenv.Dotenv;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Objects;
 
 import static io.restassured.RestAssured.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,12 +22,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParticipantE2ETest {
 
     private final static DataSampleE2E dataSample = new DataSampleE2E();
+static Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     private Long createdID = 1L;
+
+    private static final int SERVER_PORT = Integer.parseInt(Objects.requireNonNull(dotenv.get("SERVER_PORT"))) ;
 
     @BeforeEach
     void setup() {
         RestAssured.baseURI="http://localhost";
-        RestAssured.port=666;
+        RestAssured.port=SERVER_PORT;
+    }
+
+    @AfterAll
+    static void disposeDB() {
+
     }
     @Test
     void participantPOST_GET_GETID_PUTID_DELETEID() {
