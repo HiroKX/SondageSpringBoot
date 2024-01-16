@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateSondeeService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MySurvey</a> &gt; <a href="index.source.html" class="el_package">fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services</a> &gt; <span class="el_source">DateSondeeService.java</span></div><h1>DateSondeeService.java</h1><pre class="source lang-java linenums">package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
+
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondeeRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class DateSondeeService {
+
+    private final DateSondeeRepository repository;
+    private final DateSondageService sdate;
+    private final ParticipantService ps;
+
+<span class="fc" id="L18">    public DateSondeeService(DateSondeeRepository repository, DateSondageService d, ParticipantService p) {</span>
+<span class="fc" id="L19">        this.repository = repository;</span>
+<span class="fc" id="L20">        this.sdate = d;</span>
+<span class="fc" id="L21">        this.ps = p;</span>
+<span class="fc" id="L22">    }</span>
+
+    public DateSondee create(Long id, Long participantId, DateSondee dateSondee) {
+<span class="fc" id="L25">        DateSondage date = sdate.getById(id);</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if (Boolean.FALSE.equals(date.getSondage().getCloture())) {</span>
+<span class="fc" id="L27">            dateSondee.setDateSondage(date);</span>
+<span class="fc" id="L28">            dateSondee.setParticipant(ps.getById(participantId));</span>
+<span class="fc" id="L29">            return repository.save(dateSondee);</span>
+        }
+<span class="nc" id="L31">        return null;</span>
+    }
+
+    public List&lt;Date&gt; bestDate(Long id) {
+<span class="fc" id="L35">        return repository.bestDate(id);</span>
+    }
+
+    public List&lt;Date&gt; maybeBestDate(Long id) {
+<span class="fc" id="L39">        return repository.maybeBestDate(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
