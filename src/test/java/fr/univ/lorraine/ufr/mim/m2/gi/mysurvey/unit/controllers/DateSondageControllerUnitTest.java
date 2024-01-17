@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DateSondageControllerUnitTest {
+ class DateSondageControllerUnitTest {
 
     protected MockMvc mvc;
 
@@ -58,7 +58,7 @@ public class DateSondageControllerUnitTest {
     private long id;
 
     @BeforeEach
-    public void setup() {
+     void setup() {
         id = 1L;
         Participant participant = new Participant();
         participant.setParticipantId(id);
@@ -90,7 +90,7 @@ public class DateSondageControllerUnitTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+     void testCreate() throws Exception {
         when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
         when(sds.create(id, id, dateSondee)).thenReturn(dateSondee);
         when(mapper.map(dateSondee, DateSondeeDto.class)).thenReturn(dtoDS);
@@ -109,7 +109,7 @@ public class DateSondageControllerUnitTest {
     }
 
     @Test
-    public void testCreateFailed() throws Exception {
+     void testCreateFailed() throws Exception {
         long idEdited = 2L;
         when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
         when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenReturn(null);
@@ -127,7 +127,7 @@ public class DateSondageControllerUnitTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+     void testDelete() throws Exception {
         when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/date/"+id))
@@ -139,7 +139,7 @@ public class DateSondageControllerUnitTest {
     }
 
     @Test
-    public void testDeleteFailed() throws Exception {
+     void testDeleteFailed() throws Exception {
         when(service.delete(id)).thenReturn(false);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/date/"+id))

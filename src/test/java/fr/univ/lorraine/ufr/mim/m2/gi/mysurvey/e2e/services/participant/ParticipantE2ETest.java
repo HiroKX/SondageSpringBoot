@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParticipantE2ETest {
 
     private final static DataSampleE2E dataSample = new DataSampleE2E();
-static Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+    static Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     private Long createdID = 1L;
 
     private static final int SERVER_PORT = Integer.parseInt(Objects.requireNonNull(dotenv.get("SERVER_PORT"))) ;

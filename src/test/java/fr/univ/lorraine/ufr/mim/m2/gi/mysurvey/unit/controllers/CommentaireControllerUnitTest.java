@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @ExtendWith(MockitoExtension.class)
-public class CommentaireControllerUnitTest {
+ class CommentaireControllerUnitTest {
 
     protected MockMvc mvc;
 
@@ -49,7 +49,7 @@ public class CommentaireControllerUnitTest {
     private long id;
 
     @BeforeEach
-    public void setup() {
+     void setup() {
         id = 1L;
         Participant participant = new Participant();
         participant.setParticipantId(id);
@@ -69,7 +69,7 @@ public class CommentaireControllerUnitTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+     void testUpdate() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
         when(service.update(id, commentaire)).thenReturn(commentaire);
         when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
@@ -88,7 +88,7 @@ public class CommentaireControllerUnitTest {
     }
 
     @Test
-    public void testUpdateFailed() throws Exception {
+     void testUpdateFailed() throws Exception {
         long IdEdited = 2L;
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
         when(service.update(IdEdited, commentaire)).thenReturn(null);
@@ -106,7 +106,7 @@ public class CommentaireControllerUnitTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+     void testDelete() throws Exception {
         when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/"+id))
@@ -118,7 +118,7 @@ public class CommentaireControllerUnitTest {
     }
 
     @Test
-    public void testDeleteFailed() throws Exception {
+     void testDeleteFailed() throws Exception {
         when(service.delete(id)).thenReturn(false);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/"+id))
