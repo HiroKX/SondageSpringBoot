@@ -2,7 +2,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.participant;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 
-public class DataSampleE2E {
+ class DataSampleE2E {
 
     // Participants
     static String[] prenoms = {"Benjamin", "Lara", "Indiana", "Nathan", "Rick"};

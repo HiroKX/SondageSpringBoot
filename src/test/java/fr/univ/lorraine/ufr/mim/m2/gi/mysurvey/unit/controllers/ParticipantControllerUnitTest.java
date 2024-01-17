@@ -27,7 +27,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class ParticipantControllerUnitTest {
+class ParticipantControllerUnitTest {
 
     private MockMvc mvc;
 
@@ -49,7 +49,7 @@ public class ParticipantControllerUnitTest {
     private long id = 1L;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         participant = new Participant();
         participantDto = new ParticipantDto();
         JacksonTester.initFields(this, new ObjectMapper());
@@ -59,7 +59,7 @@ public class ParticipantControllerUnitTest {
 
 
     @Test
-    public void testGetParticipant() throws Exception {
+    void testGetParticipant() throws Exception {
         when(service.getById(id)).thenReturn(participant);
         when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
 
@@ -73,7 +73,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testGetParticipantFailed() throws Exception {
+    void testGetParticipantFailed() throws Exception {
         when(service.getById(id)).thenReturn(null);
 
         MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
@@ -85,7 +85,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testGetAllParticipants() throws Exception {
+    void testGetAllParticipants() throws Exception {
         Participant participant2 = new Participant();
         List<Participant> participants = List.of(participant,participant2);
         System.out.println(participants);
@@ -100,7 +100,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testCreateParticipant() throws Exception {
+    void testCreateParticipant() throws Exception {
 
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.create(participant)).thenReturn(participant);
@@ -118,7 +118,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testCreateParticipantFailed() throws Exception {
+    void testCreateParticipantFailed() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.create(participant)).thenReturn(null);
 
@@ -133,7 +133,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testUpdateParticipant() throws Exception {
+    void testUpdateParticipant() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.update(id, participant)).thenReturn(participant);
         when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
@@ -150,7 +150,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testUpdateParticipantFailed() throws Exception {
+    void testUpdateParticipantFailed() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.update(id, participant)).thenReturn(null);
 
@@ -165,7 +165,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    void testDelete() throws Exception {
         when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
@@ -177,7 +177,7 @@ public class ParticipantControllerUnitTest {
     }
 
     @Test
-    public void testDeleteFailed() throws Exception {
+    void testDeleteFailed() throws Exception {
         when(service.delete(id)).thenReturn(false);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
