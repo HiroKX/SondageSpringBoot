@@ -17,26 +17,26 @@ public class DateSondageController {
     private final DateSondeeService sds;
     private final ModelMapper mapper;
 
-<span class="nc" id="L20">    public DateSondageController(DateSondageService service, ModelMapper mapper, DateSondeeService s) {</span>
-<span class="nc" id="L21">        this.service = service;</span>
-<span class="nc" id="L22">        this.mapper = mapper;</span>
-<span class="nc" id="L23">        this.sds = s;</span>
-<span class="nc" id="L24">    }</span>
+<span class="fc" id="L20">    public DateSondageController(DateSondageService service, ModelMapper mapper, DateSondeeService s) {</span>
+<span class="fc" id="L21">        this.service = service;</span>
+<span class="fc" id="L22">        this.mapper = mapper;</span>
+<span class="fc" id="L23">        this.sds = s;</span>
+<span class="fc" id="L24">    }</span>
 
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="nc" id="L30">    }</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L30">    }</span>
 
     @PostMapping(value = &quot;/{id}/participer&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DateSondeeDto createParticipation(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondeeDto dto) {
-<span class="nc" id="L36">        var model = mapper.map(dto, DateSondee.class);</span>
-<span class="nc" id="L37">        var result = sds.create(id, dto.getParticipant(), model);</span>
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="nc" id="L39">        return mapper.map(result, DateSondeeDto.class);</span>
+<span class="fc" id="L36">        var model = mapper.map(dto, DateSondee.class);</span>
+<span class="fc" id="L37">        var result = sds.create(id, dto.getParticipant(), model);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L39">        return mapper.map(result, DateSondeeDto.class);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
