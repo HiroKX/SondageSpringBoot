@@ -1,8 +1,10 @@
-package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
+package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepository;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class DateSondageServiceTest {
+class DateSondageServiceUnitTest {
 
     @Mock
     private DateSondageRepository repository;

@@ -1,7 +1,8 @@
-package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
+package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ParticipantServiceTest {
+class ParticipantServiceUnitTest {
 
     @Mock
     private ParticipantRepository repository;

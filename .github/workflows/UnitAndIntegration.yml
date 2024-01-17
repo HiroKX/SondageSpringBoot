@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java CI (Unit & Integration) with Maven
 
 on:
   push:
@@ -21,25 +21,36 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-maven-
+
     - name: Set up JDK 19
       uses: actions/setup-java@v3
       with:
         java-version: '19'
         distribution: 'temurin'
         cache: maven
+
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn test -Dtest=*UnitTest,IntegrationTest -DfailIfNoTests=true
 
     - name: Generate JaCoCo Badge
       uses: cicirello/jacoco-badge-generator@v2
       with:
-        jacoco-csv-file: build/jacoco/jacoco.csv
-        badges-directory: build/jacoco/
+        jacoco-csv-file: target/coverage/jacoco/jacoco.csv
+        badges-directory: target/coverage/jacoco
+
+    - name: Run Mutation Testing
+      run: mvn org.pitest:pitest-maven:mutationCoverage
 
     - name: Publish coverage report to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: build/jacoco
+        folder: target/coverage
         ssh-key: ${{ secrets.DEPLOY_KEY }}
         branch: gh-pages
-        target-folder: jacoco
+

@@ -1,0 +1,46 @@
+# This workflow sets a PostgreSQL database for the project so it can execute the E2E Tests
+name: Tests E2E
+
+on:
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  Testing_E2E:
+    runs-on: ubuntu-latest
+    env:
+      DB_USERNAME: post
+      DB_PASSWORD: admin
+      DB_NAME: MySurvey
+      DB_PORTS: 5432
+      SERVER_PORT: 666
+      ADMINER_PORTS: 8089
+      DB_URL: "jdbc:postgresql://db:5432"
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set Up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: create .env
+        run: |
+          touch .env
+          echo 'DB_USERNAME=${{ env.DB_USERNAME }}' >> .env
+          echo 'DB_PASSWORD=${{ env.DB_PASSWORD }}' >> .env
+          echo 'DB_PORTS=${{ env.DB_PORTS }}' >> .env
+          echo 'DB_NAME=${{ env.DB_NAME }}' >> .env
+          echo 'DB_URL=${{ env.DB_URL }}' >> .env
+          echo 'SERVER_PORT=${{ env.SERVER_PORT }}' >> .env
+
+      - name: Build with docker
+        run: |
+          docker-compose up -d --build
+          mvn test -Dtest=*E2ETest -DfailIfNoTests=true
+
+
