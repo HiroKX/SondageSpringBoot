@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @ExtendWith(MockitoExtension.class)
-public class CommentaireControllerTest {
+public class CommentaireControllerUnitTest {
 
     protected MockMvc mvc;
 

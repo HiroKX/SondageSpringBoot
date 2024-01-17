@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.DateSondageController;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
@@ -12,7 +11,6 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
-import jakarta.persistence.Id;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +31,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DateSondageControllerTest {
+public class DateSondageControllerUnitTest {
 
     protected MockMvc mvc;
 
