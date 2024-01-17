@@ -34,14 +34,14 @@ public class CommentaireService {
     }
 
     public Commentaire update(Long id, Commentaire newCommentaire) {
-        if (repository.findById(id).isEmpty()) throw new NoSuchElementException("Le commentaire n'existe pas");
+        if (!exists(id)) throw new NoSuchElementException("Le commentaire n'existe pas");
         var commentaire = repository.getReferenceById(id);
         commentaire.setCommentaire(newCommentaire.getCommentaire());
         return repository.save(commentaire);
     }
 
     public void delete(Long id) {
-        if (repository.findById(id).isEmpty()) throw new NoSuchElementException("Le commentaire n'existe pas");
+        if (!exists(id)) throw new NoSuchElementException("Le commentaire n'existe pas");
         repository.deleteById(id);
     }
 
