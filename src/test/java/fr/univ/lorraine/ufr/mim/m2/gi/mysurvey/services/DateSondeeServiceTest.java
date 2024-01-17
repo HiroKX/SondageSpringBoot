@@ -60,6 +60,26 @@ class DateSondeeServiceTest {
     }
 
     @Test
+    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() {
+        Long id = 1L;
+        Long participantId = 1L;
+        DateSondee dateSondee = new DateSondee();
+
+        DateSondage dateSondage = new DateSondage();
+        dateSondage.setSondage(new Sondage()); // Créer et configurer une instance de DateSondage
+        dateSondage.getSondage().setCloture(true);
+
+        when(dateSondageService.getById(id)).thenReturn(dateSondage);
+
+        DateSondee result = dateSondeeService.create(id, participantId, dateSondee);
+
+        verify(dateSondageService, times(1)).getById(id);
+        verify(participantService, times(0)).getById(participantId);
+        verify(repository, times(0)).save(dateSondee);
+        assertNull(result);
+    }
+
+    @Test
     void givenId_whenBestDate_thenRepositoryIsCalled() {
         Long id = 1L;
         List<Date> expectedDates = Arrays.asList(new Date(), new Date());
