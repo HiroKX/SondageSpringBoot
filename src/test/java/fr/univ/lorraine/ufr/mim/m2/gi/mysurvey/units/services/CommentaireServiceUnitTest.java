@@ -93,6 +93,47 @@ class CommentaireServiceUnitTest {
         assertEquals(commentaire, result);
     }
 
+    @Test
+    void givenSondageIdThatDoesNotExist_whenCreate_thenThrowNoSuchElementException() {
+        Long sondageId = 1L;
+        Long participantId = 1L;
+        Commentaire commentaire = new Commentaire();
+
+        // Simuler le comportement des services et du repository
+        when(sondageService.exists(sondageId)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class, () -> commentaireService
+                .create(sondageId, participantId, commentaire));
+
+        // Vérifier les interactions avec les mocks
+        verify(sondageService, times(1)).exists(sondageId);
+        verify(sondageService, never()).getById(same(sondageId));
+        verify(participantService, never()).exists(participantId);
+        verify(participantService, never()).getById(same(participantId));
+        verify(repository, never()).save(commentaire);
+    }
+
+    @Test
+    void givenParticipantIdThatDoesNotExist_whenCreate_thenThrowNoSuchElementException() {
+        Long sondageId = 1L;
+        Long participantId = 1L;
+        Commentaire commentaire = new Commentaire();
+
+        // Simuler le comportement des services et du repository
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(participantService.exists(participantId)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class, () -> commentaireService
+                .create(sondageId, participantId, commentaire));
+
+        // Vérifier les interactions avec les mocks
+        verify(sondageService, times(1)).exists(sondageId);
+        verify(sondageService, times(1)).getById(same(sondageId));
+        verify(participantService, times(1)).exists(participantId);
+        verify(participantService, never()).getById(same(participantId));
+        verify(repository, never()).save(commentaire);
+    }
+
 
     @Test
     void givenAnIdAndACommentaire_whenUpdate_thenRepositoryIsCalled() {
