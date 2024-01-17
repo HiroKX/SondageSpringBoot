@@ -1,21 +1,19 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,7 +42,13 @@ public class DateSondageController {
             var result = service.create(id, model);
             return mapper.map(result, DateSondageDto.class);
         } catch(DataIntegrityViolationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Il existe déjà une date correspondante à ce sondage ou bien, le sondage n'existe pas");
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Il existe déjà une date correspondante à ce sondage ou bien, le sondage n'existe pas");
+        }
+        catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire");
         }
     }
 
@@ -57,10 +61,22 @@ public class DateSondageController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<DateSondageDto> getDates(@PathVariable("id") Long id) {
-        var models = service.getBySondageId(id);
-        return models.stream()
-                .map(model -> mapper.map(model, DateSondageDto.class))
-                .collect(Collectors.toList());
+        try {
+            var models = service.getBySondageId(id);
+            if (models.isEmpty()) throw new NoResultException();
+            return models.stream()
+                    .map(model -> mapper.map(model, DateSondageDto.class))
+                    .collect(Collectors.toList());
+        }
+        catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch(NoResultException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucune date de sondage n'a été trouvée");
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire");
+        }
     }
 
     /**
@@ -70,6 +86,14 @@ public class DateSondageController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
-        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        try {
+            service.delete(id);
+        }
+        catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire");
+        }
     }
 }
