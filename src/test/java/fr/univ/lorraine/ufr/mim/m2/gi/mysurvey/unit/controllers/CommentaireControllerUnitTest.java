@@ -3,6 +3,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.CommentaireController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
@@ -122,7 +123,8 @@ class CommentaireControllerUnitTest {
                                 .content(jsonCommentaire.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
+        verify(service, times(1)).addCommantaire(eq(id), eq(dto.getParticipant()), eq(commentaire));
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
@@ -140,6 +142,24 @@ class CommentaireControllerUnitTest {
         verify(service, times(1)).getBySondageId(eq(id));
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertEquals(response.getContentAsString(), "[]");
+    }
+
+    @Test
+    void testGetCommentaireFromSondage() throws Exception {
+        ArrayList<Commentaire> commentaires = new ArrayList<>();
+        commentaires.add(commentaire);
+        when(service.getBySondageId(id)).thenReturn(commentaires);
+        when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getBySondageId(eq(id));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertEquals("["+jsonCommentaire.write(dto).getJson()+"]",response.getContentAsString());
     }
 
     @Test

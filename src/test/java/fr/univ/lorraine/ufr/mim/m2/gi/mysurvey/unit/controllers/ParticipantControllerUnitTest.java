@@ -9,6 +9,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipantController
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,7 +49,7 @@ class ParticipantControllerUnitTest {
 
     private ParticipantDto participantDtoNull;
 
-    private long id = 1L;
+    private final long id = 1L;
 
     @BeforeEach
     void setup() {
@@ -78,6 +79,17 @@ class ParticipantControllerUnitTest {
         assertEquals(response.getContentAsString(),jsonParticipant.write(participantDto).getJson());
     }
 
+    @Test
+    void testGetParticipantFailed() throws Exception {
+        when(service.getById(id)).thenThrow(EntityNotFoundException.class);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
+                .andReturn().getResponse();
+
+        verify(service).getById(id);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
 
     @Test
     void testGetAllParticipants() throws Exception {
@@ -92,6 +104,8 @@ class ParticipantControllerUnitTest {
 
         verify(service).getAll();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentAsString()).isEqualTo("["+jsonParticipant.write(participantDto).getJson()+","+jsonParticipant.write(participantDto).getJson()+"]");
+
     }
 
     @Test
@@ -110,6 +124,7 @@ class ParticipantControllerUnitTest {
         verify(mapper).map(participantDto, Participant.class);
         verify(mapper).map(participant, ParticipantDto.class);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.getContentAsString()).isNotEqualTo("");
     }
 
     @Test
@@ -150,6 +165,7 @@ class ParticipantControllerUnitTest {
         verify(mapper).map(participant, ParticipantDto.class);
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getContentAsString()).isNotEqualTo("");
     }
 
     @Test
