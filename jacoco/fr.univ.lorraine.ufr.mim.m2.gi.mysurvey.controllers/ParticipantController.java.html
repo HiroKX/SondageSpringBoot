@@ -18,51 +18,51 @@ public class ParticipantController {
     private final ParticipantService service;
     private final ModelMapper mapper;
 
-<span class="fc" id="L21">    public ParticipantController(ParticipantService service, ModelMapper mapper) {</span>
-<span class="fc" id="L22">        this.service = service;</span>
-<span class="fc" id="L23">        this.mapper = mapper;</span>
-<span class="fc" id="L24">    }</span>
+<span class="nc" id="L21">    public ParticipantController(ParticipantService service, ModelMapper mapper) {</span>
+<span class="nc" id="L22">        this.service = service;</span>
+<span class="nc" id="L23">        this.mapper = mapper;</span>
+<span class="nc" id="L24">    }</span>
 
     @GetMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ParticipantDto get(@PathVariable(&quot;id&quot;) Long id) {
-<span class="fc" id="L30">        var model = service.getById(id);</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(model == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L32">        return mapper.map(model, ParticipantDto.class);</span>
+<span class="nc" id="L30">        var model = service.getById(id);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if(model == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L32">        return mapper.map(model, ParticipantDto.class);</span>
     }
 
     @GetMapping(value = &quot;/&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List&lt;ParticipantDto&gt; get() {
-<span class="fc" id="L39">        var models = service.getAll();</span>
-<span class="fc" id="L40">        return models.stream().map(model -&gt; mapper.map(model, ParticipantDto.class)).collect(Collectors.toList());</span>
+<span class="nc" id="L39">        var models = service.getAll();</span>
+<span class="nc" id="L40">        return models.stream().map(model -&gt; mapper.map(model, ParticipantDto.class)).collect(Collectors.toList());</span>
     }
 
     @PostMapping(value = &quot;/&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
-<span class="fc" id="L47">        var model = mapper.map(participantDto, Participant.class);</span>
-<span class="fc" id="L48">        var result = service.create(model);</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L50">        return mapper.map(result, ParticipantDto.class);</span>
+<span class="nc" id="L47">        var model = mapper.map(participantDto, Participant.class);</span>
+<span class="nc" id="L48">        var result = service.create(model);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L50">        return mapper.map(result, ParticipantDto.class);</span>
     }
 
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public ParticipantDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody ParticipantDto participantDto) {
-<span class="fc" id="L56">        var model = mapper.map(participantDto, Participant.class);</span>
-<span class="fc" id="L57">        var result = service.update(id, model);</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L59">        return mapper.map(result, ParticipantDto.class);</span>
+<span class="nc" id="L56">        var model = mapper.map(participantDto, Participant.class);</span>
+<span class="nc" id="L57">        var result = service.update(id, model);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L59">        return mapper.map(result, ParticipantDto.class);</span>
     }
 
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);;</span>
-<span class="fc" id="L66">    }</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);;</span>
+<span class="nc" id="L66">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
