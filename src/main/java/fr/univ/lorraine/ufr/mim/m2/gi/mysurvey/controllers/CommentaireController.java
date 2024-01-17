@@ -3,16 +3,15 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "/api/commentaire")
@@ -34,12 +33,18 @@ public class CommentaireController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public CommentaireDto update(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
-        var model = mapper.map(commentaireDto, Commentaire.class);
         if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le commentaire");
-        if(commentaireDto.getParticipant() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le participant");
-        var result = service.update(id, model);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return mapper.map(result, CommentaireDto.class);
+        try {
+            var model = mapper.map(commentaireDto, Commentaire.class);
+            var result = service.update(id, model);
+            return mapper.map(result, CommentaireDto.class);
+        }
+        catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -52,14 +57,17 @@ public class CommentaireController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public CommentaireDto createCommentaire(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
-        var model = mapper.map(commentaireDto, Commentaire.class);
         if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le commentaire");
         if(commentaireDto.getParticipant() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le participant");
         try{
-            var result = service.addCommantaire(id, commentaireDto.getParticipant(), model);
+            var model = mapper.map(commentaireDto, Commentaire.class);
+            var result = service.create(id, commentaireDto.getParticipant(), model);
             return mapper.map(result, CommentaireDto.class);
-        }catch(DataIntegrityViolationException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage n'existe pas");
+        }catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire");
         }
     }
 
@@ -72,10 +80,22 @@ public class CommentaireController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<CommentaireDto> getCommentaires(@PathVariable("id") Long id) {
-        var models = service.getBySondageId(id);
-        return models.stream()
-                .map(model -> mapper.map(model, CommentaireDto.class))
-                .collect(Collectors.toList());
+        try {
+            var models = service.getBySondageId(id);
+            if (models.isEmpty()) throw new NoResultException();
+            return models.stream()
+                    .map(model -> mapper.map(model, CommentaireDto.class))
+                    .toList();
+        }
+        catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (NoResultException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun commentaire n'a été trouvé");
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -85,6 +105,14 @@ public class CommentaireController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
-        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        try {
+            service.delete(id);
+        }
+        catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

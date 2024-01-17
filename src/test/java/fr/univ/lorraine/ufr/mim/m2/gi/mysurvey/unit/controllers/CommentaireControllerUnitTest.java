@@ -3,7 +3,6 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.CommentaireController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -84,7 +82,7 @@ class CommentaireControllerUnitTest {
     @Test
     void testCreate() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.addCommantaire(id,dto.getParticipant(),commentaire)).thenReturn(commentaire);
+        when(service.create(id,dto.getParticipant(),commentaire)).thenReturn(commentaire);
         when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/commentaire/"+id)
@@ -94,7 +92,7 @@ class CommentaireControllerUnitTest {
                 .andReturn().getResponse();
 
         verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service, times(1)).addCommantaire(eq(id), eq(dto.getParticipant()), eq(commentaire));
+        verify(service, times(1)).create(eq(id), eq(dto.getParticipant()), eq(commentaire));
         verify(mapper, times(1)).map(eq(commentaire), eq(CommentaireDto.class));
         assertThat(response.getContentAsString()).isEqualTo(jsonCommentaire.write(dto).getJson());
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
@@ -115,7 +113,7 @@ class CommentaireControllerUnitTest {
     @Test
     void testCreateFailedDataViolation() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.addCommantaire(id,dto.getParticipant(),commentaire)).thenThrow(DataIntegrityViolationException.class);
+        when(service.create(id,dto.getParticipant(),commentaire)).thenThrow(DataIntegrityViolationException.class);
 
         MockHttpServletResponse response = mvc.perform(
                         post("/api/commentaire/"+id)
@@ -124,7 +122,7 @@ class CommentaireControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
         verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service, times(1)).addCommantaire(eq(id), eq(dto.getParticipant()), eq(commentaire));
+        verify(service, times(1)).create(eq(id), eq(dto.getParticipant()), eq(commentaire));
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
@@ -201,7 +199,6 @@ class CommentaireControllerUnitTest {
 
     @Test
     void testDelete() throws Exception {
-        when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/" + id))
                 .andReturn().getResponse();
@@ -213,7 +210,6 @@ class CommentaireControllerUnitTest {
 
     @Test
     void testDeleteFailed() throws Exception {
-        when(service.delete(id)).thenReturn(false);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/" + id))
                 .andReturn().getResponse();

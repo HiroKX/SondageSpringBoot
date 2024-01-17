@@ -66,7 +66,7 @@ class CommentaireServiceUnitTest {
         when(participantService.getById(participantId)).thenReturn(expectedParticipant);
         when(repository.save(commentaire)).thenReturn(commentaire);
 
-        Commentaire result = commentaireService.addCommantaire(sondageId, participantId, commentaire);
+        Commentaire result = commentaireService.create(sondageId, participantId, commentaire);
 
         // Vérifier les interactions avec les mocks
         verify(sondageService, times(1)).getById(same(sondageId));
