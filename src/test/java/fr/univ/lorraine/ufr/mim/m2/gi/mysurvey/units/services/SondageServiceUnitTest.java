@@ -84,7 +84,7 @@ class SondageServiceUnitTest {
 
         Sondage result = sondageService.update(sondageId, updatedSondage);
 
-        verify(sondageRepository, times(2)).findById(same(sondageId));
+        verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, times(1)).save(same(updatedSondage));
         assertNotNull(result);
         assertEquals(sondageId, result.getSondageId());
