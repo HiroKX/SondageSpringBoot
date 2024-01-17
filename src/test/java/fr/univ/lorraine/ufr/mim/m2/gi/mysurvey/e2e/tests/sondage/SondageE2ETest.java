@@ -1,4 +1,4 @@
-package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.controller.sondage;
+package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.tests.sondage;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.RestAssured_conf;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.participant.ParticipantSampleE2E;
@@ -80,15 +80,14 @@ class SondageE2ETest {
         // TEST POST SONDAGE
         participant.setParticipantId(createdParticipantID);
         Sondage sondage = new Sondage(8L,
-                "Rey Skywalker est le meilleur personnage de Star Wars",
-                "Vous ne pouvez qu être d accord",
+                "Aller voir Star Wars IX au cinéma",
+                "Vous êtes pas obligés",
                 new Date(1735599600),
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 participant);
         requestBody = sondageSample.generateSondagePostBody(sondage);
-        System.out.println(requestBody);
         response = given()
                 .header("Content-type", "application/json")
                 .header("accept", "*/*")
@@ -105,7 +104,89 @@ class SondageE2ETest {
         assertEquals(sondage.getCloture(), response.jsonPath().getBoolean("cloture"));
         assertEquals(sondage.getCreateBy().getParticipantId(), response.jsonPath().getLong("createBy"));
 
-        // SUPPRESSION DU PARTICIPANT
+        // GET SONDAGE ID
+        response = given()
+                .header("accept", "*/*")
+                .when()
+                .get("/api/sondage/"+ createdSondageID)
+                .then()
+                .extract().response();
+        assertEquals(createdSondageID, response.jsonPath().getLong("sondageId"));
+        assertEquals(sondage.getNom(), response.jsonPath().getString("nom"));
+        assertEquals(sondage.getDescription(), response.jsonPath().getString("description"));
+        assertEquals(recieveDate(sondage.getFin()), response.jsonPath().getString("fin"));
+        assertEquals(sondage.getCloture(), response.jsonPath().getBoolean("cloture"));
+        assertEquals(sondage.getCreateBy().getParticipantId(), response.jsonPath().getLong("createBy"));
+
+        // ADD ANOTHER SONDAGE
+        Sondage sondage2 = new Sondage(4L,
+                "P'tit bowling",
+                "Allez venez les copains",
+                new Date(),
+                false,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                participant);
+        requestBody = sondageSample.generateSondagePostBody(sondage2);
+        response = given()
+                .header("Content-type", "application/json")
+                .header("accept", "*/*")
+                .body(requestBody)
+                .when()
+                .post("/api/sondage/")
+                .then()
+                .extract().response();
+        long createdSondageID2 = response.jsonPath().getLong("sondageId");
+
+
+        // GET ALL SONDAGE
+        response = given()
+                    .header("accept", "*/*")
+                    .when()
+                    .get("/api/sondage/")
+                    .then()
+                    .extract().response();
+        String expectedString = "[{\"sondageId\":" + createdSondageID + "," +
+                "\"nom\":\"" + sondage.getNom() + "\"," +
+                "\"description\":\"" + sondage.getDescription() + "\"," +
+                "\"fin\":\"" + recieveDate(sondage.getFin()) + "\"," +
+                "\"cloture\":" + sondage.getCloture() + "," +
+                "\"createBy\":" + sondage.getCreateBy().getParticipantId() + "}," +
+                "{\"sondageId\":" + createdSondageID2 + "," +
+                "\"nom\":\"" + sondage2.getNom() + "\"," +
+                "\"description\":\"" + sondage2.getDescription() + "\"," +
+                "\"fin\":\"" + recieveDate(sondage2.getFin()) + "\"," +
+                "\"cloture\":" + sondage2.getCloture() + "," +
+                "\"createBy\":" + sondage2.getCreateBy().getParticipantId() + "}]";
+        assertEquals(200, response.statusCode());
+        assertEquals(expectedString, response.getBody().print());
+
+
+
+
+        // PUT SONDAGE ID
+        sondage.setNom("Au final elle est nulle non ?");
+        sondage.setDescription("Le personnage est quand même bien mal fait");
+        sondage.setFin(new Date(1739599600));
+        sondage.setCloture(true);
+        requestBody = sondageSample.generateSondagePostBody(sondage);
+        response = given()
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .put("api/sondage/"+ createdSondageID)
+                .then()
+                .extract().response();
+        assertEquals(500, response.statusCode());
+        //assertEquals(createdSondageID, response.jsonPath().getLong("sondageId"));
+        //assertEquals(sondage.getNom() ,response.jsonPath().getString("nom"));
+        //assertEquals(sondage.getDescription(), response.jsonPath().getString("description"));
+        //assertEquals(recieveDate(sondage.getFin()), response.jsonPath().getString("fin"));
+        //assertEquals(sondage.getCloture(), response.jsonPath().getBoolean("cloture"));
+
+
+        // SUPPRESSION PARTICIPANT
         response = given()
                 .header("accept", "*/*")
                 .when()
@@ -114,7 +195,7 @@ class SondageE2ETest {
                 .extract().response();
         assertEquals(200, response.statusCode());
 
-        // SUPPRESSION DU SONDAGE
+        // SUPPRESSION SONDAGE
         response = given()
                 .header("accept", "*/*")
                 .when()

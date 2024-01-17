@@ -1,4 +1,4 @@
-package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.controller.participant;
+package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.tests.participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.RestAssured_conf;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.participant.ParticipantSampleE2E;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
