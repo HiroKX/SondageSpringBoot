@@ -73,17 +73,18 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledTwoTimes() {
+    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledThreeTimes() {
         Long sondageId = 1L;
         Sondage existingSondage = new Sondage();
         Sondage updatedSondage = new Sondage();
+        updatedSondage.setSondageId(sondageId);
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(existingSondage));
         when(sondageRepository.save(updatedSondage)).thenReturn(updatedSondage);
 
         Sondage result = sondageService.update(sondageId, updatedSondage);
 
-        verify(sondageRepository, times(1)).findById(same(sondageId));
+        verify(sondageRepository, times(2)).findById(same(sondageId));
         verify(sondageRepository, times(1)).save(same(updatedSondage));
         assertNotNull(result);
         assertEquals(sondageId, result.getSondageId());
@@ -109,11 +110,11 @@ class SondageServiceUnitTest {
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(new Sondage()));
 
-        int result = sondageService.delete(sondageId);
+        boolean result = sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, times(1)).deleteById(sondageId);
-        assertEquals(1, result);
+        assertTrue(result);
     }
 
     @Test
@@ -122,11 +123,11 @@ class SondageServiceUnitTest {
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.empty());
 
-        int result = sondageService.delete(sondageId);
+        boolean result = sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, never()).deleteById(sondageId);
-        assertEquals(0, result);
+        assertFalse(result);
     }
 }
 

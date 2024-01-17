@@ -32,17 +32,18 @@ public class SondageService {
 
     public Sondage update(Long id, Sondage sondage) {
         if (repository.findById(id).isPresent()) {
-            sondage.setSondageId(id);
+            Sondage sond = repository.findById(id).get();
+            sondage.setCreateBy(sond.getCreateBy());
             return repository.save(sondage);
         }
         return null;
     }
 
-    public int delete(Long id) {
+    public boolean delete(Long id) {
         if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     }
 }

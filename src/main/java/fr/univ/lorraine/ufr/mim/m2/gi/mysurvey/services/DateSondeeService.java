@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.ExceptionSondageClotured;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondeeRepository;
@@ -21,14 +22,14 @@ public class DateSondeeService {
         this.ps = p;
     }
 
-    public DateSondee create(Long id, Long participantId, DateSondee dateSondee) {
+    public DateSondee create(Long id, Long participantId, DateSondee dateSondee) throws ExceptionSondageClotured {
         DateSondage date = sdate.getById(id);
-        if (Boolean.FALSE.equals(date.getSondage().getCloture())) {
+        if (!date.getSondage().getCloture()) {
             dateSondee.setDateSondage(date);
             dateSondee.setParticipant(ps.getById(participantId));
             return repository.save(dateSondee);
         }
-        return null;
+        throw new ExceptionSondageClotured();
     }
 
     public List<Date> bestDate(Long id) {

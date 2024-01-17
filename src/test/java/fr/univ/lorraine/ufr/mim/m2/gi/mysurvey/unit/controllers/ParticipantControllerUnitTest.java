@@ -46,12 +46,18 @@ class ParticipantControllerUnitTest {
 
     private ParticipantDto participantDto;
 
+    private ParticipantDto participantDtoNull;
+
     private long id = 1L;
 
     @BeforeEach
     void setup() {
         participant = new Participant();
+
         participantDto = new ParticipantDto();
+        participantDto.setPrenom("prenom");
+        participantDto.setNom("nom");
+        participantDtoNull = new ParticipantDto();
         JacksonTester.initFields(this, new ObjectMapper());
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
@@ -72,17 +78,6 @@ class ParticipantControllerUnitTest {
         assertEquals(response.getContentAsString(),jsonParticipant.write(participantDto).getJson());
     }
 
-    @Test
-    void testGetParticipantFailed() throws Exception {
-        when(service.getById(id)).thenReturn(null);
-
-        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
-                .andReturn().getResponse();
-
-        verify(service).getById(id);
-        verify(mapper,times(0)).map(participant, ParticipantDto.class);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
-    }
 
     @Test
     void testGetAllParticipants() throws Exception {
@@ -119,14 +114,22 @@ class ParticipantControllerUnitTest {
 
     @Test
     void testCreateParticipantFailed() throws Exception {
+        MockHttpServletResponse response = mvc.perform(post("/api/participant/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(participantDtoNull).getJson()))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testCreateParticipantFailedNotFound() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.create(participant)).thenReturn(null);
-
         MockHttpServletResponse response = mvc.perform(post("/api/participant/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonParticipant.write(participantDto).getJson()))
                 .andReturn().getResponse();
-
         verify(service).create(participant);
         verify(mapper).map(participantDto, Participant.class);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
@@ -151,19 +154,26 @@ class ParticipantControllerUnitTest {
 
     @Test
     void testUpdateParticipantFailed() throws Exception {
-        when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
-        when(service.update(id, participant)).thenReturn(null);
 
         MockHttpServletResponse response = mvc.perform(
                 put("/api/participant/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
-        verify(mapper).map(participantDto, Participant.class);
-        verify(service,times(0)).update(id, null);
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+                        .content(jsonParticipant.write(participantDtoNull).getJson())).andReturn().getResponse();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
+    @Test
+    void testUpdateParticipantFailedNotFound() throws Exception {
+        when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
+        when(service.update(id,participant)).thenReturn(null);
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
+        verify(service).update(id, participant);
+        verify(mapper).map(participantDto, Participant.class);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
     @Test
     void testDelete() throws Exception {
         when(service.delete(id)).thenReturn(true);

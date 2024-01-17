@@ -1,6 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class DateSondageService {
         return repository.getAllBySondage(sondageId);
     }
 
-    public DateSondage create(Long id, DateSondage date) {
+    public DateSondage create(Long id, DateSondage date){
         date.setSondage(sondageService.getById(id));
         return repository.save(date);
     }
