@@ -23,12 +23,12 @@ public class DateSondeeService {
 
     public DateSondee create(Long id, Long participantId, DateSondee dateSondee) {
 <span class="fc" id="L25">        DateSondage date = sdate.getById(id);</span>
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (Boolean.FALSE.equals(date.getSondage().getCloture())) {</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        if (Boolean.FALSE.equals(date.getSondage().getCloture())) {</span>
 <span class="fc" id="L27">            dateSondee.setDateSondage(date);</span>
 <span class="fc" id="L28">            dateSondee.setParticipant(ps.getById(participantId));</span>
 <span class="fc" id="L29">            return repository.save(dateSondee);</span>
         }
-<span class="fc" id="L31">        return null;</span>
+<span class="nc" id="L31">        return null;</span>
     }
 
     public List&lt;Date&gt; bestDate(Long id) {
