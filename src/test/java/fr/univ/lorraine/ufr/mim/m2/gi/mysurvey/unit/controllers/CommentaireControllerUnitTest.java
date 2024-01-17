@@ -14,19 +14,23 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @ExtendWith(MockitoExtension.class)
- class CommentaireControllerUnitTest {
+class CommentaireControllerUnitTest {
 
     protected MockMvc mvc;
 
@@ -44,12 +48,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
     private Commentaire commentaire;
 
+    private Commentaire commentaireNull;
+
     private CommentaireDto dto;
+
+    private CommentaireDto dtoNull;
 
     private long id;
 
     @BeforeEach
-     void setup() {
+    void setup() {
         id = 1L;
         Participant participant = new Participant();
         participant.setParticipantId(id);
@@ -59,6 +67,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
         commentaire.setCommentaireId(id);
         commentaire.setCommentaire("Je suis un commentaire");
         commentaire.setParticipant(participant);
+
+        commentaireNull = new Commentaire();
+        dtoNull = new CommentaireDto();
+
         dto = new CommentaireDto();
         dto.setCommentaire("Je suis un commentaire");
         dto.setCommentaireId(id);
@@ -69,62 +81,124 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
     }
 
     @Test
-     void testUpdate() throws Exception {
+    void testCreate() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.update(id, commentaire)).thenReturn(commentaire);
+        when(service.addCommantaire(id,dto.getParticipant(),commentaire)).thenReturn(commentaire);
         when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
         MockHttpServletResponse response = mvc.perform(
-                put("/api/commentaire/"+id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonCommentaire.write(dto).getJson())
-                        .characterEncoding("UTF-8"))
-                        .andReturn().getResponse();
-
-        verify(mapper,times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service,times(1)).update(eq(id), eq(commentaire));
-        verify(mapper,times(1)).map(eq(commentaire), eq(CommentaireDto.class));
-        assertThat(response.getContentAsString()).isEqualTo(jsonCommentaire.write(dto).getJson());
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-     void testUpdateFailed() throws Exception {
-        long IdEdited = 2L;
-        when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.update(IdEdited, commentaire)).thenReturn(null);
-        MockHttpServletResponse response = mvc.perform(
-                        put("/api/commentaire/"+IdEdited)
+                        post("/api/commentaire/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonCommentaire.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        verify(mapper,times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service,times(1)).update(eq(IdEdited), eq(commentaire));
-        verify(mapper,times(0)).map(eq(commentaire), eq(CommentaireDto.class));
+        verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
+        verify(service, times(1)).addCommantaire(eq(id), eq(dto.getParticipant()), eq(commentaire));
+        verify(mapper, times(1)).map(eq(commentaire), eq(CommentaireDto.class));
+        assertThat(response.getContentAsString()).isEqualTo(jsonCommentaire.write(dto).getJson());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    void testCreateFailed() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/commentaire/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dtoNull).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testCreateFailedDataViolation() throws Exception {
+        when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
+        when(service.addCommantaire(id,dto.getParticipant(),commentaire)).thenThrow(DataIntegrityViolationException.class);
+
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/commentaire/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testGetCommentaireFromSondageEmpty() throws Exception {
+        ArrayList<Commentaire> commentaires = new ArrayList<>();
+        when(service.getBySondageId(id)).thenReturn(commentaires);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getBySondageId(eq(id));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertEquals(response.getContentAsString(), "[]");
+    }
+
+    @Test
+    void testUpdate() throws Exception {
+        when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
+        when(service.update(id, commentaire)).thenReturn(commentaire);
+        when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
+        verify(service, times(1)).update(eq(id), eq(commentaire));
+        verify(mapper, times(1)).map(eq(commentaire), eq(CommentaireDto.class));
+        assertThat(response.getContentAsString()).isEqualTo(jsonCommentaire.write(dto).getJson());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    void testUpdateFailed() throws Exception {
+        long IdEdited = 2L;
+        when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
+        when(service.update(IdEdited, commentaire)).thenReturn(null);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/commentaire/" + IdEdited)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
+        verify(service, times(1)).update(eq(IdEdited), eq(commentaire));
+        verify(mapper, times(0)).map(eq(commentaire), eq(CommentaireDto.class));
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
-     void testDelete() throws Exception {
+    void testDelete() throws Exception {
         when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
-                        delete("/api/commentaire/"+id))
+                        delete("/api/commentaire/" + id))
                 .andReturn().getResponse();
 
-        verify(service,times(1)).delete(eq(id));
+        verify(service, times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
-     void testDeleteFailed() throws Exception {
+    void testDeleteFailed() throws Exception {
         when(service.delete(id)).thenReturn(false);
         MockHttpServletResponse response = mvc.perform(
-                        delete("/api/commentaire/"+id))
+                        delete("/api/commentaire/" + id))
                 .andReturn().getResponse();
 
-        verify(service,times(1)).delete(eq(id));
+        verify(service, times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
