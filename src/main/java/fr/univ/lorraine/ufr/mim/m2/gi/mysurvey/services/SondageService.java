@@ -47,4 +47,8 @@ public class SondageService {
         }
         return false;
     }
+
+    public boolean exists(Long id) {
+        return repository.findById(id).isPresent();
+    }
 }
