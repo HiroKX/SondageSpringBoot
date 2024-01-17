@@ -125,19 +125,20 @@ public class SondageController {
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public SondageDto create(@RequestBody SondageDto sondageDto, HttpServletResponse response) {
-        sondageDto.setCloture(false);
+    public SondageDto create(@RequestBody SondageDto sondageDto) {
         verifySondage(sondageDto);
         var model = mapper.map(sondageDto, Sondage.class);
-        if(model.getFin().before(new Date())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"La date de fin doit être supérieure à la date de début",null);
         var result = service.create(sondageDto.getCreateBy(), model);
         return mapper.map(result, SondageDto.class);
     }
 
     private void verifySondage(@RequestBody SondageDto sondageDto) {
+        if(sondageDto.getFin().before(new Date())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"La date de fin doit être supérieure à la date de début",null);
         if(sondageDto.getCreateBy() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir un créateur",null);
         if(sondageDto.getNom() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir un nom",null);
         if(sondageDto.getDescription() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir une description",null);
+        if(sondageDto.getCloture() == null || sondageDto.getCloture()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit être ouvert",null);
+
     }
 
     /**

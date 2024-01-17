@@ -162,7 +162,6 @@ public class ParticipationControllerUnitTest {
     }
 
 
-
     @Test
     void testCreateFailedPasDeDateCorrespondante() throws Exception {
         long idEdited = 2L;
@@ -176,5 +175,20 @@ public class ParticipationControllerUnitTest {
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void testCreateFailedBadChoice() throws Exception {
+        long idEdited = 2L;
+        when(mapper.map(dtoDS, DateSondee.class)).thenThrow(IllegalArgumentException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/participer/"+idEdited)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonDateSondee.write(dtoDS).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 }

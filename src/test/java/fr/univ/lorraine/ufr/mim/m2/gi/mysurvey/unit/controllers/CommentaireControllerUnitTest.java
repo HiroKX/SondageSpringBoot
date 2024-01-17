@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -99,11 +100,26 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
-    void testCreateFailed() throws Exception {
+    void testCreateFailedNoSuchElement() throws Exception {
+        when(mapper.map(dto, Commentaire.class)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/commentaire/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonCommentaire.write(dtoNull).getJson())
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+
+    @Test
+    void testCreateFailed() throws Exception {
+        when(mapper.map(dto, Commentaire.class)).thenThrow(NoSuchElementException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/commentaire/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
@@ -113,7 +129,7 @@ class CommentaireControllerUnitTest {
     @Test
     void testCreateFailedDataViolation() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.create(id,dto.getParticipant(),commentaire)).thenThrow(DataIntegrityViolationException.class);
+        when(service.create(id,dto.getParticipant(),commentaire)).thenThrow(NoSuchElementException.class);
 
         MockHttpServletResponse response = mvc.perform(
                         post("/api/commentaire/"+id)
@@ -138,8 +154,49 @@ class CommentaireControllerUnitTest {
                 .andReturn().getResponse();
 
         verify(service, times(1)).getBySondageId(eq(id));
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertEquals(response.getContentAsString(), "[]");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void testGetCommentaireFromSondageNoSuchElement() throws Exception {
+        when(service.getBySondageId(id)).thenThrow(NoSuchElementException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getBySondageId(eq(id));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testGetCommentaireFromSondageNoResultException() throws Exception {
+        when(service.getBySondageId(id)).thenReturn(new ArrayList<>());
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getBySondageId(eq(id));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void testGetCommentaireFromSondageException() throws Exception {
+        when(service.getBySondageId(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getBySondageId(eq(id));
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @Test
@@ -159,6 +216,7 @@ class CommentaireControllerUnitTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertEquals("["+jsonCommentaire.write(dto).getJson()+"]",response.getContentAsString());
     }
+
 
     @Test
     void testUpdate() throws Exception {
@@ -182,8 +240,20 @@ class CommentaireControllerUnitTest {
     @Test
     void testUpdateFailed() throws Exception {
         long IdEdited = 2L;
-        when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
-        when(service.update(IdEdited, commentaire)).thenReturn(null);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/commentaire/" + IdEdited)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dtoNull).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testUpdateFailedNoSuchElement() throws Exception {
+        long IdEdited = 2L;
+        when(mapper.map(dto, Commentaire.class)).thenThrow(NoSuchElementException.class);
         MockHttpServletResponse response = mvc.perform(
                         put("/api/commentaire/" + IdEdited)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -191,10 +261,21 @@ class CommentaireControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        verify(mapper, times(1)).map(eq(dto), eq(Commentaire.class));
-        verify(service, times(1)).update(eq(IdEdited), eq(commentaire));
-        verify(mapper, times(0)).map(eq(commentaire), eq(CommentaireDto.class));
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void testUpdateFailedException() throws Exception {
+        long IdEdited = 2L;
+        when(mapper.map(dto, Commentaire.class)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/commentaire/" + IdEdited)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @Test
@@ -209,13 +290,25 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
+    void testDeleteFailedNoSuchElement() throws Exception {
+        doThrow(NoSuchElementException.class).when(service).delete(id);        MockHttpServletResponse response = mvc.perform(
+                        delete("/api/commentaire/" + id))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).delete(eq(id));
+        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void testDeleteFailed() throws Exception {
+        doThrow(NullPointerException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/" + id))
                 .andReturn().getResponse();
 
         verify(service, times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 }
