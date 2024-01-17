@@ -161,6 +161,8 @@ public class ParticipationControllerUnitTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
+
+
     @Test
     void testCreateFailedPasDeDateCorrespondante() throws Exception {
         long idEdited = 2L;
