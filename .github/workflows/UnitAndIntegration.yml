@@ -9,8 +9,6 @@
 name: Java CI (Unit & Integration) with Maven
 
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -46,11 +44,4 @@ jobs:
 
     - name: Run Mutation Testing
       run: mvn org.pitest:pitest-maven:mutationCoverage
-
-    - name: Publish coverage report to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: target/coverage
-        ssh-key: ${{ secrets.DEPLOY_KEY }}
-        branch: gh-pages
 
