@@ -1,13 +1,12 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.tests.sondage;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.RestAssured_conf;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.CrudRestAssured;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.participant.ParticipantSampleE2E;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.sondage.SondageSampleE2E;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -16,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.RestAssured_conf.*;
+import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.CrudRestAssured.*;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,53 +25,30 @@ class SondageE2ETest {
     private final static ParticipantSampleE2E participantSample = new ParticipantSampleE2E();
     private final static SondageSampleE2E sondageSample = new SondageSampleE2E();
 
-    @BeforeEach
-    void setup() {
-        RestAssured.baseURI = RestAssured_conf.SRV_BASEURI;
-        RestAssured.port = RestAssured_conf.SERVER_PORT;
+    @BeforeAll
+    static void setup() {
+        RestAssured.baseURI = CrudRestAssured.SRV_BASEURI;
+        RestAssured.port = CrudRestAssured.SERVER_PORT;
     }
     @Test
     void givenParticipant_whenCreatesSondage() {
         // GET ID WHEN NO SONDAGE
-        Response response = given()
-                .header("accept", "*/*")
-                .when()
-                .get("api/sondage/99")
-                .then()
-                .extract().response();
+        Response response = CrudRestAssured.getFromDB("api/sondage/99");
         assertEquals(500, response.statusCode());
 
         // GET ALL WHEN NO SONDAGE
-        response = given()
-                .header("accept", "*/*")
-                .when()
-                .get("/api/sondage/")
-                .then()
-                .extract().response();
+        response = CrudRestAssured.getFromDB("api/sondage/");
         assertEquals(200, response.statusCode());
         assertEquals("[]", response.getBody().print());
 
         // GET DATE CLOTURE WHEN NO SONDAGE
-        response = given()
-                .header("accept", "*/*")
-                .when()
-                .get("api/sondage/99/dates")
-                .then()
-                .extract().response();
+        response = CrudRestAssured.getFromDB("api/sondage/99/dates");
         assertEquals(200, response.statusCode());
-
 
         // CREATE THE PARTICIPANT IN DB
         Participant participant = new Participant(1L, "Mortensen", "Viggo");
         String requestBody = participantSample.generateParticipantPOSTBody(participant);
-        response = given()
-                .header("accept", "*/*")
-                .header("Content-type", "application/json")
-                .body(requestBody)
-                .when()
-                .post("/api/participant/")
-                .then()
-                .extract().response();
+        response = CrudRestAssured.addToDB("/api/participant/", requestBody);
         long createdParticipantID = response.jsonPath().getLong("participantId");
         assertEquals(201, response.statusCode());
         assertEquals(createdParticipantID, response.jsonPath().getLong("participantId"));
@@ -88,14 +64,7 @@ class SondageE2ETest {
                 new ArrayList<>(),
                 participant);
         requestBody = sondageSample.generateSondagePostBody(sondage);
-        response = given()
-                .header("Content-type", "application/json")
-                .header("accept", "*/*")
-                .body(requestBody)
-                .when()
-                .post("/api/sondage/")
-                .then()
-                .extract().response();
+        response = CrudRestAssured.addToDB("/api/sondage/", requestBody);
         long createdSondageID = response.jsonPath().getLong("sondageId");
         assertEquals(201, response.statusCode());
         assertEquals(sondage.getNom(), response.jsonPath().getString("nom"));
@@ -105,12 +74,7 @@ class SondageE2ETest {
         assertEquals(sondage.getCreateBy().getParticipantId(), response.jsonPath().getLong("createBy"));
 
         // GET SONDAGE ID
-        response = given()
-                .header("accept", "*/*")
-                .when()
-                .get("/api/sondage/"+ createdSondageID)
-                .then()
-                .extract().response();
+        response = CrudRestAssured.getFromDB("/api/sondage/"+createdSondageID);
         assertEquals(createdSondageID, response.jsonPath().getLong("sondageId"));
         assertEquals(sondage.getNom(), response.jsonPath().getString("nom"));
         assertEquals(sondage.getDescription(), response.jsonPath().getString("description"));
@@ -128,24 +92,12 @@ class SondageE2ETest {
                 new ArrayList<>(),
                 participant);
         requestBody = sondageSample.generateSondagePostBody(sondage2);
-        response = given()
-                .header("Content-type", "application/json")
-                .header("accept", "*/*")
-                .body(requestBody)
-                .when()
-                .post("/api/sondage/")
-                .then()
-                .extract().response();
+        response = CrudRestAssured.addToDB("/api/sondage/", requestBody);
         long createdSondageID2 = response.jsonPath().getLong("sondageId");
 
 
         // GET ALL SONDAGE
-        response = given()
-                    .header("accept", "*/*")
-                    .when()
-                    .get("/api/sondage/")
-                    .then()
-                    .extract().response();
+        response = CrudRestAssured.getFromDB("/api/sondage/");
         String expectedString = "[{\"sondageId\":" + createdSondageID + "," +
                 "\"nom\":\"" + sondage.getNom() + "\"," +
                 "\"description\":\"" + sondage.getDescription() + "\"," +
@@ -165,19 +117,12 @@ class SondageE2ETest {
 
 
         // PUT SONDAGE ID
-        sondage.setNom("Au final elle est nulle non ?");
-        sondage.setDescription("Le personnage est quand même bien mal fait");
+        sondage.setNom("Au final un billard ?");
+        sondage.setDescription("C'est pas les mêmes boules");
         sondage.setFin(new Date(1739599600));
         sondage.setCloture(true);
         requestBody = sondageSample.generateSondagePostBody(sondage);
-        response = given()
-                .header("accept", "*/*")
-                .header("Content-Type", "application/json")
-                .body(requestBody)
-                .when()
-                .put("api/sondage/"+ createdSondageID)
-                .then()
-                .extract().response();
+        response = CrudRestAssured.updateEntityFromDB("/api/sondage/"+createdSondageID, requestBody);
         assertEquals(500, response.statusCode());
         //assertEquals(createdSondageID, response.jsonPath().getLong("sondageId"));
         //assertEquals(sondage.getNom() ,response.jsonPath().getString("nom"));
@@ -187,21 +132,44 @@ class SondageE2ETest {
 
 
         // SUPPRESSION PARTICIPANT
-        response = given()
-                .header("accept", "*/*")
-                .when()
-                .delete("/api/participant/"+ createdParticipantID)
-                .then()
-                .extract().response();
+        response = CrudRestAssured.removeFromDB("/api/participant/"+createdParticipantID);
         assertEquals(200, response.statusCode());
 
         // SUPPRESSION SONDAGE
-        response = given()
-                .header("accept", "*/*")
-                .when()
-                .delete("/api/sondage/" + createdSondageID)
-                .then()
-                .extract().response();
+        response = CrudRestAssured.removeFromDB("/api/sondage/"+createdSondageID);
         assertEquals(200, response.statusCode());
+    }
+    @Test
+    void givenSondage_whenCloseSondage_thenCannotVote() {
+        Participant participant = new Participant(4L, "BRANSTETT", "Tim");
+        Sondage sondage = new Sondage(8L,
+                "Aller en cours de Production Logicielle",
+                "Il y a la soutenance !",
+                new Date(),
+                false,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                participant);
+        ArrayList<DateSondage> listDateSondage = new ArrayList<>();
+        DateSondage dateSondage = new DateSondage(1L, new Date(), sondage, new ArrayList<>());
+        listDateSondage.add(dateSondage);
+        DateSondee dateSondee = new DateSondee(1L, dateSondage, participant, Choix.DISPONIBLE);
+        sondage.setDateSondage(listDateSondage);
+        sondage.setCloture(false);
+        sondage.setCreateBy(participant);
+        // CREATE PARTICIPANT
+        // CREATE SONDAGE
+        String requestBody = participantSample.generateParticipantPOSTBody(participant);
+        Response response = CrudRestAssured.addToDB("/api/participant/", requestBody);
+        long createdParticipantID = response.jsonPath().getLong("participantId");
+        participant.setParticipantId(createdParticipantID);
+        sondage.setCreateBy(participant);
+        requestBody = sondageSample.generateSondagePostBody(sondage);
+        response = CrudRestAssured.addToDB("/api/sondage/", requestBody);
+        long createdSondageID = response.jsonPath().getLong("sondageId");
+        //SUPPRESSION DU PARTICIPANT ET DU SONDAGE
+        response = CrudRestAssured.removeFromDB("/api/participant/"+createdParticipantID);
+        response = CrudRestAssured.removeFromDB("/api/sondage/"+createdSondageID);
+
     }
 }

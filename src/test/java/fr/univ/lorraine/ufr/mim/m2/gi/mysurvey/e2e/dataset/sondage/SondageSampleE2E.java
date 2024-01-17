@@ -1,7 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 
-import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.RestAssured_conf.*;
+import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.CrudRestAssured.*;
 
 public class SondageSampleE2E {
 
