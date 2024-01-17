@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,18 @@ class SondageServiceUnitTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void givenAnId_whenGetAll_thenSondageRepositoryIsCalled() {
+        ArrayList<Sondage> expectedSondage = new ArrayList<Sondage>();
+        expectedSondage.add(new Sondage());
+        when(sondageRepository.findAll()).thenReturn(expectedSondage);
+
+        List<Sondage> result = sondageService.getAll();
+
+        verify(sondageRepository, times(1)).findAll();
+        assertEquals(expectedSondage, result);
     }
 
     @Test

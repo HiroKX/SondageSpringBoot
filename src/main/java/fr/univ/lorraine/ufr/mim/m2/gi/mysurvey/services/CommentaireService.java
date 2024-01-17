@@ -32,6 +32,8 @@ public class CommentaireService {
     public Commentaire update(Long id, Commentaire commentaire) {
         if (repository.findById(id).isPresent()) {
             commentaire.setCommentaireId(id);
+            if(commentaire.getCommentaireId() == null)
+                return null;
             return repository.save(commentaire);
         }
         return null;

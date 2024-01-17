@@ -7,6 +7,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepositor
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -84,12 +85,15 @@ class CommentaireServiceUnitTest {
         Long id = 1L;
         Commentaire commentaire = new Commentaire();
         when(repository.findById(id)).thenReturn(Optional.of(commentaire));
-        when(repository.save(commentaire)).thenReturn(commentaire);
+        Commentaire commentaire1 = new Commentaire();
+        commentaire1.setCommentaireId(id);
+        when(repository.save(commentaire)).thenReturn(commentaire1);
 
         Commentaire result = commentaireService.update(id, commentaire);
-
         verify(repository, times(1)).findById(same(id));
         verify(repository, times(1)).save(same(commentaire));
+        assertEquals(id, result.getCommentaireId());
+
         assertNotNull(result);
     }
 

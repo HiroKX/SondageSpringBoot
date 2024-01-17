@@ -2,12 +2,37 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 /**
  * Classe de commentaire d'un {@link Sondage}
  */
 @Entity
 @Table(name = "commentaire")
 public class Commentaire {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Commentaire that = (Commentaire) o;
+        return Objects.equals(commentaireId, that.commentaireId) && Objects.equals(commentaire, that.commentaire) && Objects.equals(sondage, that.sondage) && Objects.equals(participant, that.participant);
+    }
+
+    @Override
+    public String toString() {
+        return "Commentaire{" +
+                "commentaireId=" + commentaireId +
+                ", commentaire='" + commentaire + '\'' +
+                ", sondage=" + sondage +
+                ", participant=" + participant +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(commentaireId, commentaire, sondage, participant);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
