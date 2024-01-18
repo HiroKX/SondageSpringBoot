@@ -21,8 +21,6 @@ class ParticipantE2ETest {
         RestAssured.baseURI = CrudRestAssured.SRV_BASEURI;
         RestAssured.port = CrudRestAssured.SERVER_PORT;
     }
-
-    private final static ParticipantSampleE2E dataSample = new ParticipantSampleE2E();
     @Test
     void participantPOST_GET_GETID_PUTID_DELETEID() {
         // GET WHEN NO DATA IN DB
@@ -32,7 +30,7 @@ class ParticipantE2ETest {
 
         // TEST POST PARTICIPANT
         Participant participant = new Participant(1L,"Reeves","Keanu");
-        String requestBody = dataSample.generateParticipantPOSTBody(participant);
+        String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
         response = CrudRestAssured.addToDB("/api/participant/", requestBody);
         long createdID = response.jsonPath().getLong("participantId");
         assertEquals(201, response.statusCode());
@@ -48,7 +46,7 @@ class ParticipantE2ETest {
         // TEST PUT PARTICIPANT
         participant.setNom("Wick");
         participant.setPrenom("John");
-        requestBody = dataSample.generateParticipantPOSTBody(participant);
+        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
         response = CrudRestAssured.updateEntityFromDB("api/participant/"+createdID, requestBody);
         assertEquals(200, response.statusCode());
         assertEquals(createdID, response.jsonPath().getLong("participantId"));
@@ -67,7 +65,7 @@ class ParticipantE2ETest {
 
         // TEST GET PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.getFromDB("/api/participant/99");
-        assertEquals(500, response.statusCode());
+        assertEquals(404, response.statusCode());
 
         // TEST DELETE PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.removeFromDB("/api/participant/99");
