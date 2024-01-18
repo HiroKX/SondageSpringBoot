@@ -25,8 +25,7 @@ class ParticipantE2ETest {
     void participantPOST_GET_GETID_PUTID_DELETEID() {
         // GET WHEN NO DATA IN DB
         Response response = CrudRestAssured.dbGET("/api/participant/");
-        assertEquals(200, response.statusCode());
-        assertEquals("[]", response.getBody().print());
+        assertEquals(404, response.statusCode()); // DEBAT POUR 204 PLUTOT QUE 404
 
         // TEST POST PARTICIPANT
         Participant participant = new Participant(1L,"Reeves","Keanu");
