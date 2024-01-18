@@ -41,5 +41,9 @@ public class ParticipantService {
         }
 <span class="fc" id="L42">        return false;</span>
     }
+
+    public boolean exists(Long id) {
+<span class="nc" id="L46">        return repository.findById(id).isPresent();</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -37,14 +37,13 @@ public class DateSondeeDto {
     @Override
     public boolean equals(Object o) {
 <span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (this == o) return true;</span>
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (!(o instanceof DateSondeeDto)) return false;</span>
-<span class="fc" id="L41">        DateSondeeDto that = (DateSondeeDto) o;</span>
-<span class="pc bpc" id="L42" title="3 of 6 branches missed.">        return Objects.equals(getDateSondeeId(), that.getDateSondeeId()) &amp;&amp; Objects.equals(getParticipant(), that.getParticipant()) &amp;&amp; Objects.equals(getChoix(), that.getChoix());</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (!(o instanceof DateSondeeDto that)) return false;</span>
+<span class="pc bpc" id="L41" title="3 of 6 branches missed.">        return Objects.equals(getDateSondeeId(), that.getDateSondeeId()) &amp;&amp; Objects.equals(getParticipant(), that.getParticipant()) &amp;&amp; Objects.equals(getChoix(), that.getChoix());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L47">        return Objects.hash(getDateSondeeId(), getParticipant(), getChoix());</span>
+<span class="nc" id="L46">        return Objects.hash(getDateSondeeId(), getParticipant(), getChoix());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.SondageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SondageService {
@@ -12,38 +13,43 @@ public class SondageService {
     private final SondageRepository repository;
     private final ParticipantService participantService;
 
-<span class="fc" id="L15">    public SondageService(SondageRepository repository, ParticipantService p) {</span>
-<span class="fc" id="L16">        this.repository = repository;</span>
-<span class="fc" id="L17">        this.participantService = p;</span>
-<span class="fc" id="L18">    }</span>
+<span class="fc" id="L16">    public SondageService(SondageRepository repository, ParticipantService p) {</span>
+<span class="fc" id="L17">        this.repository = repository;</span>
+<span class="fc" id="L18">        this.participantService = p;</span>
+<span class="fc" id="L19">    }</span>
 
     public Sondage getById(Long id) {
-<span class="fc" id="L21">        return repository.getReferenceById(id);</span>
+<span class="fc" id="L22">        return repository.getReferenceById(id);</span>
     }
 
     public List&lt;Sondage&gt; getAll() {
-<span class="fc" id="L25">        return repository.findAll();</span>
+<span class="fc" id="L26">        return repository.findAll();</span>
     }
 
     public Sondage create(Long idParticipant, Sondage sondage) {
-<span class="fc" id="L29">        sondage.setCreateBy(this.participantService.getById(idParticipant));</span>
-<span class="fc" id="L30">        return repository.save(sondage);</span>
+<span class="fc" id="L30">        sondage.setCreateBy(this.participantService.getById(idParticipant));</span>
+<span class="fc" id="L31">        return repository.save(sondage);</span>
     }
 
     public Sondage update(Long id, Sondage sondage) {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
-<span class="fc" id="L35">            sondage.setSondageId(id);</span>
-<span class="fc" id="L36">            return repository.save(sondage);</span>
+<span class="fc" id="L35">        Optional&lt;Sondage&gt; sond = repository.findById(id);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (sond.isPresent()) {</span>
+<span class="fc" id="L37">            sondage.setCreateBy(sond.get().getCreateBy());</span>
+<span class="fc" id="L38">            return repository.save(sondage);</span>
         }
-<span class="fc" id="L38">        return null;</span>
+<span class="fc" id="L40">        return null;</span>
     }
 
-    public int delete(Long id) {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
-<span class="fc" id="L43">            repository.deleteById(id);</span>
-<span class="fc" id="L44">            return 1;</span>
+    public boolean delete(Long id) {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
+<span class="fc" id="L45">            repository.deleteById(id);</span>
+<span class="fc" id="L46">            return true;</span>
         }
-<span class="fc" id="L46">        return 0;</span>
+<span class="fc" id="L48">        return false;</span>
+    }
+
+    public boolean exists(Long id) {
+<span class="nc" id="L52">        return repository.findById(id).isPresent();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

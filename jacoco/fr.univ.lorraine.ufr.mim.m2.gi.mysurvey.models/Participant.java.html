@@ -88,19 +88,18 @@ public class Participant {
     @Override
     public boolean equals(Object o) {
 <span class="fc bfc" id="L90" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (!(o instanceof Participant)) return false;</span>
-<span class="fc" id="L92">        Participant that = (Participant) o;</span>
-<span class="pc bpc" id="L93" title="6 of 12 branches missed.">        return Objects.equals(getParticipantId(), that.getParticipantId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getPrenom(), that.getPrenom()) &amp;&amp; Objects.equals(getCommentaire(), that.getCommentaire()) &amp;&amp; Objects.equals(getSondages(), that.getSondages()) &amp;&amp; Objects.equals(getDateSondee(), that.getDateSondee());</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (!(o instanceof Participant that)) return false;</span>
+<span class="pc bpc" id="L92" title="6 of 12 branches missed.">        return Objects.equals(getParticipantId(), that.getParticipantId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getPrenom(), that.getPrenom()) &amp;&amp; Objects.equals(getCommentaire(), that.getCommentaire()) &amp;&amp; Objects.equals(getSondages(), that.getSondages()) &amp;&amp; Objects.equals(getDateSondee(), that.getDateSondee());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L98">        return Objects.hash(getParticipantId(), getNom(), getPrenom(), getCommentaire(), getSondages(), getDateSondee());</span>
+<span class="nc" id="L97">        return Objects.hash(getParticipantId(), getNom(), getPrenom(), getCommentaire(), getSondages(), getDateSondee());</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L103">        return &quot;Participant{&quot; + &quot;participantId=&quot; + participantId + &quot;, nom='&quot; + nom + '\'' + &quot;, prenom='&quot; + prenom + '\'' + '}';</span>
+<span class="fc" id="L102">        return &quot;Participant{&quot; + &quot;participantId=&quot; + participantId + &quot;, nom='&quot; + nom + '\'' + &quot;, prenom='&quot; + prenom + '\'' + '}';</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

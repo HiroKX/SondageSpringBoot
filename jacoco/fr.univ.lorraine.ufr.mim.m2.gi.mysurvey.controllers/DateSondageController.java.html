@@ -1,42 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateSondageController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MySurvey</a> &gt; <a href="index.source.html" class="el_package">fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers</a> &gt; <span class="el_source">DateSondageController.java</span></div><h1>DateSondageController.java</h1><pre class="source lang-java linenums">package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 @RestController
-@RequestMapping(value = &quot;/api/date&quot;)
-public class DateSondageController {
+@RequestMapping(value = &quot;/api/datesondage&quot;)
+<span class="fc" id="L21">public class DateSondageController {</span>
 
-    private final DateSondageService service;
-    private final DateSondeeService sds;
-    private final ModelMapper mapper;
+    @Autowired
+    private DateSondageService service;
 
-<span class="fc" id="L20">    public DateSondageController(DateSondageService service, ModelMapper mapper, DateSondeeService s) {</span>
-<span class="fc" id="L21">        this.service = service;</span>
-<span class="fc" id="L22">        this.mapper = mapper;</span>
-<span class="fc" id="L23">        this.sds = s;</span>
-<span class="fc" id="L24">    }</span>
+    @Autowired
+    private ModelMapper mapper;
 
+    /**
+     * Création d'une date de sondage pour un sondage
+     * @param id d'un sondage
+     * @param dto
+     * @return
+     */
+    @PostMapping(value = &quot;/{id}&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public DateSondageDto createDate(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondageDto dto) {
+<span class="fc bfc" id="L39" title="All 4 branches covered.">        if(dto.getDate() == null || dto.getDate().before(new Date())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vérifier la date&quot;);</span>
+        try{
+<span class="fc" id="L41">            var model = mapper.map(dto, DateSondage.class);</span>
+<span class="fc" id="L42">            var result = service.create(id, model);</span>
+<span class="fc" id="L43">            return mapper.map(result, DateSondageDto.class);</span>
+<span class="fc" id="L44">        } catch(DataIntegrityViolationException e){</span>
+<span class="fc" id="L45">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Il existe déjà une date correspondante à ce sondage ou bien, le sondage n'existe pas&quot;);</span>
+        }
+<span class="fc" id="L47">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L48">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L50">        catch (Exception e) {</span>
+<span class="fc" id="L51">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire&quot;);</span>
+        }
+    }
+
+    /**
+     * Récupération d'une date d'un sondage
+     * @param id
+     * @return
+     */
+    @GetMapping(value = &quot;/{id}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List&lt;DateSondageDto&gt; getDates(@PathVariable(&quot;id&quot;) Long id) {
+        try {
+<span class="fc" id="L65">            var models = service.getBySondageId(id);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (models.isEmpty()) throw new NoResultException();</span>
+<span class="fc" id="L67">            return models.stream()</span>
+<span class="fc" id="L68">                    .map(model -&gt; mapper.map(model, DateSondageDto.class))</span>
+<span class="fc" id="L69">                    .collect(Collectors.toList());</span>
+        }
+<span class="fc" id="L71">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L72">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L74">        catch(NoResultException e) {</span>
+<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Aucune date de sondage n'a été trouvée&quot;);</span>
+        }
+<span class="fc" id="L77">        catch (Exception e) {</span>
+<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire&quot;);</span>
+        }
+    }
+
+    /**
+     * Suppression d'une date d'un sondage
+     * @param id
+     */
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
-<span class="fc bfc" id="L29" title="All 2 branches covered.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L30">    }</span>
-
-    @PostMapping(value = &quot;/{id}/participer&quot;)
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public DateSondeeDto createParticipation(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondeeDto dto) {
-<span class="fc" id="L36">        var model = mapper.map(dto, DateSondee.class);</span>
-<span class="fc" id="L37">        var result = sds.create(id, dto.getParticipant(), model);</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L39">        return mapper.map(result, DateSondeeDto.class);</span>
-    }
+        try {
+<span class="fc" id="L90">            service.delete(id);</span>
+        }
+<span class="fc" id="L92">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L93">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L95">        catch (Exception e) {</span>
+<span class="fc" id="L96">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire&quot;);</span>
+<span class="fc" id="L97">        }</span>
+<span class="fc" id="L98">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

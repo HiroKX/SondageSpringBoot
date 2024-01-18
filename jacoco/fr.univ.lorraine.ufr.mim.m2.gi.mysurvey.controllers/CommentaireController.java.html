@@ -3,38 +3,117 @@
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping(value = &quot;/api/commentaire&quot;)
-public class CommentaireController {
+<span class="fc" id="L18">public class CommentaireController {</span>
 
-    private final CommentaireService service;
-    private final ModelMapper mapper;
+    @Autowired
+    private CommentaireService service;
 
-<span class="fc" id="L19">    public CommentaireController(CommentaireService service, ModelMapper mapper) {</span>
-<span class="fc" id="L20">        this.service = service;</span>
-<span class="fc" id="L21">        this.mapper = mapper;</span>
-<span class="fc" id="L22">    }</span>
+    @Autowired
+    private ModelMapper mapper;
 
+    /**
+     * Modifier un commentaire
+     * @param id du commentaire
+     * @param commentaireDto
+     * @return
+     */
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public CommentaireDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody CommentaireDto commentaireDto) {
-<span class="fc" id="L28">        var model = mapper.map(commentaireDto, Commentaire.class);</span>
-<span class="fc" id="L29">        var result = service.update(id, model);</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L31">        return mapper.map(result, CommentaireDto.class);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vérifier le commentaire&quot;);</span>
+        try {
+<span class="fc" id="L38">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
+<span class="fc" id="L39">            var result = service.update(id, model);</span>
+<span class="fc" id="L40">            return mapper.map(result, CommentaireDto.class);</span>
+        }
+<span class="fc" id="L42">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L43">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L45">        catch (Exception e) {</span>
+<span class="fc" id="L46">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
     }
 
+    /**
+     *
+     * @param id du sondage
+     * @param commentaireDto
+     * @return
+     */
+    @PostMapping(value = &quot;/{id}&quot;)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public CommentaireDto createCommentaire(@PathVariable(&quot;id&quot;) Long id, @RequestBody CommentaireDto commentaireDto) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vérifier le commentaire&quot;);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(commentaireDto.getParticipant() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vérifier le participant&quot;);</span>
+        try{
+<span class="fc" id="L63">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
+<span class="fc" id="L64">            var result = service.create(id, commentaireDto.getParticipant(), model);</span>
+<span class="fc" id="L65">            return mapper.map(result, CommentaireDto.class);</span>
+<span class="fc" id="L66">        }catch(NoSuchElementException e){</span>
+<span class="fc" id="L67">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L69">        catch (Exception e) {</span>
+<span class="fc" id="L70">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire&quot;);</span>
+        }
+    }
+
+    /**
+     * Récupération des commentaires d'un sondage
+     * @param id
+     * @return
+     */
+    @GetMapping(value = &quot;/{id}&quot;)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List&lt;CommentaireDto&gt; getCommentaires(@PathVariable(&quot;id&quot;) Long id) {
+        try {
+<span class="fc" id="L84">            var models = service.getBySondageId(id);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (models.isEmpty()) throw new NoResultException();</span>
+<span class="fc" id="L86">            return models.stream()</span>
+<span class="fc" id="L87">                    .map(model -&gt; mapper.map(model, CommentaireDto.class))</span>
+<span class="fc" id="L88">                    .toList();</span>
+        }
+<span class="fc" id="L90">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L91">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L93">        catch (NoResultException e) {</span>
+<span class="fc" id="L94">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, &quot;Aucun commentaire n'a été trouvé&quot;);</span>
+        }
+<span class="fc" id="L96">        catch (Exception e) {</span>
+<span class="fc" id="L97">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Suppression d'un commentaire
+     * @param id
+     */
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);</span>
-<span class="fc" id="L38">    }</span>
+        try {
+<span class="fc" id="L109">            service.delete(id);</span>
+        }
+<span class="fc" id="L111">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L112">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L114">        catch (Exception e) {</span>
+<span class="fc" id="L115">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+<span class="fc" id="L116">        }</span>
+<span class="fc" id="L117">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

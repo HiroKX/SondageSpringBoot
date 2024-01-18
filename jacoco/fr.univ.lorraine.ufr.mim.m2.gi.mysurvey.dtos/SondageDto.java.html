@@ -12,67 +12,66 @@ public class SondageDto {
     private Boolean cloture;
     private Long createBy;
 
-<span class="nc" id="L15">    public SondageDto() {}</span>
+<span class="fc" id="L15">    public SondageDto() {}</span>
 
     public Long getSondageId() {
-<span class="nc" id="L18">        return sondageId;</span>
+<span class="fc" id="L18">        return sondageId;</span>
     }
 
     public void setSondageId(Long sondageId) {
-<span class="nc" id="L22">        this.sondageId = sondageId;</span>
-<span class="nc" id="L23">    }</span>
+<span class="fc" id="L22">        this.sondageId = sondageId;</span>
+<span class="fc" id="L23">    }</span>
 
     public String getNom() {
-<span class="nc" id="L26">        return nom;</span>
+<span class="fc" id="L26">        return nom;</span>
     }
 
     public void setNom(String nom) {
-<span class="nc" id="L30">        this.nom = nom;</span>
-<span class="nc" id="L31">    }</span>
+<span class="fc" id="L30">        this.nom = nom;</span>
+<span class="fc" id="L31">    }</span>
 
     public String getDescription() {
-<span class="nc" id="L34">        return description;</span>
+<span class="fc" id="L34">        return description;</span>
     }
 
     public void setDescription(String description) {
-<span class="nc" id="L38">        this.description = description;</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L38">        this.description = description;</span>
+<span class="fc" id="L39">    }</span>
 
     public Date getFin() {
-<span class="nc" id="L42">        return fin;</span>
+<span class="fc" id="L42">        return fin;</span>
     }
 
     public void setFin(Date fin) {
-<span class="nc" id="L46">        this.fin = fin;</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L46">        this.fin = fin;</span>
+<span class="fc" id="L47">    }</span>
 
     public Boolean getCloture() {
-<span class="nc" id="L50">        return cloture;</span>
+<span class="fc" id="L50">        return cloture;</span>
     }
 
     public void setCloture(Boolean cloture) {
-<span class="nc" id="L54">        this.cloture = cloture;</span>
-<span class="nc" id="L55">    }</span>
+<span class="fc" id="L54">        this.cloture = cloture;</span>
+<span class="fc" id="L55">    }</span>
 
     public Long getCreateBy() {
-<span class="nc" id="L58">        return createBy;</span>
+<span class="fc" id="L58">        return createBy;</span>
     }
 
     public void setCreateBy(Long createBy) {
-<span class="nc" id="L62">        this.createBy = createBy;</span>
-<span class="nc" id="L63">    }</span>
+<span class="fc" id="L62">        this.createBy = createBy;</span>
+<span class="fc" id="L63">    }</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (this == o) return true;</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (!(o instanceof SondageDto)) return false;</span>
-<span class="nc" id="L69">        SondageDto that = (SondageDto) o;</span>
-<span class="nc bnc" id="L70" title="All 12 branches missed.">        return Objects.equals(getSondageId(), that.getSondageId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getDescription(), that.getDescription()) &amp;&amp; Objects.equals(getFin(), that.getFin()) &amp;&amp; Objects.equals(getCloture(), that.getCloture()) &amp;&amp; Objects.equals(getCreateBy(), that.getCreateBy());</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (!(o instanceof SondageDto that)) return false;</span>
+<span class="pc bpc" id="L69" title="6 of 12 branches missed.">        return Objects.equals(getSondageId(), that.getSondageId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getDescription(), that.getDescription()) &amp;&amp; Objects.equals(getFin(), that.getFin()) &amp;&amp; Objects.equals(getCloture(), that.getCloture()) &amp;&amp; Objects.equals(getCreateBy(), that.getCreateBy());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L75">        return Objects.hash(getSondageId(), getNom(), getDescription(), getFin(), getCloture(), getCreateBy());</span>
+<span class="nc" id="L74">        return Objects.hash(getSondageId(), getNom(), getDescription(), getFin(), getCloture(), getCreateBy());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

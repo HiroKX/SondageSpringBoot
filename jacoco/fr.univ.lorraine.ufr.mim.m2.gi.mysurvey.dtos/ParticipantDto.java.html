@@ -37,19 +37,18 @@ public class ParticipantDto {
     @Override
     public boolean equals(Object o) {
 <span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (this == o) return true;</span>
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (!(o instanceof ParticipantDto)) return false;</span>
-<span class="fc" id="L41">        ParticipantDto that = (ParticipantDto) o;</span>
-<span class="pc bpc" id="L42" title="3 of 6 branches missed.">        return Objects.equals(getParticipantId(), that.getParticipantId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getPrenom(), that.getPrenom());</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (!(o instanceof ParticipantDto that)) return false;</span>
+<span class="pc bpc" id="L41" title="3 of 6 branches missed.">        return Objects.equals(getParticipantId(), that.getParticipantId()) &amp;&amp; Objects.equals(getNom(), that.getNom()) &amp;&amp; Objects.equals(getPrenom(), that.getPrenom());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L47">        return Objects.hash(getParticipantId(), getNom(), getPrenom());</span>
+<span class="nc" id="L46">        return Objects.hash(getParticipantId(), getNom(), getPrenom());</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L52">        return &quot;ParticipantDto{&quot; + &quot;participantId=&quot; + participantId + &quot;, nom='&quot; + nom + '\'' + &quot;, prenom='&quot; + prenom + '\'' + '}';</span>
+<span class="nc" id="L51">        return &quot;ParticipantDto{&quot; + &quot;participantId=&quot; + participantId + &quot;, nom='&quot; + nom + '\'' + &quot;, prenom='&quot; + prenom + '\'' + '}';</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
