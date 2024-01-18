@@ -2,6 +2,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
@@ -97,10 +98,13 @@ public class ParticipantController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez au moins un nom ou un prénom.");
         try {
             if (mapper.map(service.getById(id), ParticipantDto.class).equals(participantDto))
-                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Le participant n'a pas été modifié.");
+                throw new NoUpdateException("Le participant n'a pas été modifié.");
             var model = mapper.map(participantDto, Participant.class);
             var result = service.update(id, model);
             return mapper.map(result, ParticipantDto.class);
+        }
+        catch(NoUpdateException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
         catch(NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -279,7 +279,7 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenUpdateButCommentaireDoesNotExists_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getById(id)).thenReturn(new Commentaire());
         when(service.update(id, commentaire)).thenThrow(NullPointerException.class);
 

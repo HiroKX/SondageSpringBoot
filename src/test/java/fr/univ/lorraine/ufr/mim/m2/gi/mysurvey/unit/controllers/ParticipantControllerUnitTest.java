@@ -6,10 +6,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipantController;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
@@ -64,54 +67,8 @@ class ParticipantControllerUnitTest {
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-
-
     @Test
-    void testGetParticipant() throws Exception {
-        when(service.getById(id)).thenReturn(participant);
-        when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
-
-        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
-                .andReturn().getResponse();
-
-        verify(service).getById(id);
-        verify(mapper).map(participant, ParticipantDto.class);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertEquals(response.getContentAsString(),jsonParticipant.write(participantDto).getJson());
-    }
-
-    @Test
-    void testGetParticipantFailed() throws Exception {
-        when(service.getById(id)).thenThrow(EntityNotFoundException.class);
-
-        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
-                .andReturn().getResponse();
-
-        verify(service).getById(id);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-
-    @Test
-    void testGetAllParticipants() throws Exception {
-        Participant participant2 = new Participant();
-        List<Participant> participants = List.of(participant,participant2);
-        System.out.println(participants);
-        when(service.getAll()).thenReturn(participants);
-        when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
-
-        MockHttpServletResponse response = mvc.perform(get("/api/participant/"))
-                .andReturn().getResponse();
-
-        verify(service).getAll();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentAsString()).isEqualTo("["+jsonParticipant.write(participantDto).getJson()+","+jsonParticipant.write(participantDto).getJson()+"]");
-
-    }
-
-    @Test
-    void testCreateParticipant() throws Exception {
-
+    void givenValidParameters_whenCreate_thenReturnCreated() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.create(participant)).thenReturn(participant);
         when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
@@ -121,80 +78,198 @@ class ParticipantControllerUnitTest {
                         .content(jsonParticipant.write(participantDto).getJson()))
                 .andReturn().getResponse();
 
-        verify(service).create(participant);
-        verify(mapper).map(participantDto, Participant.class);
-        verify(mapper).map(participant, ParticipantDto.class);
+        verify(service, times(1)).create(participant);
+        verify(mapper, times(1)).map(participantDto, Participant.class);
+        verify(mapper, times(1)).map(participant, ParticipantDto.class);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.getContentAsString()).isNotEqualTo("");
     }
 
     @Test
-    void testCreateParticipantFailed() throws Exception {
+    void givenInvalidParameters_whenCreate_thenReturnBadRequest() throws Exception {
         MockHttpServletResponse response = mvc.perform(post("/api/participant/")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonParticipant.write(participantDtoNull).getJson()))
+                        .content(jsonParticipant.write(new ParticipantDto()).getJson()))
                 .andReturn().getResponse();
 
+        verify(service, never()).create(participant);
+        verify(mapper, never()).map(participantDto, Participant.class);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    void testCreateParticipantFailedNotFound() throws Exception {
+    void givenValidParameters_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
-        when(service.create(participant)).thenReturn(null);
+        when(service.create(participant)).thenThrow(NullPointerException.class);
+
         MockHttpServletResponse response = mvc.perform(post("/api/participant/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonParticipant.write(participantDto).getJson()))
                 .andReturn().getResponse();
-        verify(service).create(participant);
-        verify(mapper).map(participantDto, Participant.class);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+
+        verify(service, times(1)).create(participant);
+        verify(mapper, times(1)).map(participantDto, Participant.class);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @Test
-    void testUpdateParticipant() throws Exception {
-        /*
-        when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
-        when(service.update(id, participant)).thenReturn(participant);
+    void givenValidParameters_whenGetAllParticipants_thenReturnOk() throws Exception {
+        when(service.getAll()).thenReturn(List.of(participant));
         when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getAll();
+        verify(mapper, times(1)).map(participant, ParticipantDto.class);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertEquals(response.getContentAsString(),"[" + jsonParticipant.write(participantDto).getJson() + "]");
+    }
+
+    @Test
+    void givenValidParameters_whenGetAllParticipantsButNoParticipantExist_thenReturnNotFound() throws Exception {
+        when(service.getAll()).thenThrow(NoResultException.class);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getAll();
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void givenValidParameters_whenGetAllParticipantsButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getAll()).thenThrow(NullPointerException.class);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/"))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getAll();
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    void givenValidParameters_whenGetParticipantById_thenReturnOk() throws Exception {
+        when(service.getById(id)).thenReturn(participant);
+        when(mapper.map(participant, ParticipantDto.class)).thenReturn(participantDto);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(mapper, times(1)).map(participant, ParticipantDto.class);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertEquals(response.getContentAsString(),jsonParticipant.write(participantDto).getJson());
+    }
+
+    @Test
+    void givenValidParameters_whenGetParticipantByIdButNoParticipantExist_thenReturnNotFound() throws Exception {
+        when(service.getById(id)).thenThrow(NoResultException.class);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void givenValidParameters_whenGetParticipantByIdButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getById(id)).thenThrow(NullPointerException.class);
+
+        MockHttpServletResponse response = mvc.perform(get("/api/participant/" + id))
+                .andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    void givenValidParameters_whenUpdate_thenReturnOk() throws Exception {
+        when(service.getById(id)).thenReturn(new Participant());
+        when(service.update(id, participant)).thenReturn(participant);
+
+        when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
+        when(mapper.map(any(), eq(ParticipantDto.class))).thenReturn(new ParticipantDto());
 
         MockHttpServletResponse response = mvc.perform(
                 put("/api/participant/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
-        verify(mapper).map(participantDto, Participant.class);
-        verify(service).update(id, participant);
-        verify(mapper).map(participant, ParticipantDto.class);
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.getContentAsString()).isNotEqualTo("");
-         */
+        verify(service, times(1)).getById(id);
+        verify(service, times(1)).update(id, participant);
+        assertThat(response.getContentAsString()).isNotEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
-    void testUpdateParticipantFailed() throws Exception {
+    void givenValidParameters_whenUpdateButNoChange_thenReturnNoContent() throws Exception {
+        when(service.getById(id)).thenReturn(new Participant());
+        when(mapper.map(any(), eq(ParticipantDto.class))).thenReturn(participantDto);
 
         MockHttpServletResponse response = mvc.perform(
                 put("/api/participant/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonParticipant.write(participantDtoNull).getJson())).andReturn().getResponse();
+                        .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(service, never()).update(id, participant);
+        System.out.println(response.getContentAsString());
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    void givenValidParameters_whenUpdateButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(service.getById(id)).thenReturn(new Participant());
+        when(service.update(id, participant)).thenThrow(NoSuchElementException.class);
+
+        when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
+        when(mapper.map(any(), eq(ParticipantDto.class))).thenReturn(new ParticipantDto());
+
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(service, times(1)).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    void testUpdateParticipantFailedNotFound() throws Exception {
-        /*
+    void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getById(id)).thenReturn(new Participant());
+        when(service.update(id, participant)).thenThrow(NullPointerException.class);
+
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
-        when(service.update(id,participant)).thenReturn(null);
+        when(mapper.map(any(), eq(ParticipantDto.class))).thenReturn(new ParticipantDto());
+
         MockHttpServletResponse response = mvc.perform(
                 put("/api/participant/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
-        verify(service).getById(id);
-        verify(mapper).map(participantDto, Participant.class);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
-         */
+
+        verify(service, times(1)).getById(id);
+        verify(service, times(1)).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
+
     @Test
     void testDelete() throws Exception {
         MockHttpServletResponse response = mvc.perform(
@@ -202,7 +277,7 @@ class ParticipantControllerUnitTest {
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
-        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
@@ -214,8 +289,7 @@ class ParticipantControllerUnitTest {
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
-        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
-
 }
