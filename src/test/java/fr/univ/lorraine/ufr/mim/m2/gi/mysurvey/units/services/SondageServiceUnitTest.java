@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.SondageRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -83,19 +84,28 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledThreeTimes() {
+    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledTwoTimes() {
         Long sondageId = 1L;
+        Date d = new Date();
         Sondage existingSondage = new Sondage();
+        existingSondage.setFin(d);
+        existingSondage.setNom("nom");
+        existingSondage.setDescription("description");
+        existingSondage.setCloture(false);
         Sondage updatedSondage = new Sondage();
+        existingSondage.setFin(d);
+        existingSondage.setNom("nom");
+        existingSondage.setDescription("description");
+        existingSondage.setCloture(false);
         updatedSondage.setSondageId(sondageId);
-
-        when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(existingSondage));
-        when(sondageRepository.save(updatedSondage)).thenReturn(updatedSondage);
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(sondageRepository.getReferenceById(sondageId)).thenReturn(existingSondage);
+        when(sondageRepository.save(existingSondage)).thenReturn(updatedSondage);
 
         Sondage result = sondageService.update(sondageId, updatedSondage);
 
-        verify(sondageRepository, times(1)).findById(same(sondageId));
-        verify(sondageRepository, times(1)).save(same(updatedSondage));
+        verify(sondageRepository, times(1)).getReferenceById(same(sondageId));
+        verify(sondageRepository, times(1)).save(same(existingSondage));
         assertNotNull(result);
         assertEquals(sondageId, result.getSondageId());
     }
@@ -104,36 +114,36 @@ class SondageServiceUnitTest {
     void givenASondageIdAThatDoesNotExists_whenUpdate_thenSondageRepositoryIsCalledOneTime() {
         Long sondageId = 1L;
         Sondage updatedSondage = new Sondage();
-
+        when(sondageService.exists(sondageId)).thenReturn(false);
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.empty());
 
-        Sondage result = sondageService.update(sondageId, updatedSondage);
+        assertThrows(NoResultException.class, () -> sondageService.update(sondageId, updatedSondage));
 
-        verify(sondageRepository, times(1)).findById(same(sondageId));
+        verify(sondageRepository, times(1)).existsById(same(sondageId));
         verify(sondageRepository, never()).save(same(updatedSondage));
-        assertNull(result);
     }
 
     @Test
     void givenASondageIdThatExists_whenDelete_thenSondageRepositoryIsCalledTwoTimes() {
         Long sondageId = 1L;
 
+        when(sondageService.exists(sondageId)).thenReturn(true);
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(new Sondage()));
 
         sondageService.delete(sondageId);
 
-        verify(sondageRepository, times(1)).findById(same(sondageId));
-        verify(sondageRepository, times(1)).deleteById(sondageId);
+        verify(sondageRepository, times(1)).existsById(same(sondageId));
+        verify(sondageRepository, times(1)).deleteById(same(sondageId));
     }
 
     @Test
     void givenASondageIdAThatDoesNotExists_whenDelete_thenSondageRepositoryIsCalledOneTime() {
         Long sondageId = 1L;
-        doThrow(NoSuchElementException.class).when(sondageService).exists(sondageId);
+        when(sondageService.exists(sondageId)).thenReturn(false);
 
-        sondageService.delete(sondageId);
+        assertThrows(NoSuchElementException.class, () -> sondageService.delete(sondageId));
 
-        verify(sondageRepository, times(1)).findById(same(sondageId));
+        verify(sondageRepository, times(1)).existsById(same(sondageId));
         verify(sondageRepository, never()).deleteById(sondageId);
     }
 }
