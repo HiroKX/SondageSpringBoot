@@ -50,6 +50,7 @@ class SondageServiceUnitTest {
         Long sondageId = 1L;
         Sondage expectedSondage = new Sondage();
         when(sondageRepository.getReferenceById(sondageId)).thenReturn(expectedSondage);
+        when(sondageService.exists(sondageId)).thenReturn(true);
 
         Sondage result = sondageService.getById(sondageId);
 
@@ -59,12 +60,22 @@ class SondageServiceUnitTest {
 
     @Test
     void whenGetAll_thenSondageRepositoryIsCalled() {
-        when(sondageRepository.findAll()).thenReturn(Collections.emptyList());
+        when(sondageRepository.findAll()).thenReturn(Collections.singletonList(new Sondage()));
 
         List<Sondage> result = sondageService.getAll();
 
         verify(sondageRepository, times(1)).findAll();
-        assertTrue(result.isEmpty());
+        assertNotNull(result);
+        assertNotEquals(result, Collections.emptyList());
+    }
+
+    @Test
+    void whenGetAllEmpty_thenSondageRepositoryIsCalled() {
+        when(sondageRepository.findAll()).thenReturn(Collections.emptyList());
+
+        assertThrows(NoResultException.class,()-> sondageService.getAll());
+
+        verify(sondageRepository, times(1)).findAll();
     }
 
     @Test
