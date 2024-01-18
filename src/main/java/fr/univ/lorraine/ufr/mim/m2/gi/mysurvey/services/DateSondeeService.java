@@ -32,7 +32,7 @@ public class DateSondeeService {
 
     public DateSondee create(Long dateSondageId, Long participantId, DateSondee dateSondee) throws SondageCloturedException, NoResultException {
         DateSondage date = dateSondageService.getById(dateSondageId);
-        if(Boolean.FALSE.equals(date.getSondage().getCloture()))
+        if(Boolean.TRUE.equals(date.getSondage().getCloture()))
             throw new SondageCloturedException();
         Participant participant = participantService.getById(participantId);
         dateSondee.setDateSondage(date);
