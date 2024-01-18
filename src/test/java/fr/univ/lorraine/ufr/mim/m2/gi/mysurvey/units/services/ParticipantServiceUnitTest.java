@@ -95,11 +95,10 @@ class ParticipantServiceUnitTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.of(new Participant()));
 
-        boolean result = service.delete(id);
+        service.delete(id);
 
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).deleteById(id);
-        assertTrue(result);
     }
 
     @Test
@@ -107,10 +106,9 @@ class ParticipantServiceUnitTest {
         Long id = 1L;
         when(repository.findById(id)).thenReturn(Optional.empty());
 
-        boolean result = service.delete(id);
+        service.delete(id);
 
         verify(repository, times(1)).findById(id);
         verify(repository, never()).deleteById(id);
-        assertFalse(result);
     }
 }

@@ -11,10 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -123,24 +120,21 @@ class SondageServiceUnitTest {
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(new Sondage()));
 
-        boolean result = sondageService.delete(sondageId);
+        sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, times(1)).deleteById(sondageId);
-        assertTrue(result);
     }
 
     @Test
     void givenASondageIdAThatDoesNotExists_whenDelete_thenSondageRepositoryIsCalledOneTime() {
         Long sondageId = 1L;
+        doThrow(NoSuchElementException.class).when(sondageService).exists(sondageId);
 
-        when(sondageRepository.findById(sondageId)).thenReturn(Optional.empty());
-
-        boolean result = sondageService.delete(sondageId);
+        sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, never()).deleteById(sondageId);
-        assertFalse(result);
     }
 }
 

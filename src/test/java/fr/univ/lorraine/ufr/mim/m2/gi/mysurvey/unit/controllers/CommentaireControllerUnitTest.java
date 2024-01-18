@@ -81,7 +81,7 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
-    void testCreate() throws Exception {
+    void given() throws Exception {
         when(mapper.map(dto, Commentaire.class)).thenReturn(commentaire);
         when(service.create(id,dto.getParticipant(),commentaire)).thenReturn(commentaire);
         when(mapper.map(commentaire, CommentaireDto.class)).thenReturn(dto);
@@ -291,7 +291,8 @@ class CommentaireControllerUnitTest {
 
     @Test
     void testDeleteFailedNoSuchElement() throws Exception {
-        doThrow(NoSuchElementException.class).when(service).delete(id);        MockHttpServletResponse response = mvc.perform(
+        doThrow(NoSuchElementException.class).when(service).delete(id);
+        MockHttpServletResponse response = mvc.perform(
                         delete("/api/commentaire/" + id))
                 .andReturn().getResponse();
 

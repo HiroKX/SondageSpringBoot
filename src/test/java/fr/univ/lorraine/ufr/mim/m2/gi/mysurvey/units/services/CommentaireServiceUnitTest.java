@@ -7,7 +7,6 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepositor
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

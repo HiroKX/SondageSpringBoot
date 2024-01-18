@@ -26,6 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @ExtendWith(MockitoExtension.class)
 class ParticipantControllerUnitTest {
@@ -192,26 +193,25 @@ class ParticipantControllerUnitTest {
     }
     @Test
     void testDelete() throws Exception {
-        when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
     void testDeleteFailed() throws Exception {
-        when(service.delete(id)).thenReturn(false);
+        doThrow(NoSuchElementException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
 }

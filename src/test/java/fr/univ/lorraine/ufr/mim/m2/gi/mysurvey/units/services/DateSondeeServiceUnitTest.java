@@ -1,6 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.ExceptionSondageClotured;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
@@ -42,7 +42,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
+    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -64,7 +64,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
+    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -75,7 +75,7 @@ class DateSondeeServiceUnitTest {
 
         when(dateSondageService.getById(id)).thenReturn(dateSondage);
 
-        assertThrows(ExceptionSondageClotured.class, () -> dateSondeeService.create(id, participantId, dateSondee));
+        assertThrows(SondageCloturedException.class, () -> dateSondeeService.create(id, participantId, dateSondee));
 
         verify(dateSondageService, times(1)).getById(id);
         verify(participantService, times(0)).getById(participantId);
@@ -88,7 +88,7 @@ class DateSondeeServiceUnitTest {
         List<Date> expectedDates = Arrays.asList(new Date(), new Date());
         when(repository.bestDate(id)).thenReturn(expectedDates);
 
-        List<Date> result = dateSondeeService.bestDate(id);
+        List<Date> result = dateSondeeService.getBestDateBySondageId(id);
 
         verify(repository, times(1)).bestDate(id);
         assertEquals(expectedDates, result);
@@ -100,7 +100,7 @@ class DateSondeeServiceUnitTest {
         List<Date> expectedDates = Arrays.asList(new Date(), new Date());
         when(repository.maybeBestDate(id)).thenReturn(expectedDates);
 
-        List<Date> result = dateSondeeService.maybeBestDate(id);
+        List<Date> result = dateSondeeService.getMaybeBestDateBySondageId(id);
 
         verify(repository, times(1)).maybeBestDate(id);
         assertEquals(expectedDates, result);

@@ -2,15 +2,9 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.SondageController;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,10 +22,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -140,31 +134,31 @@ public class SondageControllerUnitTest {
     @Test
     public void testGetBest() throws Exception {
         Date d = new Date();
-        when(request.bestDate(id)).thenReturn(List.of(d));
+        when(request.getBestDateBySondageId(id)).thenReturn(List.of(d));
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/best"))
                 .andReturn().getResponse();
 
-        verify(request,times(1)).bestDate(id);
+        verify(request,times(1)).getBestDateBySondageId(id);
         assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     public void testGetBestEmpty() throws Exception {
-        when(request.bestDate(id)).thenReturn(List.of());
+        when(request.getBestDateBySondageId(id)).thenReturn(List.of());
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/best"))
                 .andReturn().getResponse();
 
-        verify(request,times(1)).bestDate(id);
+        verify(request,times(1)).getBestDateBySondageId(id);
         assertThat(response.getContentAsString()).isEqualTo("[]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     public void testGetBestNotFound() throws Exception {
-        when(request.bestDate(id)).thenThrow(EntityNotFoundException.class);
+        when(request.getBestDateBySondageId(id)).thenThrow(EntityNotFoundException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/best"))
                 .andReturn().getResponse();
@@ -176,31 +170,31 @@ public class SondageControllerUnitTest {
     @Test
     public void testGetMaybeBest() throws Exception {
         Date d = new Date();
-        when(request.maybeBestDate(id)).thenReturn(List.of(d));
+        when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of(d));
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/maybe"))
                 .andReturn().getResponse();
 
-        verify(request,times(1)).maybeBestDate(id);
+        verify(request,times(1)).getMaybeBestDateBySondageId(id);
         assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     public void testGetMaybeBestEmpty() throws Exception {
-        when(request.maybeBestDate(id)).thenReturn(List.of());
+        when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of());
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/maybe"))
                 .andReturn().getResponse();
 
-        verify(request,times(1)).maybeBestDate(id);
+        verify(request,times(1)).getMaybeBestDateBySondageId(id);
         assertThat(response.getContentAsString()).isEqualTo("[]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     public void testGetMaybeBestNotFound() throws Exception {
-        when(request.maybeBestDate(id)).thenThrow(EntityNotFoundException.class);
+        when(request.getMaybeBestDateBySondageId(id)).thenThrow(EntityNotFoundException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/maybe"))
                 .andReturn().getResponse();
@@ -302,26 +296,25 @@ public class SondageControllerUnitTest {
 
     @Test
     public void testDelete() throws Exception {
-        when(service.delete(id)).thenReturn(true);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
     public void testDeleteFailed() throws Exception {
-        when(service.delete(id)).thenReturn(false);
+        doThrow(NoSuchElementException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
                 .andReturn().getResponse();
 
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
 }
