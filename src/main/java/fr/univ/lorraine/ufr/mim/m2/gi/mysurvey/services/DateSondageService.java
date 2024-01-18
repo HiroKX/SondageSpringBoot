@@ -54,7 +54,7 @@ public class DateSondageService {
     }
 
     public void checkIfDateAlreadyExists(Long sondageId, DateSondageDto dto) throws DateSondageAlreadyExistsException {
-        List<DateSondage> datesSondages = getBySondageId(sondageId);
+        List<DateSondage> datesSondages = repository.getAllBySondage(sondageId);
         for (DateSondage dateSondage : datesSondages) {
             if (dateSondage.getDate().equals(dto.getDate()))
                 throw new DateSondageAlreadyExistsException();

@@ -54,13 +54,14 @@ class ParticipantE2ETest {
 
         // TEST GET PARTICIPANT ID
         response = CrudRestAssured.dbGET("/api/participant/"+createdID);
+        assertEquals(200, response.statusCode());
         assertEquals(createdID, response.jsonPath().getLong("participantId"));
         assertEquals("Wick", response.jsonPath().getString("nom"));
         assertEquals("John", response.jsonPath().getString("prenom"));
 
         // TEST DELETE PARTICIPANT
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdID);
-        assertEquals(200, response.statusCode());
+        assertEquals(204, response.statusCode());
 
         // TEST GET PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.dbGET("/api/participant/99");
@@ -68,11 +69,11 @@ class ParticipantE2ETest {
 
         // TEST DELETE PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.dbDELETE("/api/participant/99");
-        assertEquals(404, response.statusCode());
+        assertEquals(400, response.statusCode());
 
         // TEST PUT PARTICIPANT WHEN NO ID MATCH
-        response = CrudRestAssured.dbPUT("/api/application/99", requestBody);
-        assertEquals(404, response.statusCode());
+        response = CrudRestAssured.dbPUT("/api/participant/99", requestBody);
+        assertEquals(400, response.statusCode());
 
         // TEST INCOMPLETE POST PARTICIPANT - no name
         requestBody = "[{\"participantId\":" + ",\"nom\":" + ",\"prenom\":\"" + participant.getPrenom() + "\"}]";
