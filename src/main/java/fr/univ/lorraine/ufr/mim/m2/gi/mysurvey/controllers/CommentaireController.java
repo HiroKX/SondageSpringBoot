@@ -1,6 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
@@ -88,7 +89,7 @@ public class CommentaireController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un commentaire.");
         try {
             if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))
-                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Le commentaire n'a pas été modifié.");
+                throw new NoUpdateException("Le commentaire n'a pas été modifié.");
             var model = mapper.map(commentaireDto, Commentaire.class);
             var result = service.update(id, model);
             return mapper.map(result, CommentaireDto.class);
@@ -96,7 +97,11 @@ public class CommentaireController {
         catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+        catch (NoUpdateException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
         catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la modification du commentaire.");
         }
     }
