@@ -1,5 +1,8 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
@@ -16,10 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -51,13 +51,13 @@ class DateSondeeServiceUnitTest {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
-
         DateSondage dateSondage = new DateSondage();
         dateSondage.setSondage(new Sondage()); // Créer et configurer une instance de DateSondage
         dateSondage.getSondage().setCloture(false);
-
+        Participant p = new Participant();
+        p.setNom("test");
         when(dateSondageService.getById(id)).thenReturn(dateSondage);
-        when(participantService.getById(participantId)).thenReturn(new Participant());
+        when(participantService.getById(participantId)).thenReturn(p);
         when(repository.save(dateSondee)).thenReturn(dateSondee);
 
         DateSondee result = dateSondeeService.create(id, participantId, dateSondee);
@@ -66,7 +66,11 @@ class DateSondeeServiceUnitTest {
         verify(participantService, times(1)).getById(participantId);
         verify(repository, times(1)).save(dateSondee);
         assertEquals(dateSondee, result);
+        assertEquals(dateSondee.getDateSondage(),dateSondage);
+        assertEquals(dateSondee.getParticipant().getNom(),p.getNom());
+
     }
+
 
     @Test
     void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
@@ -136,4 +140,21 @@ class DateSondeeServiceUnitTest {
         verify(repository, never()).maybeBestDate(id);
         verify(sondageService, times(1)).exists(id);
     }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenNotThrowException() {
+        Long dateSondageId = 1L;
+        Long participantId = 1L;
+        when(repository.getAllByDateSondageAndParticipant(dateSondageId, participantId)).thenReturn(new ArrayList<>());
+        assertDoesNotThrow(() -> dateSondeeService.checkIfDateSondeeAlreadyExists(dateSondageId,participantId));
+    }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenThrowDateSondeeAlreadyExists() {
+        Long dateSondageId = 1L;
+        Long participantId = 1L;
+        when(repository.getAllByDateSondageAndParticipant(dateSondageId, participantId)).thenReturn(List.of(new DateSondee()));
+        assertThrows(DateSondeeAlreadyExistsException.class,() -> dateSondeeService.checkIfDateSondeeAlreadyExists(dateSondageId,participantId));
+    }
+
 }
