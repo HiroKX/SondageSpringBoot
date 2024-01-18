@@ -101,7 +101,6 @@ public class CommentaireController {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la modification du commentaire.");
         }
     }
