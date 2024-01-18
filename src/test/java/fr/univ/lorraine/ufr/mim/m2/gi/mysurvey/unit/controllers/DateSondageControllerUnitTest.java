@@ -161,7 +161,7 @@ class DateSondageControllerUnitTest {
         verify(service, times(1)).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
         assertThat(response.getContentAsString()).isEmpty();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_ACCEPTABLE.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
