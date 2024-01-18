@@ -2,54 +2,61 @@
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.SondageRepository;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.ErrorMessages;
+import jakarta.persistence.NoResultException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
-public class SondageService {
+<span class="fc" id="L17">public class SondageService {</span>
 
-    private final SondageRepository repository;
-    private final ParticipantService participantService;
+    @Autowired
+    private SondageRepository repository;
 
-<span class="fc" id="L16">    public SondageService(SondageRepository repository, ParticipantService p) {</span>
-<span class="fc" id="L17">        this.repository = repository;</span>
-<span class="fc" id="L18">        this.participantService = p;</span>
-<span class="fc" id="L19">    }</span>
+    @Autowired
+    private ParticipantService participantService;
+
+    public Sondage create(Long idParticipant, Sondage sondage) {
+<span class="fc" id="L26">        sondage.setCreateBy(participantService.getById(idParticipant));</span>
+<span class="fc" id="L27">        return repository.save(sondage);</span>
+    }
 
     public Sondage getById(Long id) {
-<span class="fc" id="L22">        return repository.getReferenceById(id);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if(!exists(id))</span>
+<span class="fc" id="L32">            throw new NoResultException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L33">        return repository.getReferenceById(id);</span>
     }
 
     public List&lt;Sondage&gt; getAll() {
-<span class="fc" id="L26">        return repository.findAll();</span>
+<span class="fc" id="L37">        List&lt;Sondage&gt; sondages = repository.findAll();</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (sondages.isEmpty())</span>
+<span class="fc" id="L39">            throw new NoResultException(&quot;Aucun sondage n'a été trouvé.&quot;);</span>
+<span class="fc" id="L40">        return sondages;</span>
     }
 
-    public Sondage create(Long idParticipant, Sondage sondage) {
-<span class="fc" id="L30">        sondage.setCreateBy(this.participantService.getById(idParticipant));</span>
-<span class="fc" id="L31">        return repository.save(sondage);</span>
+    public Sondage update(Long id, Sondage newSondage) {
+<span class="fc" id="L44">        Sondage sondage = getById(id);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (newSondage.getFin() != null) sondage.setFin(newSondage.getFin());</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (newSondage.getNom() != null) sondage.setNom(newSondage.getNom());</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (newSondage.getDescription() != null) sondage.setDescription(newSondage.getDescription());</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (newSondage.getCloture() != null) sondage.setCloture(newSondage.getCloture());</span>
+<span class="fc" id="L49">        return repository.save(sondage);</span>
     }
 
-    public Sondage update(Long id, Sondage sondage) {
-<span class="fc" id="L35">        Optional&lt;Sondage&gt; sond = repository.findById(id);</span>
-<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (sond.isPresent()) {</span>
-<span class="fc" id="L37">            sondage.setCreateBy(sond.get().getCreateBy());</span>
-<span class="fc" id="L38">            return repository.save(sondage);</span>
-        }
-<span class="fc" id="L40">        return null;</span>
-    }
-
-    public boolean delete(Long id) {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (repository.findById(id).isPresent()) {</span>
-<span class="fc" id="L45">            repository.deleteById(id);</span>
-<span class="fc" id="L46">            return true;</span>
-        }
-<span class="fc" id="L48">        return false;</span>
-    }
+    public void delete(Long id) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (!exists(id))</span>
+<span class="fc" id="L54">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L55">        repository.deleteById(id);</span>
+<span class="fc" id="L56">    }</span>
 
     public boolean exists(Long id) {
-<span class="nc" id="L52">        return repository.findById(id).isPresent();</span>
+<span class="fc" id="L59">        return repository.existsById(id);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

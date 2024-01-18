@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateSondageService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MySurvey</a> &gt; <a href="index.source.html" class="el_package">fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services</a> &gt; <span class="el_source">DateSondageService.java</span></div><h1>DateSondageService.java</h1><pre class="source lang-java linenums">package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepository;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.ErrorMessages;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-<span class="fc" id="L12">public class DateSondageService {</span>
+<span class="fc" id="L16">public class DateSondageService {</span>
 
     @Autowired
     private DateSondageRepository repository;
@@ -17,28 +21,44 @@ import java.util.NoSuchElementException;
     @Autowired
     private SondageService sondageService;
 
+    public DateSondage create(Long id, DateSondage date){
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (!sondageService.exists(id))</span>
+<span class="fc" id="L26">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L27">        date.setSondage(sondageService.getById(id));</span>
+<span class="fc" id="L28">        return repository.save(date);</span>
+    }
+
     public DateSondage getById(Long id) {
-<span class="fc" id="L21">        return repository.getReferenceById(id);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if(!exists(id))</span>
+<span class="fc" id="L33">            throw new NoResultException(ErrorMessages.DATE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L34">        return repository.getReferenceById(id);</span>
     }
 
     public List&lt;DateSondage&gt; getBySondageId(Long sondageId) {
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (!sondageService.exists(sondageId)) throw new NoSuchElementException(&quot;Le sondage n'existe pas&quot;);</span>
-<span class="fc" id="L26">        return repository.getAllBySondage(sondageId);</span>
-    }
-
-    public DateSondage create(Long id, DateSondage date){
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (!sondageService.exists(id)) throw new NoSuchElementException(&quot;Le sondage n'existe pas&quot;);</span>
-<span class="fc" id="L31">        date.setSondage(sondageService.getById(id));</span>
-<span class="fc" id="L32">        return repository.save(date);</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (!sondageService.exists(sondageId))</span>
+<span class="nc" id="L39">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L40">        List&lt;DateSondage&gt; dateSondages = repository.getAllBySondage(sondageId);</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (dateSondages.isEmpty())</span>
+<span class="nc" id="L42">            throw new NoResultException(&quot;Aucune date de sondage n'a été trouvé.&quot;);</span>
+<span class="fc" id="L43">        return dateSondages;</span>
     }
 
     public void delete(Long id) {
-<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (!exists(id)) throw new NoSuchElementException(&quot;La date de sondage n'existe pas&quot;);</span>
-<span class="fc" id="L37">        repository.deleteById(id);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (!exists(id))</span>
+<span class="fc" id="L48">            throw new NoSuchElementException(ErrorMessages.DATE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L49">        repository.deleteById(id);</span>
+<span class="fc" id="L50">    }</span>
 
     public boolean exists(Long id) {
-<span class="fc" id="L41">        return repository.findById(id).isPresent();</span>
+<span class="fc" id="L53">        return repository.existsById(id);</span>
     }
+
+    public void checkIfDateAlreadyExists(Long sondageId, DateSondageDto dto) throws DateSondageAlreadyExistsException {
+<span class="nc" id="L57">        List&lt;DateSondage&gt; datesSondages = getBySondageId(sondageId);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (DateSondage dateSondage : datesSondages) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (dateSondage.getDate().equals(dto.getDate()))</span>
+<span class="nc" id="L60">                throw new DateSondageAlreadyExistsException();</span>
+<span class="nc" id="L61">        }</span>
+<span class="nc" id="L62">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

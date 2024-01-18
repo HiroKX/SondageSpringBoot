@@ -2,6 +2,8 @@
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepository;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.ErrorMessages;
+import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-<span class="fc" id="L12">public class CommentaireService {</span>
+<span class="fc" id="L14">public class CommentaireService {</span>
 
     @Autowired
     private CommentaireRepository repository;
@@ -20,33 +22,50 @@ import java.util.NoSuchElementException;
     @Autowired
     private ParticipantService participantService;
 
-    public List&lt;Commentaire&gt; getBySondageId(Long sondageId) {
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (!sondageService.exists(sondageId)) throw new NoSuchElementException(&quot;Le sondage n'existe pas&quot;);</span>
-<span class="fc" id="L25">        return repository.getAllBySondage(sondageId);</span>
+    public Commentaire create(Long idSondage, Long idParticipant, Commentaire commentaire) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (!sondageService.exists(idSondage))</span>
+<span class="fc" id="L27">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L28">        commentaire.setSondage(sondageService.getById(idSondage));</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (!participantService.exists(idParticipant))</span>
+<span class="fc" id="L30">            throw new NoSuchElementException(ErrorMessages.PARTICIPANT_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L31">        commentaire.setParticipant(participantService.getById(idParticipant));</span>
+<span class="fc" id="L32">        return repository.save(commentaire);</span>
     }
 
-    public Commentaire create(Long idSondage, Long idParticipant, Commentaire commentaire) {
-<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (!sondageService.exists(idSondage)) throw new NoSuchElementException(&quot;Le sondage n'existe pas&quot;);</span>
-<span class="fc" id="L30">        commentaire.setSondage(sondageService.getById(idSondage));</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (!participantService.exists(idParticipant)) throw new NoSuchElementException(&quot;Le participant n'existe pas&quot;);</span>
-<span class="fc" id="L32">        commentaire.setParticipant(participantService.getById(idParticipant));</span>
-<span class="fc" id="L33">        return repository.save(commentaire);</span>
+    public Commentaire getById(Long id) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(!exists(id))</span>
+<span class="fc" id="L37">            throw new NoResultException(ErrorMessages.COMMENTAIRE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L38">        return repository.getReferenceById(id);</span>
+    }
+
+    public List&lt;Commentaire&gt; getBySondageId(Long sondageId) {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!sondageService.exists(sondageId))</span>
+<span class="fc" id="L43">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L44">        List&lt;Commentaire&gt; commentaires = repository.getAllBySondage(sondageId);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (commentaires.isEmpty())</span>
+<span class="nc" id="L46">            throw new NoResultException(&quot;Aucun commentaire n'a été trouvé.&quot;);</span>
+<span class="fc" id="L47">        return commentaires;</span>
     }
 
     public Commentaire update(Long id, Commentaire newCommentaire) {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (!exists(id)) throw new NoSuchElementException(&quot;Le commentaire n'existe pas&quot;);</span>
-<span class="fc" id="L38">        var commentaire = repository.getReferenceById(id);</span>
-<span class="fc" id="L39">        commentaire.setCommentaire(newCommentaire.getCommentaire());</span>
-<span class="fc" id="L40">        return repository.save(commentaire);</span>
+        try {
+<span class="fc" id="L52">            Commentaire commentaire = getById(id);</span>
+<span class="fc" id="L53">            commentaire.setCommentaire(newCommentaire.getCommentaire());</span>
+<span class="fc" id="L54">            return repository.save(commentaire);</span>
+        }
+<span class="fc" id="L56">        catch (NoResultException e) {</span>
+<span class="fc" id="L57">            throw new NoSuchElementException(ErrorMessages.COMMENTAIRE_DOES_NOT_EXISTS);</span>
+        }
     }
 
     public void delete(Long id) {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (!exists(id)) throw new NoSuchElementException(&quot;Le commentaire n'existe pas&quot;);</span>
-<span class="fc" id="L45">        repository.deleteById(id);</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (!exists(id))</span>
+<span class="fc" id="L63">            throw new NoSuchElementException(ErrorMessages.COMMENTAIRE_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L64">        repository.deleteById(id);</span>
+<span class="fc" id="L65">    }</span>
 
     public boolean exists(Long id) {
-<span class="fc" id="L49">        return repository.findById(id).isPresent();</span>
+<span class="fc" id="L68">        return repository.existsById(id);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
