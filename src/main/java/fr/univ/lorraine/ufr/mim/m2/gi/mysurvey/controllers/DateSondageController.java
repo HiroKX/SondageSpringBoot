@@ -42,7 +42,7 @@ public class DateSondageController {
             var result = service.create(id, model);
             return mapper.map(result, DateSondageDto.class);
         } catch(DataIntegrityViolationException e){
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Il existe déjà une date correspondante à ce sondage ou bien, le sondage n'existe pas");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il existe déjà une date correspondante à ce sondage ou bien, le sondage n'existe pas");
         }
         catch(NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
