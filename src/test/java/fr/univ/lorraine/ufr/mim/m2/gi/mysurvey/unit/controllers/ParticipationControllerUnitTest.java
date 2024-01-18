@@ -173,7 +173,7 @@ public class ParticipationControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
