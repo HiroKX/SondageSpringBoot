@@ -3,6 +3,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipationController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
@@ -10,6 +11,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -89,7 +92,7 @@ public class ParticipationControllerUnitTest {
         mvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
     @Test
-    void testCreate() throws Exception {
+    void givenValidParameter_whenCreate_thenReturnCreated() throws Exception {
         when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
         when(sds.create(id, id, dateSondee)).thenReturn(dateSondee);
         when(mapper.map(dateSondee, DateSondeeDto.class)).thenReturn(dtoDS);
@@ -108,86 +111,107 @@ public class ParticipationControllerUnitTest {
     }
 
     @Test
-    void testCreateFailedDejaVote() throws Exception {
-        long idEdited = 2L;
-        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
-        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(DataIntegrityViolationException.class);
+    void givenParticipantNull_whenCreate_thenReturnBadRequest() throws Exception {
+        dtoDS.setParticipant(null);
         MockHttpServletResponse response = mvc.perform(
-                        post("/api/participer/"+idEdited)
+                        post("/api/participer/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
-        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
-        verify(sds,times(1)).create(eq(idEdited), eq(dtoDS.getParticipant()),eq(dateSondee));
-        verify(mapper,times(0)).map(eq(dateSondee), eq(DateSondeeDto.class));
+        verify(sds,never()).checkIfDateSondeeAlreadyExists(id, id);
+        verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    void testCreateFailedChoixPasCorrect() throws Exception {
-        long idEdited = 2L;
-        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
-        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(DataIntegrityViolationException.class);
+    void givenInvalidChoice_whenCreate_thenReturnBadRequest() throws Exception {
+        dtoDS.setChoix(null);
         MockHttpServletResponse response = mvc.perform(
-                        post("/api/participer/"+idEdited)
+                        post("/api/participer/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
-        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
-        verify(sds,times(1)).create(eq(idEdited), eq(dtoDS.getParticipant()),eq(dateSondee));
-        verify(mapper,times(0)).map(eq(dateSondee), eq(DateSondeeDto.class));
+        verify(sds,never()).checkIfDateSondeeAlreadyExists(id, id);
+        verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    void testCreateFailedSondageCloture() throws Exception {
-        long idEdited = 2L;
-        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
-        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(SondageCloturedException.class);
-
+    void givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest() throws Exception {
+        doThrow(DateSondeeAlreadyExistsException.class).when(sds).checkIfDateSondeeAlreadyExists(id, id);
         MockHttpServletResponse response = mvc.perform(
-                        post("/api/participer/"+idEdited)
+                        post("/api/participer/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
-        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-    }
-
-
-    @Test
-    void testCreateFailedPasDeDateCorrespondante() throws Exception {
-        long idEdited = 2L;
-        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
-        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(EntityNotFoundException.class);
-        MockHttpServletResponse response = mvc.perform(
-                        post("/api/participer/"+idEdited)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonDateSondee.write(dtoDS).getJson())
-                                .characterEncoding("UTF-8"))
-                .andReturn().getResponse();
-
+        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
+        verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    void testCreateFailedBadChoice() throws Exception {
-        long idEdited = 2L;
-        when(mapper.map(dtoDS, DateSondee.class)).thenThrow(IllegalArgumentException.class);
+    void givenValidParameter_whenCreateButSondageCloture_thenReturnBadRequest() throws Exception {
+        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
+        when(sds.create(id, id, dateSondee)).thenThrow(SondageCloturedException.class);
         MockHttpServletResponse response = mvc.perform(
-                        post("/api/participer/"+idEdited)
+                        post("/api/participer/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenValidParameter_whenCreateButSondageOrParticipantDoesntExist_thenReturnNotFound() throws Exception {
+        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
+        when(sds.create(id, id, dateSondee)).thenThrow(NoResultException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/participer/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonDateSondee.write(dtoDS).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
+        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void givenValidParameter_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
+        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
+        when(sds.create(id, id, dateSondee)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/participer/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonDateSondee.write(dtoDS).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
+        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
+        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 }
