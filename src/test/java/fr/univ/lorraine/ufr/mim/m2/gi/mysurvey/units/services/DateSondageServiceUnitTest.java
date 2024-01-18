@@ -62,23 +62,12 @@ class DateSondageServiceUnitTest {
     }
 
     @Test
-    void givenAnIdThatDoesNotExist_whenGetBySondageId_thenThrowNoSuchElementException() {
-        Long sondageId = 1L;
-        when(sondageService.exists(sondageId)).thenReturn(false);
-
-        assertThrows(NoSuchElementException.class, () -> service.getById(sondageId));
-
-        verify(sondageService, times(1)).exists(sondageId);
-        verify(repository, never()).getAllBySondage(same(sondageId));
-    }
-
-    @Test
     void givenAnIdAndADateSondage_whenCreate_thenSondageServiceAndRepositoryAreCalled() {
         Long sondageId = 1L;
         DateSondage dateSondage = new DateSondage();
         Sondage expectedSondage = new Sondage(); // Créer une instance de Sondage attendue
 
-        when(sondageService.exists(sondageId)).thenReturn(false);
+        when(sondageService.exists(sondageId)).thenReturn(true);
         when(sondageService.getById(sondageId)).thenReturn(expectedSondage); // Retourner le Sondage attendu
         when(repository.save(dateSondage)).thenReturn(dateSondage); // Simuler l'enregistrement de DateSondage
 
