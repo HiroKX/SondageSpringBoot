@@ -1,6 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
@@ -149,15 +150,19 @@ public class SondageController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
         try {
             if (service.getById(id).equals(mapper.map(sondageDto, Sondage.class)))
-                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Le sondage n'a pas été modifié.");
+                throw new NoUpdateException("Le sondage n'a pas été modifié.");
             Sondage model = mapper.map(sondageDto, Sondage.class);
             var result = service.update(id, model);
             return mapper.map(result, SondageDto.class);
         }
-        catch(NoSuchElementException e){
+        catch(NoUpdateException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+        catch(NoResultException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du sondage.");
         }
     }

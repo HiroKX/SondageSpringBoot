@@ -3,6 +3,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.SondageController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
@@ -23,6 +24,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -370,10 +372,9 @@ public class SondageControllerUnitTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
-
     @Test
-    public void testUpdate() throws Exception {
-        /*
+    public void givenValidParameters_whenUpdate_thenReturnOk() throws Exception {
+        when(service.getById(id)).thenReturn(new Sondage());
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.update(id, sondage)).thenReturn(sondage);
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
@@ -384,36 +385,70 @@ public class SondageControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        verify(mapper,times(1)).map(eq(dto), eq(Sondage.class));
         verify(service,times(1)).update(eq(id), eq(sondage));
-        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
         assertThat(response.getContentAsString()).isEqualTo(jsonSondage.write(dto).getJson());
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-         */
     }
 
     @Test
-    public void testUpdateFailedDueToLackOfInfo() throws Exception {
-        SondageDto s = new SondageDto();
-        s.setFin(dateDansUnAn);
-        MockHttpServletResponse response = mvc.perform(
-                        put("/api/sondage/"+id)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonSondage.write(s).getJson())
-                                .characterEncoding("UTF-8"))
-                .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @Test
-    public void testUpdateFailedNotFound() throws Exception {
-        when(mapper.map(dto, Sondage.class)).thenThrow(EntityNotFoundException.class);
+    public void givenInvalidDateFin_whenUpdate_thenReturnBadRequest() throws Exception {
+        SondageDto dto = new SondageDto();
+        dto.setFin(new Date());
         MockHttpServletResponse response = mvc.perform(
                         put("/api/sondage/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent() throws Exception {
+        when(service.getById(id)).thenReturn(sondage);
+        when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(service.getById(id)).thenThrow(NoResultException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getById(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
