@@ -7,7 +7,6 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepositor
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -139,14 +138,14 @@ class CommentaireServiceUnitTest {
     void givenAnIdAndACommentaire_whenUpdate_thenRepositoryIsCalled() {
         Long id = 1L;
         Commentaire commentaire = new Commentaire();
-        when(repository.findById(id)).thenReturn(Optional.of(commentaire));
+        when(commentaireService.exists(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(commentaire);
         Commentaire commentaire1 = new Commentaire();
         commentaire1.setCommentaireId(id);
         when(repository.save(commentaire)).thenReturn(commentaire1);
 
         Commentaire result = commentaireService.update(id, commentaire);
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, times(1)).save(same(commentaire));
         assertEquals(id, result.getCommentaireId());
 
@@ -157,40 +156,40 @@ class CommentaireServiceUnitTest {
     void givenAnIdThatDoesNotExist_whenUpdate_thenThrowNoSuchElementException() {
         Long id = 1L;
         Commentaire commentaire = new Commentaire();
-        when(repository.findById(id)).thenReturn(Optional.empty());
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> commentaireService.update(id, commentaire));
 
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, never()).save(same(commentaire));
     }
 
     @Test
     void givenAnIdThatExists_whenDelete_thenRepositoryIsCalled() {
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.of(new Commentaire()));
+        when(repository.existsById(id)).thenReturn(true);
 
         commentaireService.delete(id);
 
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, times(1)).deleteById(id);
     }
 
     @Test
     void givenAnIdThatDoesNotExist_whenDelete_thenThrowNoSuchElementException() {
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.empty());
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> commentaireService.delete(id));
 
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, never()).deleteById(id);
     }
 
     @Test
     void givenAnIdThatExists_whenExists_thenReturnTrue() {
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.of(new Commentaire()));
+        when(repository.existsById(id)).thenReturn(true);
 
         var result = commentaireService.exists(id);
 

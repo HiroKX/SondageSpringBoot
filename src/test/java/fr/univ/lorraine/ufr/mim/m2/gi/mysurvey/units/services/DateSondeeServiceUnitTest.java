@@ -1,6 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.ExceptionSondageClotured;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
@@ -9,6 +9,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondeeRepository
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Date;
 import java.util.List;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,6 +33,9 @@ class DateSondeeServiceUnitTest {
     private DateSondageService dateSondageService;
 
     @Mock
+    private SondageService sondageService;
+
+    @Mock
     private ParticipantService participantService;
 
     @InjectMocks
@@ -42,7 +47,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
+    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -64,7 +69,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
+    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -75,7 +80,7 @@ class DateSondeeServiceUnitTest {
 
         when(dateSondageService.getById(id)).thenReturn(dateSondage);
 
-        assertThrows(ExceptionSondageClotured.class, () -> dateSondeeService.create(id, participantId, dateSondee));
+        assertThrows(SondageCloturedException.class, () -> dateSondeeService.create(id, participantId, dateSondee));
 
         verify(dateSondageService, times(1)).getById(id);
         verify(participantService, times(0)).getById(participantId);
@@ -86,23 +91,49 @@ class DateSondeeServiceUnitTest {
     void givenId_whenBestDate_thenRepositoryIsCalled() {
         Long id = 1L;
         List<Date> expectedDates = Arrays.asList(new Date(), new Date());
+        when(sondageService.exists(id)).thenReturn(true);
         when(repository.bestDate(id)).thenReturn(expectedDates);
 
-        List<Date> result = dateSondeeService.bestDate(id);
+        List<Date> result = dateSondeeService.getBestDateBySondageId(id);
 
         verify(repository, times(1)).bestDate(id);
+        verify(sondageService, times(1)).exists(id);
         assertEquals(expectedDates, result);
+    }
+
+    @Test
+    void givenNotExistingId_whenBestDate_thenRepositoryIsCalled() {
+        Long id = 1L;
+        when(sondageService.exists(id)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class,() -> dateSondeeService.getBestDateBySondageId(id));
+
+        verify(repository, never()).maybeBestDate(id);
+        verify(sondageService, times(1)).exists(id);
     }
 
     @Test
     void givenId_whenMaybeBestDate_thenRepositoryIsCalled() {
         Long id = 1L;
         List<Date> expectedDates = Arrays.asList(new Date(), new Date());
+        when(sondageService.exists(id)).thenReturn(true);
         when(repository.maybeBestDate(id)).thenReturn(expectedDates);
 
-        List<Date> result = dateSondeeService.maybeBestDate(id);
+        List<Date> result = dateSondeeService.getMaybeBestDateBySondageId(id);
 
         verify(repository, times(1)).maybeBestDate(id);
+        verify(sondageService, times(1)).exists(id);
         assertEquals(expectedDates, result);
+    }
+
+    @Test
+    void givenNotExistingId_whenMaybeBestDate_thenRepositoryIsCalled() {
+        Long id = 1L;
+        when(sondageService.exists(id)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class,() -> dateSondeeService.getMaybeBestDateBySondageId(id));
+
+        verify(repository, never()).maybeBestDate(id);
+        verify(sondageService, times(1)).exists(id);
     }
 }

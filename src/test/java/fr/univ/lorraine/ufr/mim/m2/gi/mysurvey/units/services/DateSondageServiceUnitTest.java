@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,12 +40,23 @@ class DateSondageServiceUnitTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         DateSondage expectedDateSondage = new DateSondage();
+        when(service.exists(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(expectedDateSondage);
 
         DateSondage result = service.getById(id);
 
         verify(repository, times(1)).getReferenceById(same(id));
         assertEquals(expectedDateSondage, result);
+    }
+
+    @Test
+    void givenAnIdThatDoesNotExist_whenGetById_thenRepositoryIsCalled() {
+        Long id = 1L;
+        when(service.exists(id)).thenReturn(false);
+
+        assertThrows(NoResultException.class, () -> service.getById(id));
+
+        verify(repository, never()).getReferenceById(same(id));
     }
 
     @Test
@@ -101,22 +113,23 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatExists_whenDelete_thenRepositoryIsCalledTwoTimes() {
         Long id = 1L;
+        when(service.exists(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(Optional.of(new DateSondage()));
 
         service.delete(id);
 
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, times(1)).deleteById(id);
     }
 
     @Test
     void givenAnIdThatDoesNotExists_whenDelete_thenThrowNoSuchElementException() {
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.empty());
+        when(service.exists(id)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> service.delete(id));
 
-        verify(repository, times(1)).findById(same(id));
+        verify(repository, times(1)).existsById(same(id));
         verify(repository, never()).deleteById(id);
     }
 }

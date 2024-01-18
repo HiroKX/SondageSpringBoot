@@ -1,8 +1,11 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
+import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,41 +26,6 @@ public class ParticipantController {
     @Autowired
     private ModelMapper mapper;
 
-    public ParticipantController(ParticipantService service, ModelMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
-    }
-
-
-    /**
-     * Get all participants
-     * @return
-     */
-    @GetMapping(value = "/")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<ParticipantDto> get() {
-        var models = service.getAll();
-        return models.stream().map(model -> mapper.map(model, ParticipantDto.class)).collect(Collectors.toList());
-    }
-
-    /**
-     * Get participant by id
-     * @param id
-     * @return
-     */
-    @GetMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public ParticipantDto get(@PathVariable("id") Long id) {
-        try{
-            var model = service.getById(id);
-            return mapper.map(model, ParticipantDto.class);
-        }catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Le participant n'existe pas");
-        }
-    }
-
     /**
      * Create a participant
      * @param participantDto
@@ -64,13 +33,55 @@ public class ParticipantController {
      */
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
-        if(participantDto.getNom() == null || participantDto.getPrenom() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le nom et le prénom sont obligatoires");
-        var model = mapper.map(participantDto, Participant.class);
-        var result = service.create(model);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return mapper.map(result, ParticipantDto.class);
+        if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un nom et un prénom.");
+        try {
+            var model = mapper.map(participantDto, Participant.class);
+            var result = service.create(model);
+            return mapper.map(result, ParticipantDto.class);
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du participant.");
+        }
+    }
+
+    /**
+     * Get all participants
+     * @return
+     */
+    @GetMapping(value = "/")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipantDto> getAllParticipants() {
+        try {
+            var models = service.getAll();
+            return models.stream().map(model -> mapper.map(model, ParticipantDto.class)).toList();
+        }
+        catch(NoResultException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des participants.");
+        }
+    }
+    /**
+     * Get participant by id
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ParticipantDto getParticipantById(@PathVariable("id") Long id) {
+        try{
+            var model = service.getById(id);
+            return mapper.map(model, ParticipantDto.class);
+        }
+        catch(NoResultException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la récupération du participant.");
+        }
     }
 
     /**
@@ -82,11 +93,21 @@ public class ParticipantController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantDto update(@PathVariable("id") Long id, @RequestBody ParticipantDto participantDto) {
-        if(participantDto.getNom() == null || participantDto.getPrenom() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le nom et le prénom sont obligatoires");
-        var model = mapper.map(participantDto, Participant.class);
-        var result = service.update(id, model);
-        if(result == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return mapper.map(result, ParticipantDto.class);
+        if(StringUtils.isNullOrEmpty(participantDto.getNom()) && StringUtils.isNullOrEmpty(participantDto.getPrenom()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez au moins un nom ou un prénom.");
+        try {
+            if (mapper.map(service.getById(id), ParticipantDto.class).equals(participantDto))
+                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Le participant n'a pas été modifié.");
+            var model = mapper.map(participantDto, Participant.class);
+            var result = service.update(id, model);
+            return mapper.map(result, ParticipantDto.class);
+        }
+        catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du commentaire.");
+        }
     }
 
     /**
@@ -94,8 +115,16 @@ public class ParticipantController {
      * @param id
      */
     @DeleteMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
-        if(!service.delete(id)) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        try {
+            service.delete(id);
+        }
+        catch(NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du commentaire.");
+        }
     }
 }

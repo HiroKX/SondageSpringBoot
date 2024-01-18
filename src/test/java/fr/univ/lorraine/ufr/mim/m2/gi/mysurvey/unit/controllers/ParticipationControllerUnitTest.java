@@ -1,10 +1,9 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipantController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipationController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.ExceptionSondageClotured;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
@@ -148,7 +147,7 @@ public class ParticipationControllerUnitTest {
     void testCreateFailedSondageCloture() throws Exception {
         long idEdited = 2L;
         when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
-        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(ExceptionSondageClotured.class);
+        when(sds.create(idEdited, dtoDS.getParticipant(),dateSondee)).thenThrow(SondageCloturedException.class);
 
         MockHttpServletResponse response = mvc.perform(
                         post("/api/participer/"+idEdited)
@@ -174,7 +173,7 @@ public class ParticipationControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test

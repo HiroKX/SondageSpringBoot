@@ -5,10 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.DateSondageController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,7 +104,7 @@ class DateSondageControllerUnitTest {
                                 .content(jsonDateSondage.write(dateSondageDto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(service, times(1)).checkIfDateAlreadyExists(id, dateSondageDto);
         verify(mapper, times(1)).map(dateSondageDto, DateSondage.class);
         verify(service, times(1)).create(eq(id), eq(dateSondage));
         verify(mapper, times(1)).map(dateSondage, DateSondageDto.class);
@@ -120,7 +122,7 @@ class DateSondageControllerUnitTest {
                                 .content(jsonDateSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(service, never()).checkIfDateAlreadyExists(id, dateSondageDto);
         verify(mapper, never()).map(dateSondageDto, DateSondage.class);
         verify(service, never()).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
@@ -138,7 +140,7 @@ class DateSondageControllerUnitTest {
                                 .content(jsonDateSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(service, never()).checkIfDateAlreadyExists(id, dateSondageDto);
         verify(mapper, never()).map(dateSondageDto, DateSondage.class);
         verify(service, never()).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
@@ -147,18 +149,17 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenCreateButDateAlreadyExists_thenReturnNotAcceptable() throws Exception {
-        when(mapper.map(dateSondageDto, DateSondage.class)).thenReturn(dateSondage);
-        when(service.create(id, dateSondage)).thenThrow(DataIntegrityViolationException.class);
+    void givenValidParameters_whenCreateButDateAlreadyExists_thenReturnBadRequest() throws Exception {
+        doThrow(DateSondageAlreadyExistsException.class).when(service).checkIfDateAlreadyExists(id, dateSondageDto);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/datesondage/" + id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondage.write(dateSondageDto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
-        verify(mapper, times(1)).map(dateSondageDto, DateSondage.class);
-        verify(service, times(1)).create(eq(id), eq(dateSondage));
+        verify(service, times(1)).checkIfDateAlreadyExists(id, dateSondageDto);
+        verify(mapper, never()).map(dateSondageDto, DateSondage.class);
+        verify(service, never()).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
         assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -174,7 +175,7 @@ class DateSondageControllerUnitTest {
                                 .content(jsonDateSondage.write(dateSondageDto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(service, times(1)).checkIfDateAlreadyExists(id, dateSondageDto);
         verify(mapper, times(1)).map(dateSondageDto, DateSondage.class);
         verify(service, times(1)).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
@@ -192,7 +193,7 @@ class DateSondageControllerUnitTest {
                                 .content(jsonDateSondage.write(dateSondageDto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-
+        verify(service, times(1)).checkIfDateAlreadyExists(id, dateSondageDto);
         verify(mapper, times(1)).map(dateSondageDto, DateSondage.class);
         verify(service, times(1)).create(eq(id), eq(dateSondage));
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
@@ -201,7 +202,7 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetDates_thenReturnOk() throws Exception {
+    void givenValidParameters_whenGetAllDatesBySondageId_thenReturnOk() throws Exception {
         ArrayList<DateSondage> dateSondages = new ArrayList<>();
         dateSondages.add(dateSondage);
         when(service.getBySondageId(id)).thenReturn(dateSondages);
@@ -218,7 +219,7 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetDatesButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenGetAllDatesBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         when(service.getBySondageId(id)).thenThrow(NoSuchElementException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/datesondage/" + id)
@@ -232,8 +233,8 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetDatesButDateDoesNotExist_thenReturnNotFound() throws Exception {
-        when(service.getBySondageId(id)).thenReturn(new ArrayList<>());
+    void givenValidParameters_whenGetAllDatesBySondageIdButDateDoesNotExist_thenReturnNotFound() throws Exception {
+        when(service.getBySondageId(id)).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/datesondage/" + id)
                                 .characterEncoding("UTF-8"))
@@ -246,7 +247,7 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetDatesButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenGetAllDatesBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getBySondageId(id)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/datesondage/" + id)
@@ -268,7 +269,7 @@ class DateSondageControllerUnitTest {
 
         verify(service, times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEmpty();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test

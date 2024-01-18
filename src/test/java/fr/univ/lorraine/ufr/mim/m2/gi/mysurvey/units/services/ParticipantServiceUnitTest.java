@@ -3,6 +3,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,13 +35,30 @@ class ParticipantServiceUnitTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant expectedParticipant = new Participant();
+        when(service.exists(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
 
         Participant result = service.getById(id);
 
         verify(repository, times(1)).getReferenceById(id);
+        verify(repository, times(1)).existsById(id);
         assertEquals(expectedParticipant, result);
     }
+
+    @Test
+    void givenAnIdNotExisting_whenGetById_thenRepositoryIsCalled() {
+        Long id = 1L;
+        Participant expectedParticipant = new Participant();
+        when(service.exists(id)).thenReturn(false);
+        when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
+
+        assertThrows(NoResultException.class,() -> service.getById(id));
+
+        verify(repository, never()).getReferenceById(id);
+        verify(repository, times(1)).existsById(id);
+    }
+
+
 
     @Test
     void whenGetAll_thenRepositoryIsCalled() {
@@ -67,12 +86,14 @@ class ParticipantServiceUnitTest {
     void givenAnIdAndAParticipant_whenUpdate_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant participant = new Participant();
-        when(repository.findById(id)).thenReturn(Optional.of(new Participant()));
+        participant.setNom("Nom");
+        participant.setPrenom("Prenom");
+        when(service.exists(id)).thenReturn(true);
+        when(service.getById(id)).thenReturn(participant);
         when(repository.save(participant)).thenReturn(participant);
 
         Participant result = service.update(id, participant);
 
-        verify(repository, times(1)).findById(id);
         verify(repository, times(1)).save(participant);
         assertEquals(participant, result);
     }
@@ -81,36 +102,36 @@ class ParticipantServiceUnitTest {
     void givenAnIdThatDoesNotExist_whenUpdate_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant participant = new Participant();
-        when(repository.findById(id)).thenReturn(Optional.empty());
+        participant.setNom("Nom");
+        participant.setPrenom("Prenom");
+        when(service.exists(id)).thenReturn(false);
 
-        Participant result = service.update(id, participant);
-
-        verify(repository, times(1)).findById(id);
+        assertThrows(NoSuchElementException.class, () -> service.update(id, participant));
+        verify(repository, times(1)).existsById(id);
         verify(repository, never()).save(participant);
-        assertNull(result);
+        verify(repository, never()).getReferenceById(id);
     }
 
     @Test
     void givenAnIdThatExists_whenDelete_thenRepositoryIsCalled() {
         Long id = 1L;
+        when(service.exists(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(Optional.of(new Participant()));
 
-        boolean result = service.delete(id);
+        service.delete(id);
 
-        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).existsById(id);
         verify(repository, times(1)).deleteById(id);
-        assertTrue(result);
     }
 
     @Test
     void givenAnIdThatDoesNotExist_whenDelete_thenRepositoryIsCalled() {
         Long id = 1L;
-        when(repository.findById(id)).thenReturn(Optional.empty());
+        when(service.exists(id)).thenReturn(false);
 
-        boolean result = service.delete(id);
+        assertThrows(NoSuchElementException.class, () -> service.delete(id));
 
-        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).existsById(id);
         verify(repository, never()).deleteById(id);
-        assertFalse(result);
     }
 }

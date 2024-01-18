@@ -1,8 +1,10 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,30 +26,6 @@ public class CommentaireController {
     private ModelMapper mapper;
 
     /**
-     * Modifier un commentaire
-     * @param id du commentaire
-     * @param commentaireDto
-     * @return
-     */
-    @PutMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public CommentaireDto update(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
-        if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le commentaire");
-        try {
-            var model = mapper.map(commentaireDto, Commentaire.class);
-            var result = service.update(id, model);
-            return mapper.map(result, CommentaireDto.class);
-        }
-        catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-        catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    /**
      *
      * @param id du sondage
      * @param commentaireDto
@@ -55,19 +33,21 @@ public class CommentaireController {
      */
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public CommentaireDto createCommentaire(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
-        if(commentaireDto.getCommentaire() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le commentaire");
-        if(commentaireDto.getParticipant() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vérifier le participant");
+    public CommentaireDto create(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
+        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un commentaire.");
+        if(commentaireDto.getParticipant() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un participant.");
         try{
             var model = mapper.map(commentaireDto, Commentaire.class);
             var result = service.create(id, commentaireDto.getParticipant(), model);
             return mapper.map(result, CommentaireDto.class);
-        }catch(NoSuchElementException e){
+        }
+        catch(NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du commentaire.");
         }
     }
 
@@ -78,11 +58,9 @@ public class CommentaireController {
      */
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<CommentaireDto> getCommentaires(@PathVariable("id") Long id) {
+    public List<CommentaireDto> getAllCommentairesBySondageId(@PathVariable("id") Long id) {
         try {
             var models = service.getBySondageId(id);
-            if (models.isEmpty()) throw new NoResultException();
             return models.stream()
                     .map(model -> mapper.map(model, CommentaireDto.class))
                     .toList();
@@ -91,10 +69,39 @@ public class CommentaireController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (NoResultException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aucun commentaire n'a été trouvé");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des commentaires.");
+        }
+    }
+
+    /**
+     * Modifier un commentaire
+     * @param id du commentaire
+     * @param commentaireDto
+     * @return
+     */
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CommentaireDto update(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
+        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un commentaire.");
+        try {
+            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))
+                throw new NoUpdateException("Le commentaire n'a pas été modifié.");
+            var model = mapper.map(commentaireDto, Commentaire.class);
+            var result = service.update(id, model);
+            return mapper.map(result, CommentaireDto.class);
+        }
+        catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        catch (NoUpdateException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la modification du commentaire.");
         }
     }
 
@@ -103,7 +110,7 @@ public class CommentaireController {
      * @param id
      */
     @DeleteMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);
@@ -112,7 +119,7 @@ public class CommentaireController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du commentaire.");
         }
     }
 }
