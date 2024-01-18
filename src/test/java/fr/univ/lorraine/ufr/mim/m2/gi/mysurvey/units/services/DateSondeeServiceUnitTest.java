@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.ExceptionSondageClotured;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
@@ -41,7 +42,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() {
+    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -63,7 +64,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() {
+    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws ExceptionSondageClotured {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -74,12 +75,11 @@ class DateSondeeServiceUnitTest {
 
         when(dateSondageService.getById(id)).thenReturn(dateSondage);
 
-        DateSondee result = dateSondeeService.create(id, participantId, dateSondee);
+        assertThrows(ExceptionSondageClotured.class, () -> dateSondeeService.create(id, participantId, dateSondee));
 
         verify(dateSondageService, times(1)).getById(id);
         verify(participantService, times(0)).getById(participantId);
         verify(repository, times(0)).save(dateSondee);
-        assertNull(result);
     }
 
     @Test

@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,18 @@ class SondageServiceUnitTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void givenAnId_whenGetAll_thenSondageRepositoryIsCalled() {
+        ArrayList<Sondage> expectedSondage = new ArrayList<Sondage>();
+        expectedSondage.add(new Sondage());
+        when(sondageRepository.findAll()).thenReturn(expectedSondage);
+
+        List<Sondage> result = sondageService.getAll();
+
+        verify(sondageRepository, times(1)).findAll();
+        assertEquals(expectedSondage, result);
     }
 
     @Test
@@ -73,10 +86,11 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledTwoTimes() {
+    void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledThreeTimes() {
         Long sondageId = 1L;
         Sondage existingSondage = new Sondage();
         Sondage updatedSondage = new Sondage();
+        updatedSondage.setSondageId(sondageId);
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(existingSondage));
         when(sondageRepository.save(updatedSondage)).thenReturn(updatedSondage);
@@ -109,11 +123,11 @@ class SondageServiceUnitTest {
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(new Sondage()));
 
-        int result = sondageService.delete(sondageId);
+        boolean result = sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, times(1)).deleteById(sondageId);
-        assertEquals(1, result);
+        assertTrue(result);
     }
 
     @Test
@@ -122,11 +136,11 @@ class SondageServiceUnitTest {
 
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.empty());
 
-        int result = sondageService.delete(sondageId);
+        boolean result = sondageService.delete(sondageId);
 
         verify(sondageRepository, times(1)).findById(same(sondageId));
         verify(sondageRepository, never()).deleteById(sondageId);
-        assertEquals(0, result);
+        assertFalse(result);
     }
 }
 

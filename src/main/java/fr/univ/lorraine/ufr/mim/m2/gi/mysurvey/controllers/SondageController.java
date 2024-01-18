@@ -10,9 +10,12 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
@@ -22,11 +25,20 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/sondage")
 public class SondageController {
 
-    private final SondageService service;
-    private final CommentaireService scommentaire;
-    private final DateSondageService sdate;
-    private final DateSondeeService request;
-    private final ModelMapper mapper;
+    @Autowired
+    private SondageService service;
+
+    @Autowired
+    private CommentaireService scommentaire;
+
+    @Autowired
+    private DateSondageService sdate;
+
+    @Autowired
+    private DateSondeeService request;
+
+    @Autowired
+    private ModelMapper mapper;
 
     public SondageController(SondageService service, ModelMapper mapper, CommentaireService c, DateSondageService d, DateSondeeService r) {
         this.service = service;
@@ -36,28 +48,11 @@ public class SondageController {
         this.request = r;
     }
 
-    @GetMapping(value = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public SondageDto get(@PathVariable("id") Long id) {
-        var model = service.getById(id);
-        return mapper.map(model, SondageDto.class);
-    }
-
-    @GetMapping(value = "/{id}/best")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<Date> getBest(@PathVariable("id") Long id) {
-        return request.bestDate(id);
-    }
-
-    @GetMapping(value = "/{id}/maybe")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<Date> getMaybeBest(@PathVariable("id") Long id) {
-        return request.maybeBestDate(id);
-    }
-
+    /**
+     * Get ALl sondages
+     * Verifier
+     * @return
+     */
     @GetMapping(value = "/")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -69,61 +64,109 @@ public class SondageController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/{id}/commentaires")
+    /**
+     * Get sondage by id
+     * Verified
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<CommentaireDto> getCommentaires(@PathVariable("id") Long id) {
-        var models = scommentaire.getBySondageId(id);
-        return models.stream()
-                .map(model -> mapper.map(model, CommentaireDto.class))
-                .collect(Collectors.toList());
+    public SondageDto get(@PathVariable("id") Long id) {
+        try{
+            var model = service.getById(id);
+            return mapper.map(model, SondageDto.class);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sondage non trouvé", null);
+        }
     }
 
-    @GetMapping(value = "/{id}/dates")
+    /**
+     * Get Meilleur date d'un sondage
+     * Verifier
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}/best")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<DateSondageDto> getDates(@PathVariable("id") Long id) {
-        var models = sdate.getBySondageId(id);
-        return models.stream()
-                .map(model -> mapper.map(model, DateSondageDto.class))
-                .collect(Collectors.toList());
+    public List<Date> getBest(@PathVariable("id") Long id) {
+        try {
+            return request.bestDate(id);
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sondage non trouvé", null);
+        }
     }
 
+    /**
+     * Get Possible meilleur date d'un sondage
+     * Verifier
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}/maybe")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<Date> getMaybeBest(@PathVariable("id") Long id) {
+        try {
+            return request.maybeBestDate(id);
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sondage non trouvé", null);
+        }
+    }
+
+    /**
+     * Create a sondage
+     * Vérifier
+     * @param sondageDto
+     * @return
+     */
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public SondageDto create(@RequestBody SondageDto sondageDto) {
+        verifySondage(sondageDto);
         var model = mapper.map(sondageDto, Sondage.class);
         var result = service.create(sondageDto.getCreateBy(), model);
         return mapper.map(result, SondageDto.class);
     }
 
-    @PostMapping(value = "/{id}/commentaires")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public CommentaireDto createCommantaire(@PathVariable("id") Long id, @RequestBody CommentaireDto commantaireDto) {
-        var model = mapper.map(commantaireDto, Commentaire.class);
-        var result = scommentaire.addCommantaire(id, commantaireDto.getParticipant(), model);
-        return mapper.map(result, CommentaireDto.class);
+    private void verifySondage(@RequestBody SondageDto sondageDto) {
+        if(sondageDto.getFin().before(new Date())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"La date de fin doit être supérieure à la date de début",null);
+        if(sondageDto.getCreateBy() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir un créateur",null);
+        if(sondageDto.getNom() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir un nom",null);
+        if(sondageDto.getDescription() == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit avoir une description",null);
+        if(sondageDto.getCloture() == null || sondageDto.getCloture()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Le sondage doit être ouvert",null);
+
     }
 
-    @PostMapping(value = "/{id}/dates")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public DateSondageDto createDate(@PathVariable("id") Long id, @RequestBody DateSondageDto dto) {
-        var model = mapper.map(dto, DateSondage.class);
-        var result = sdate.create(id, model);
-        return mapper.map(result, DateSondageDto.class);
-    }
-
+    /**
+     * Update a sondage
+     * Verifier
+     * @param id
+     * @param sondageDto
+     * @return
+     */
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SondageDto update(@PathVariable("id") Long id, @RequestBody SondageDto sondageDto) {
-        var model = mapper.map(sondageDto, Sondage.class);
-        var result = service.update(id, model);
-        return mapper.map(result, SondageDto.class);
+        verifySondage(sondageDto);
+        Sondage model;
+        try {
+            model = mapper.map(sondageDto, Sondage.class);
+            var result = service.update(id, model);
+            return mapper.map(result, SondageDto.class);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sondage non trouvé", null);
+        }
     }
 
+    /**
+     * Delete a sondage
+     * Verifier
+     * @param id
+     */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {

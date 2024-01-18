@@ -37,8 +37,7 @@ public class DateSondeeDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DateSondeeDto)) return false;
-        DateSondeeDto that = (DateSondeeDto) o;
+        if (!(o instanceof DateSondeeDto that)) return false;
         return Objects.equals(getDateSondeeId(), that.getDateSondeeId()) && Objects.equals(getParticipant(), that.getParticipant()) && Objects.equals(getChoix(), that.getChoix());
     }
 

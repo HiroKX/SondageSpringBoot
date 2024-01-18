@@ -65,8 +65,7 @@ public class SondageDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SondageDto)) return false;
-        SondageDto that = (SondageDto) o;
+        if (!(o instanceof SondageDto that)) return false;
         return Objects.equals(getSondageId(), that.getSondageId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getFin(), that.getFin()) && Objects.equals(getCloture(), that.getCloture()) && Objects.equals(getCreateBy(), that.getCreateBy());
     }
 
