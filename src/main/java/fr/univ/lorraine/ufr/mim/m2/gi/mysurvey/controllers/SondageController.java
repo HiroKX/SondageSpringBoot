@@ -36,7 +36,7 @@ public class SondageController {
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
     public SondageDto create(@RequestBody SondageDto sondageDto) {
-        if(sondageDto.getFin().before(new Date()))
+        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
         if(sondageDto.getCreateBy() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le sondage doit avoir un créateur.");
@@ -50,6 +50,9 @@ public class SondageController {
             var model = mapper.map(sondageDto, Sondage.class);
             var result = service.create(sondageDto.getCreateBy(), model);
             return mapper.map(result, SondageDto.class);
+        }
+        catch(NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du sondage.");
@@ -170,7 +173,7 @@ public class SondageController {
             service.delete(id);
         }
         catch(NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du sondage.");
