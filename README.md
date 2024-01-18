@@ -2,7 +2,7 @@
 
 [Pitest Mutation Coverage](https://hirokx.github.io/SondageSpringBoot/pitest)
 # Setup du projet
-Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker via 
+Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker.
 Ce fichier va instancier un conteneur avec une base de données **PostgreSQL**, **adminer**, un gestionnaire de database simple en php et héberger l'application entière.
 
 Pour déployer ce conteneur : 
@@ -34,11 +34,11 @@ Pour lancer les tests d'intégrations du projet : `mvn test`
 
 Une fois le projet démarré : 
 
-* Accès à l'api Swagger : http://localhost:VOTREPORT/swagger-ui.html (dépend du SERVER_PORT que vous avez set)
+* Accès à l'api Swagger : http://localhost:{ VOTRE_SERVER_PORT }/swagger-ui.html (dépend du SERVER_PORT que vous avez set)
 
-* Documentation de l'api : http://localhost:VOTREPORT/v3/api-docs (dépend du port SERVER_PORT que vous avez set)
-
-* Interface adminer pour consulter la DB : http://localhost:VOTREPORT/ (dépend du port SERVER_PORT vous avez set)
+* Documentation de l'api : http://localhost:{ VOTRE_SERVER_PORT }/v3/api-docs (dépend du SERVER_PORT que vous avez set)
+  
+* Interface adminer pour consulter la DB : http://localhost:{ VOTRE_SERVER_PORT }/ (dépend du SERVER_PORT que vous avez set)
 
 ## Accès au projet en ligne :
 
