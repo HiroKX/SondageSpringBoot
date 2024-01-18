@@ -36,7 +36,7 @@ public class CrudRestAssured {
         return dateFormatter.format(date);
     }
 
-    public static Response addToDB(String path, String requestBody ) {
+    public static Response dbPOST(String path, String requestBody ) {
         return given()
                 .header("accept", "*/*")
                 .header("Content-type", "application/json")
@@ -47,7 +47,7 @@ public class CrudRestAssured {
                 .extract().response();
     }
 
-    public static Response removeFromDB(String path) {
+    public static Response dbDELETE(String path) {
         return given()
                 .header("accept", "*/*")
                 .when()
@@ -56,7 +56,7 @@ public class CrudRestAssured {
                 .extract().response();
     }
 
-    public static Response updateEntityFromDB(String path, String requestBody) {
+    public static Response dbPUT(String path, String requestBody) {
         return given()
                 .header("accept", "*/*")
                 .header("Content-type", "application/json")
@@ -66,7 +66,7 @@ public class CrudRestAssured {
                 .then()
                 .extract().response();
     }
-    public static Response getFromDB(String path) {
+    public static Response dbGET(String path) {
         return given()
                 .header("accept", "*/*")
                 .when()
