@@ -49,7 +49,7 @@ public class CommentaireService {
 
     public Commentaire update(Long id, Commentaire newCommentaire) {
         try {
-            var commentaire = getById(id);
+            Commentaire commentaire = getById(id);
             commentaire.setCommentaire(newCommentaire.getCommentaire());
             return repository.save(commentaire);
         }
