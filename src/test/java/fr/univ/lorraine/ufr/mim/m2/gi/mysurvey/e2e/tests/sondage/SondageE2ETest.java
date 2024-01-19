@@ -89,15 +89,13 @@ class SondageE2ETest {
         Sondage sondage2 = new Sondage(4L,
                 "P'tit bowling",
                 "Allez venez les copains",
-                new Date(),
+                new Date(futureDate.getTime()),
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
                 participant);
         requestBody = SondageSampleE2E.generateSondagePostBody(sondage2);
         response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
-        System.out.println(response.jsonPath());
-        System.out.println("IICIIIIICIICI"+response.jsonPath().getLong("sondageId"));
         assertEquals(201, response.statusCode());
         long createdSondageID2 = response.jsonPath().getLong("sondageId");
 
