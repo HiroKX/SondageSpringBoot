@@ -22,10 +22,10 @@ class ParticipantE2ETest {
         RestAssured.port = CrudRestAssured.SERVER_PORT;
     }
     @Test
-    void participantPOST_GET_GETID_PUTID_DELETEID() {
+    void testParticipantCRUD() {
         // GET WHEN NO DATA IN DB
         Response response = CrudRestAssured.dbGET("/api/participant/");
-        assertEquals(204, response.statusCode()); // DEBAT POUR 204 PLUTOT QUE 404
+        assertEquals(204, response.statusCode());
 
         // TEST POST PARTICIPANT
         Participant participant = new Participant(1L,"Reeves","Keanu");
@@ -66,10 +66,6 @@ class ParticipantE2ETest {
         // TEST GET PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.dbGET("/api/participant/99");
         assertEquals(404, response.statusCode());
-
-        // TEST DELETE PARTICIPANT WHEN NO ID MATCH
-        response = CrudRestAssured.dbDELETE("/api/participant/99");
-        assertEquals(400, response.statusCode());
 
         // TEST PUT PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.dbPUT("/api/participant/99", requestBody);

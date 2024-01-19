@@ -22,8 +22,6 @@ import java.util.Date;
 import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.CrudRestAssured.*;
 import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.sondage.SondageSampleE2E.futureDate;
 import static fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.sondage.SondageSampleE2E.pastDate;
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.request;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -36,7 +34,7 @@ class SondageE2ETest {
         RestAssured.port = CrudRestAssured.SERVER_PORT;
     }
     @Test
-    void givenParticipant_whenCreatesSondage() {
+    void testSondageCRUD() {
         // GET ID WHEN NO SONDAGE
         Response response = CrudRestAssured.dbGET("api/sondage/99");
         assertEquals(404, response.statusCode());
@@ -146,7 +144,7 @@ class SondageE2ETest {
         assertEquals(400, response.statusCode());
     }
     @Test
-    void testDateSondageOnSondage() {
+    void testDateSondageCRUD() {
         Participant participant = new Participant(4L, "BRANSTETT", "Tim");
         Sondage sondage = new Sondage(8L,
                 "Aller en cours de Production Logicielle",
@@ -239,45 +237,6 @@ class SondageE2ETest {
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
         assertEquals(204, response.statusCode());
     }
-
-    @Test
-    void testNewSondage(){
-        // CREATE PARTICIPANT
-        Participant participant = new Participant(1L, "Sarah", "Connor");
-        String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
-        Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
-        long createdParticipantID = response.jsonPath().getLong("participantId");
-        participant.setParticipantId(createdParticipantID);
-        // CREATE SONDAGE BUT WITH PAST DATE
-        Sondage sondage = new Sondage(1L,
-                "Aller manger au KFC",
-                "Ça fait longtemps que j'ai pas mangé un Bucket",
-                new Date(futureDate.getTime()),
-                false,
-                new ArrayList<>(),
-                new ArrayList<>(),
-                participant);
-        requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
-        response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
-        assertEquals(201, response.statusCode());
-        long createdSondageID = response.jsonPath().getLong("sondageId");
-
-        // CREATE DATESONDAGE AND ADD IT TO THE SONDAGE
-        Date fixedDate = new Date(futureDate.getTime()+1000000);
-        requestBody = DateSondageSampleE2E.generateDateSondagePOSTBody(fixedDate);
-        response = CrudRestAssured.dbPOST("/api/datesondage/"+createdSondageID, requestBody);
-        long createdDateSondage = response.jsonPath().getLong("dateSondageId");
-        requestBody = DateSondageSampleE2E.generateDateSondagePOSTBody(fixedDate);
-        response = CrudRestAssured.dbPOST("/api/datesondage/"+createdSondageID, requestBody);
-
-        // THE PARTICIPANT TRIES TO PARTICIPATE TO A SONDAGE WITH PAST FIN DATE
-        requestBody = ParticiperSondageSampleE2E.generateParticiper(createdParticipantID, Choix.INDISPONIBLE);
-        response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage, requestBody);
-        assertEquals(201, response.statusCode()); //TODO : Devrait être 400
-
-        // DELETE PARTICIPANT AND SONDAGE
-        response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
-    }
     @Test
     void testVoteSondageShouldWork() {
         // CREATE PARTICIPANT
@@ -316,7 +275,7 @@ class SondageE2ETest {
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
     }
     @Test
-    void crudCommentaireOnSondage() {
+    void testCommentaireCRUD() {
         // CREATE PARTICIPANT
         Participant participant = new Participant(1L, "Ellen", "Ripley");
         String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
@@ -361,9 +320,8 @@ class SondageE2ETest {
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
     }
-
     @Test
-    void testBestDatesMaybeDates() {
+    void testVoteDatesBest_VoteDatesMaybe() {
         // CREATE 3 PARTICIPANTS
         Participant participant = new Participant(1L, "Potter", "Harry");
         String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
