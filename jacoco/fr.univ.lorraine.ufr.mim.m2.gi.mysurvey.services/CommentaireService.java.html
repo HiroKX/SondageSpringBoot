@@ -42,8 +42,8 @@ import java.util.NoSuchElementException;
 <span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!sondageService.exists(sondageId))</span>
 <span class="fc" id="L43">            throw new NoSuchElementException(ErrorMessages.SONDAGE_DOES_NOT_EXISTS);</span>
 <span class="fc" id="L44">        List&lt;Commentaire&gt; commentaires = repository.getAllBySondage(sondageId);</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (commentaires.isEmpty())</span>
-<span class="nc" id="L46">            throw new NoResultException(&quot;Aucun commentaire n'a été trouvé.&quot;);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (commentaires.isEmpty())</span>
+<span class="fc" id="L46">            throw new NoResultException(&quot;Aucun commentaire n'a été trouvé.&quot;);</span>
 <span class="fc" id="L47">        return commentaires;</span>
     }
 

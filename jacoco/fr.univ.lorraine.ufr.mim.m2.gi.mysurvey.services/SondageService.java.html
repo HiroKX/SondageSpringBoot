@@ -27,8 +27,8 @@ import java.util.NoSuchElementException;
 <span class="fc" id="L27">            sondage.setCreateBy(participantService.getById(idParticipant));</span>
 <span class="fc" id="L28">            return repository.save(sondage);</span>
         }
-<span class="nc" id="L30">        catch (NoResultException e) {</span>
-<span class="nc" id="L31">            throw new NoSuchElementException(ErrorMessages.PARTICIPANT_DOES_NOT_EXISTS);</span>
+<span class="fc" id="L30">        catch (NoResultException e) {</span>
+<span class="fc" id="L31">            throw new NoSuchElementException(ErrorMessages.PARTICIPANT_DOES_NOT_EXISTS);</span>
         }
     }
 

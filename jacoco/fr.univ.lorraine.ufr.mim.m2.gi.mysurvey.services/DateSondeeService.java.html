@@ -53,9 +53,9 @@ import java.util.NoSuchElementException;
     }
 
     public void checkIfDateSondeeAlreadyExists(Long dateSondageId, Long participantId) throws DateSondeeAlreadyExistsException {
-<span class="nc" id="L56">        List&lt;DateSondee&gt; datesSondees = repository.getAllByDateSondageAndParticipant(dateSondageId, participantId);</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (!datesSondees.isEmpty())</span>
-<span class="nc" id="L58">            throw new DateSondeeAlreadyExistsException();</span>
-<span class="nc" id="L59">    }</span>
+<span class="fc" id="L56">        List&lt;DateSondee&gt; datesSondees = repository.getAllByDateSondageAndParticipant(dateSondageId, participantId);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (!datesSondees.isEmpty())</span>
+<span class="fc" id="L58">            throw new DateSondeeAlreadyExistsException();</span>
+<span class="fc" id="L59">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
