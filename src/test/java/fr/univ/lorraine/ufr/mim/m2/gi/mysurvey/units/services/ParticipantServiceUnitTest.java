@@ -55,10 +55,8 @@ class ParticipantServiceUnitTest {
         verify(repository, times(1)).existsById(id);
     }
 
-
-
     @Test
-    void whenGetAll_thenRepositoryIsCalled() {
+    void givenNoParameter_whenGetAll_thenRepositoryIsCalled() {
         List<Participant> expectedParticipants = Arrays.asList(new Participant(), new Participant());
         when(repository.findAll()).thenReturn(expectedParticipants);
 
@@ -69,7 +67,7 @@ class ParticipantServiceUnitTest {
     }
 
     @Test
-    void whenGetAll_thenThrowError() {
+    void givenNoParameter_whenGetAllButNoParticipantExist_thenThrowError() {
         List<Participant> expectedParticipants = new ArrayList<>();
         when(repository.findAll()).thenReturn(expectedParticipants);
 
@@ -111,7 +109,6 @@ class ParticipantServiceUnitTest {
         assertEquals(participant2.getPrenom(), result.getPrenom());
         assertEquals(participant2, result);
     }
-
 
     @Test
     void givenAnIdAndAParticipantChangeNomOnly_whenUpdate_thenRepositoryIsCalled() {

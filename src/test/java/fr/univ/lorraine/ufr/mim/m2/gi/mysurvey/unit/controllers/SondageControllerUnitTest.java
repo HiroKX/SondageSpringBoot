@@ -3,12 +3,10 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.SondageController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +32,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 @ExtendWith(MockitoExtension.class)
 public class SondageControllerUnitTest {
-
 
     protected MockMvc mvc;
     @Mock
@@ -59,7 +55,7 @@ public class SondageControllerUnitTest {
     private Date dateDansUnAn;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         id = 1L;
         Calendar calendar = Calendar.getInstance(); // Obtient une instance de Calendar représentant la date/heure actuelle
         calendar.add(Calendar.YEAR, 1); // Ajoute un an à la date/heure actuelle
@@ -83,7 +79,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenCreate_thenReturnCreated() throws Exception {
+    void givenValidParameters_whenCreate_thenReturnCreated() throws Exception {
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.create(id, sondage)).thenReturn(sondage);
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
@@ -102,7 +98,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidDateFin_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidDateFin_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setFin(new Date());
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -119,7 +115,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidDateFinNull_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidDateFinNull_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setFin(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -136,7 +132,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidCreatedBy_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidCreatedBy_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setCreateBy(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -154,7 +150,7 @@ public class SondageControllerUnitTest {
 
 
     @Test
-    public void givenInvalidNom_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidNom_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setNom(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -171,7 +167,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidDescription_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidDescription_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setDescription(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -188,7 +184,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidCloture_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidCloture_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setCloture(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -205,7 +201,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidClotureTrue_whenCreate_thenReturnBadRequest() throws Exception {
+    void givenInvalidClotureTrue_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setCloture(true);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
@@ -222,7 +218,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenCreateButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenCreateButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.create(id, sondage)).thenThrow(NoSuchElementException.class);
         MockHttpServletResponse response = mvc.perform(
@@ -240,7 +236,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.create(id, sondage)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
@@ -258,7 +254,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetAllSondages_thenReturnOk() throws Exception {
+    void givenValidParameters_whenGetAllSondages_thenReturnOk() throws Exception {
         when(service.getAll()).thenReturn(List.of(sondage));
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
         MockHttpServletResponse response = mvc.perform(
@@ -272,7 +268,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetAllSondagesButNoSondageExist_thenRetuNoContent() throws Exception {
+    void givenValidParameters_whenGetAllSondagesButNoSondageExist_thenRetuNoContent() throws Exception {
         when(service.getAll()).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"))
@@ -285,7 +281,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetAllSondagesButErrorServer_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenGetAllSondagesButErrorServer_thenReturnInternalServerError() throws Exception {
         when(service.getAll()).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"))
@@ -298,7 +294,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetSondageById_thenReturnOk() throws Exception {
+    void givenValidParameters_whenGetSondageById_thenReturnOk() throws Exception {
         when(service.getById(id)).thenReturn(sondage);
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
         MockHttpServletResponse response = mvc.perform(
@@ -312,7 +308,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetSondageByIdButSondageDoesNotExist_thenReturnNotFound() throws Exception {
+    void givenValidParameters_whenGetSondageByIdButSondageDoesNotExist_thenReturnNotFound() throws Exception {
         when(service.getById(id)).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id))
@@ -324,7 +320,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetSondageByIdButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenGetSondageByIdButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getById(id)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id))
@@ -336,7 +332,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetBestDateBySondageId_thenReturnOk() throws Exception {
+    void givenValidParameters_whenGetBestDateBySondageId_thenReturnOk() throws Exception {
         Date d = new Date();
         when(request.getBestDateBySondageId(id)).thenReturn(List.of(d));
         MockHttpServletResponse response = mvc.perform(
@@ -349,7 +345,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenGetBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         when(request.getBestDateBySondageId(id)).thenThrow(NoSuchElementException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/best"))
@@ -361,7 +357,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenGetBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
         when(request.getBestDateBySondageId(id)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/best"))
@@ -373,7 +369,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk() throws Exception {
+    void givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk() throws Exception {
         Date d = new Date();
         when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of(d));
         MockHttpServletResponse response = mvc.perform(
@@ -386,7 +382,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetMaybeBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenGetMaybeBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         when(request.getMaybeBestDateBySondageId(id)).thenThrow(NoSuchElementException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/maybe"))
@@ -398,7 +394,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetMaybeBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenGetMaybeBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
         when(request.getMaybeBestDateBySondageId(id)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"+id+"/maybe"))
@@ -408,7 +404,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenUpdate_thenReturnOk() throws Exception {
+    void givenValidParameters_whenUpdate_thenReturnOk() throws Exception {
         when(service.getById(id)).thenReturn(new Sondage());
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.update(id, sondage)).thenReturn(sondage);
@@ -426,7 +422,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidDateFin_whenUpdate_thenReturnBadRequest() throws Exception {
+    void givenInvalidDateFin_whenUpdate_thenReturnBadRequest() throws Exception {
         SondageDto dto = new SondageDto();
         dto.setFin(new Date());
         MockHttpServletResponse response = mvc.perform(
@@ -442,7 +438,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest() throws Exception {
+    void givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest() throws Exception {
         SondageDto dto = new SondageDto();
         dto.setFin(null);
         MockHttpServletResponse response = mvc.perform(
@@ -458,7 +454,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent() throws Exception {
+    void givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent() throws Exception {
         when(service.getById(id)).thenReturn(sondage);
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         MockHttpServletResponse response = mvc.perform(
@@ -474,7 +470,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         when(service.getById(id)).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         put("/api/sondage/"+id)
@@ -489,7 +485,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getById(id)).thenThrow(NullPointerException.class);
         MockHttpServletResponse response = mvc.perform(
                         put("/api/sondage/"+id)
@@ -504,7 +500,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenDelete_thenReturnNoContent() throws Exception {
+    void givenValidParameters_whenDelete_thenReturnNoContent() throws Exception {
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
                 .andReturn().getResponse();
@@ -515,7 +511,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenDeleteButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+    void givenValidParameters_whenDeleteButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         doThrow(NoSuchElementException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
@@ -527,7 +523,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError() throws Exception {
+    void givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError() throws Exception {
         doThrow(NullPointerException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
@@ -537,5 +533,4 @@ public class SondageControllerUnitTest {
         assertThat(response.getContentAsString()).isEqualTo("");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
-
 }

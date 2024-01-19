@@ -144,7 +144,6 @@ class CommentaireServiceUnitTest {
         verify(repository, never()).save(commentaire);
     }
 
-
     @Test
     void givenAnIdAndACommentaire_whenUpdate_thenRepositoryIsCalled() {
         Long id = 1L;

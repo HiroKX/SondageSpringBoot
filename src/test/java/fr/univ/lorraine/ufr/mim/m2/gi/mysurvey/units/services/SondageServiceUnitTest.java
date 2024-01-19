@@ -35,7 +35,7 @@ class SondageServiceUnitTest {
 
     @Test
     void givenAnId_whenGetAll_thenSondageRepositoryIsCalled() {
-        ArrayList<Sondage> expectedSondage = new ArrayList<Sondage>();
+        ArrayList<Sondage> expectedSondage = new ArrayList<>();
         expectedSondage.add(new Sondage());
         when(sondageRepository.findAll()).thenReturn(expectedSondage);
 
@@ -59,18 +59,18 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void whenGetAll_thenSondageRepositoryIsCalled() {
+    void givenNoParameter_whenGetAll_thenSondageRepositoryIsCalled() {
         when(sondageRepository.findAll()).thenReturn(Collections.singletonList(new Sondage()));
 
         List<Sondage> result = sondageService.getAll();
 
         verify(sondageRepository, times(1)).findAll();
         assertNotNull(result);
-        assertNotEquals(result, Collections.emptyList());
+        assertNotEquals(Collections.emptyList(), result);
     }
 
     @Test
-    void whenGetAllEmpty_thenSondageRepositoryIsCalled() {
+    void givenNoParameter_whenGetAllReturnsEmpty_thenThrowNoResultException() {
         when(sondageRepository.findAll()).thenReturn(Collections.emptyList());
 
         assertThrows(NoResultException.class,()-> sondageService.getAll());

@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -186,8 +184,6 @@ class CommentaireControllerUnitTest {
         assertThat(response.getContentAsString()).isEqualTo("[" + jsonCommentaire.write(new CommentaireDto()).getJson() + "]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
-
-
 
     @Test
     void givenValidParameters_whenGetAllCommentairesBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {

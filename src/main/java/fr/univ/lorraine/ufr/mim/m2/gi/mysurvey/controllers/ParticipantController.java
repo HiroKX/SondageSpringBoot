@@ -1,11 +1,11 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/participant")
@@ -29,11 +28,12 @@ public class ParticipantController {
 
     /**
      * Create a participant
-     * @param participantDto
-     * @return
+     * @param participantDto du participant à créer
+     * @return participant créé
      */
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Créer un participant", description = "Retourne le participant créé.")
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
         if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un nom et un prénom.");
@@ -49,10 +49,11 @@ public class ParticipantController {
 
     /**
      * Get all participants
-     * @return
+     * @return liste de tous les participants existants
      */
     @GetMapping(value = "/")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer tous les participants", description = "Retourne tous les participants existants.")
     public List<ParticipantDto> getAllParticipants() {
         try {
             var models = service.getAll();
@@ -67,11 +68,12 @@ public class ParticipantController {
     }
     /**
      * Get participant by id
-     * @param id
-     * @return
+     * @param id du participant à récupérer
+     * @return participant correspondant à l'id
      */
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer un participant par son id", description = "Retourne le participant s'il existe.")
     public ParticipantDto getParticipantById(@PathVariable("id") Long id) {
         try{
             var model = service.getById(id);
@@ -87,12 +89,13 @@ public class ParticipantController {
 
     /**
      * Update a participant
-     * @param id
-     * @param participantDto
-     * @return
+     * @param id du participant à modifier
+     * @param participantDto du participant à modifier
+     * @return participant modifié
      */
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Modifier un participant", description = "Retourne le participant modifié.")
     public ParticipantDto update(@PathVariable("id") Long id, @RequestBody ParticipantDto participantDto) {
         if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez au moins un nom ou un prénom.");
@@ -119,10 +122,11 @@ public class ParticipantController {
 
     /**
      * Delete a participant
-     * @param id
+     * @param id du participant à supprimer
      */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Supprimer un participant", description = "Ne retourne rien.")
     public void delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);

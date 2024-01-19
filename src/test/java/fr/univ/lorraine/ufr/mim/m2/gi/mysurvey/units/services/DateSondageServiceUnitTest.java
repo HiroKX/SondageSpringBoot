@@ -75,7 +75,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenASondageId_whenGetBySondageIdDateSondagesEmpty_thenRepositoryIsCalled() {
         Long sondageId = 1L;
-        List<DateSondage> expectedDateSondages = new ArrayList<DateSondage>();
+        List<DateSondage> expectedDateSondages = new ArrayList<>();
         when(sondageService.exists(sondageId)).thenReturn(true);
         when(repository.getAllBySondage(sondageId)).thenReturn(expectedDateSondages);
 
@@ -84,7 +84,6 @@ class DateSondageServiceUnitTest {
         verify(sondageService, times(1)).exists(sondageId);
         verify(repository, times(1)).getAllBySondage(same(sondageId));
     }
-
 
     @Test
     void givenAnIdAndADateSondage_whenCreate_thenSondageServiceAndRepositoryAreCalled() {

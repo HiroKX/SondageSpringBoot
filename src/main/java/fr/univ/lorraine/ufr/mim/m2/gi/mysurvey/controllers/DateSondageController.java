@@ -4,6 +4,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,12 @@ public class DateSondageController {
     /**
      * Création d'une date de sondage pour un sondage
      * @param id d'un sondage
-     * @param dto
-     * @return
+     * @param dto du sondage à créer
+     * @return sondage créé
      */
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Créer un sondage", description = "Retourne le sondage créé.")
     public DateSondageDto create(@PathVariable("id") Long id, @RequestBody DateSondageDto dto) {
         TimeZone tz = TimeZone.getDefault();        // pour enlever le fuseau horaire set par le système local
         if (dto.getDate() == null)
@@ -55,12 +57,13 @@ public class DateSondageController {
     }
 
     /**
-     * Récupération d'une date d'un sondage
-     * @param id
-     * @return
+     * Récupération des dates d'un sondage
+     * @param id du sondage
+     * @return liste des dates récupérées
      */
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer la liste des dates d'un sondage", description = "Retourne la liste récupérée.")
     public List<DateSondageDto> getAllDatesBySondageId(@PathVariable("id") Long id) {
         try {
             var models = service.getBySondageId(id);
@@ -81,10 +84,11 @@ public class DateSondageController {
 
     /**
      * Suppression d'une date d'un sondage
-     * @param id
+     * @param id de la date à supprimer
      */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Supprimer une date de sondage", description = "Ne retourne rien.")
     public void delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);
