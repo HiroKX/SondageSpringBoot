@@ -72,7 +72,7 @@ public class SondageController {
             return models.stream().map(model -> mapper.map(model, SondageDto.class)).toList();
         }
         catch(NoResultException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
         catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des sondages.");
