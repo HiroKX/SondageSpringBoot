@@ -333,9 +333,4 @@ class SondageE2ETest {
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
     }
-
-    @Test
-    void findBestDate_findMaybe() {
-        
-    }
 }
