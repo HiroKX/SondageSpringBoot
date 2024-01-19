@@ -40,7 +40,7 @@ Et c'est tout !
 ### Installation
 
 Il est possible d'augmenter la sécurité de votre application lors du déploiement du conteneur en refusant les connexions à la base de donnée pour chaque requête provenant de l'exterieur du conteneur.
-Pour ce faire, il suffit de retirer ces [ligne](https://github.com/HiroKX/SondageSpringBoot/blob/develop/docker-compose.yml#L25-L26) dans votre docker-compose.ml.
+Pour ce faire, il suffit de retirer ces [lignes](https://github.com/HiroKX/SondageSpringBoot/blob/develop/docker-compose.yml#L25-L26) dans votre docker-compose.ml.
 
 Pour déployer ce conteneur : 
 1. Installez docker.
@@ -69,4 +69,4 @@ Pour lancer les tests unitaires du projet, il vous suffit d'exécuter la command
 
 # Accès au projet en ligne :
 
-Vous pouvez accéder à notre projet directement en ligne, en cliquant [ici](https://sondage.ronde-lingons.fr/swagger-ui.html) ! 
+Vous pouvez accéder à notre projet directement en ligne, en cliquant [ici](https://sondage.hirokx.dev/swagger-ui/index.html#/) ! 
