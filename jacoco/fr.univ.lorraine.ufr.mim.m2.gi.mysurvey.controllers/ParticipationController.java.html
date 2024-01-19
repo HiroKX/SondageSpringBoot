@@ -33,7 +33,7 @@ import org.springframework.web.server.ResponseStatusException;
      */
     @PostMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = &quot;Créer une participant&quot;, description = &quot;Retourne l'objet DateSondee créé correspondant à la participation créée.&quot;)
+    @Operation(summary = &quot;Créer un vote d'un participant sur une date&quot;, description = &quot;Retourne l'objet DateSondee créé correspondant à la participation créée.&quot;)
     public DateSondeeDto create(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondeeDto dto) {
 <span class="fc bfc" id="L38" title="All 2 branches covered.">        if(dto.getParticipant() == null)</span>
 <span class="fc" id="L39">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
