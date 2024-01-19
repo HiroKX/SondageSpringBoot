@@ -17,8 +17,5 @@ FROM openjdk:19-jdk-slim
 # Copier le fichier JAR du conteneur de build au conteneur de run
 COPY --from=build /home/app/target/MySurvey-0.0.1-SNAPSHOT.jar /usr/local/lib/springboot.jar
 
-# Exposer le port sur lequel l'application s'exécute
-EXPOSE 8080
-
 # Définir la commande pour exécuter l'application
 ENTRYPOINT ["java","-jar","/usr/local/lib/springboot.jar"]
