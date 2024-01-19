@@ -5,6 +5,21 @@
 Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker.
 Un fichier ".env" que vous créerez va instancier un conteneur avec une base de données **PostgreSQL**, **adminer**, un gestionnaire de database simple en php et héberger l'application entière.
 
+##Local
+###Prérequis :
+1. Base de donnée
+Il faut posséder une Base de donnée, ici nous vous conseillons d'utiliser Postgres : https://www.postgresql.org/
+
+2. Java 19
+Pour installer Java 19 : https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html
+
+###Installation : 
+Dans le fichier [application-local.properties](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/test/resources/application.properties), il faut changer les variables de connexion à votre base de donnée.
+Il s'agit du port, du nom d'utilisateur, du mot de passe et du nom de la base de donnée.
+
+Une fois que tout ceci est fait, il vous suffit de lancer le programme [MySurveyApplication](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/main/java/fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/MySurveyApplication.java).
+
+##Docker
 Pour déployer ce conteneur : 
 * Installer docker.
 * Créer un fichier .env dans le root du projet et éditer la configuration : 
