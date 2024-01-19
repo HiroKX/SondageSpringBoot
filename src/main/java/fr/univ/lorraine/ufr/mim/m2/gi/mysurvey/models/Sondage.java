@@ -41,7 +41,7 @@ public class Sondage {
 
     public Sondage() {}
 
-    public Sondage(Long sondageId, String nom, String description, Date fin, Boolean cloture, List<Commentaire> commentaires, List<DateSondage> dateSondage, Participant createBy) {
+    public Sondage(long sondageId, String nom, String description, Date fin, Boolean cloture, List<Commentaire> commentaires, List<DateSondage> dateSondage, Participant createBy) {
         this.sondageId = sondageId;
         this.nom = nom;
         this.description = description;
