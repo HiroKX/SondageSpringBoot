@@ -233,6 +233,19 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
+    void givenInvalidParticipant_whenUpdateParticipant_thenReturnBadRequest() throws Exception {
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(new ParticipantDto()).getJson())).andReturn().getResponse();
+
+        verify(service, times(0)).getById(id);
+        verify(service, times(0)).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void givenValidParameters_whenUpdateButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
         when(service.getById(id)).thenReturn(new Participant());
         when(service.update(id, participant)).thenThrow(NoSuchElementException.class);
@@ -279,6 +292,18 @@ class ParticipantControllerUnitTest {
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    void testDeleteFailedOtherException() throws Exception {
+        doThrow(NoResultException.class).when(service).delete(id);
+        MockHttpServletResponse response = mvc.perform(
+                        delete("/api/participant/"+id))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).delete(eq(id));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @Test
