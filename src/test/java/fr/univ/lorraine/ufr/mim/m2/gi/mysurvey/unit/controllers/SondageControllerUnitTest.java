@@ -272,7 +272,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void givenValidParameters_whenGetAllSondagesButNoSondageExist_thenReturnNotFound() throws Exception {
+    public void givenValidParameters_whenGetAllSondagesButNoSondageExist_thenRetuNoContent() throws Exception {
         when(service.getAll()).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/sondage/"))
@@ -281,7 +281,7 @@ public class SondageControllerUnitTest {
         verify(service,times(1)).getAll();
         verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
         assertThat(response.getContentAsString()).isEmpty();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test

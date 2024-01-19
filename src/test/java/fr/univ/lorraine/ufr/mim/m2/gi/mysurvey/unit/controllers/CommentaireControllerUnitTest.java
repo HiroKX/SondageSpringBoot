@@ -204,7 +204,7 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetAllCommentairesBySondageIdButNoResultFound_thenReturnNotFound() throws Exception {
+    void givenValidParameters_whenGetAllCommentairesBySondageIdButNoResultFound_thenReturnNoContent() throws Exception {
         when(service.getBySondageId(id)).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/commentaire/" + id)
@@ -214,7 +214,7 @@ class CommentaireControllerUnitTest {
                 .andReturn().getResponse();
 
         verify(service, times(1)).getBySondageId(eq(id));
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
