@@ -1,8 +1,8 @@
-name: CD Springboot
+name: CD Springboot Prod
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "master" ]
 
 jobs:
   deploy:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy Server
+      - name: Deploy Server Prod
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/html/SondageSpringBoot
+            cd /var/www/html/SondageMain
             git pull
             docker-compose down
             docker-compose up -d --build
