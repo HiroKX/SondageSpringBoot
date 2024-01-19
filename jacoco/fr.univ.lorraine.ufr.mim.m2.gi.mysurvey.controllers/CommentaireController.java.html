@@ -85,8 +85,8 @@ import java.util.NoSuchElementException;
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public CommentaireDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody CommentaireDto commentaireDto) {
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
-<span class="nc" id="L89">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
+<span class="fc" id="L89">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
         try {
 <span class="fc bfc" id="L91" title="All 2 branches covered.">            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))</span>
 <span class="fc" id="L92">                throw new NoUpdateException(&quot;Le commentaire n'a pas été modifié.&quot;);</span>

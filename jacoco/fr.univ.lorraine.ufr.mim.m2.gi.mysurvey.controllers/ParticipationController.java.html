@@ -34,10 +34,10 @@ import org.springframework.web.server.ResponseStatusException;
     @PostMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     public DateSondeeDto create(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondeeDto dto) {
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if(dto.getParticipant() == null)</span>
-<span class="nc" id="L38">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if(!EnumUtils.isValidEnum(Choix.class, dto.getChoix()))</span>
-<span class="nc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un choix valide.&quot;);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(dto.getParticipant() == null)</span>
+<span class="fc" id="L38">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(!EnumUtils.isValidEnum(Choix.class, dto.getChoix()))</span>
+<span class="fc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un choix valide.&quot;);</span>
         try {
 <span class="fc" id="L42">            dateSondeeService.checkIfDateSondeeAlreadyExists(id, dto.getParticipant());</span>
 <span class="fc" id="L43">            DateSondee model = mapper.map(dto, DateSondee.class);</span>
@@ -45,10 +45,10 @@ import org.springframework.web.server.ResponseStatusException;
 <span class="fc" id="L45">            return mapper.map(result, DateSondeeDto.class);</span>
 <span class="fc" id="L46">        } catch (DateSondeeAlreadyExistsException | SondageCloturedException e) {</span>
 <span class="fc" id="L47">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
-<span class="nc" id="L48">        } catch (NoResultException e){</span>
-<span class="nc" id="L49">            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span>
+<span class="fc" id="L48">        } catch (NoResultException e){</span>
+<span class="fc" id="L49">            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span>
 <span class="fc" id="L50">        } catch (Exception e) {</span>
-<span class="fc" id="L51">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Erreur lors de la création de la participation.&quot;);</span>
+<span class="fc" id="L51">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création de la participation.&quot;);</span>
         }
     }
 }

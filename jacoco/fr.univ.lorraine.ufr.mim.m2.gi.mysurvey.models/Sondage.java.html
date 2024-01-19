@@ -41,7 +41,7 @@ public class Sondage {
 
 <span class="fc" id="L42">    public Sondage() {}</span>
 
-<span class="nc" id="L44">    public Sondage(Long sondageId, String nom, String description, Date fin, Boolean cloture, List&lt;Commentaire&gt; commentaires, List&lt;DateSondage&gt; dateSondage, Participant createBy) {</span>
+<span class="nc" id="L44">    public Sondage(long sondageId, String nom, String description, Date fin, Boolean cloture, List&lt;Commentaire&gt; commentaires, List&lt;DateSondage&gt; dateSondage, Participant createBy) {</span>
 <span class="nc" id="L45">        this.sondageId = sondageId;</span>
 <span class="nc" id="L46">        this.nom = nom;</span>
 <span class="nc" id="L47">        this.description = description;</span>
@@ -52,7 +52,7 @@ public class Sondage {
 <span class="nc" id="L52">        this.createBy = createBy;</span>
 <span class="nc" id="L53">    }</span>
 
-    public Long getSondageId() {
+    public long getSondageId() {
 <span class="fc" id="L56">        return sondageId;</span>
     }
 

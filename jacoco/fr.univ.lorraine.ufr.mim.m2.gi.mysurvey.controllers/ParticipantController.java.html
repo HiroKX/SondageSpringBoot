@@ -2,6 +2,7 @@
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = &quot;/api/participant&quot;)
-<span class="fc" id="L21">public class ParticipantController {</span>
+<span class="fc" id="L22">public class ParticipantController {</span>
 
     @Autowired
     private ParticipantService service;
@@ -34,15 +35,15 @@ import java.util.stream.Collectors;
     @PostMapping(value = &quot;/&quot;)
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
-<span class="pc bpc" id="L37" title="1 of 4 branches missed.">        if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))</span>
-<span class="fc" id="L38">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un nom et un prénom.&quot;);</span>
+<span class="pc bpc" id="L38" title="1 of 4 branches missed.">        if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))</span>
+<span class="fc" id="L39">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un nom et un prénom.&quot;);</span>
         try {
-<span class="fc" id="L40">            var model = mapper.map(participantDto, Participant.class);</span>
-<span class="fc" id="L41">            var result = service.create(model);</span>
-<span class="fc" id="L42">            return mapper.map(result, ParticipantDto.class);</span>
+<span class="fc" id="L41">            var model = mapper.map(participantDto, Participant.class);</span>
+<span class="fc" id="L42">            var result = service.create(model);</span>
+<span class="fc" id="L43">            return mapper.map(result, ParticipantDto.class);</span>
         }
-<span class="nc" id="L44">        catch (Exception e) {</span>
-<span class="nc" id="L45">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du participant.&quot;);</span>
+<span class="fc" id="L45">        catch (Exception e) {</span>
+<span class="fc" id="L46">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du participant.&quot;);</span>
         }
     }
 
@@ -54,14 +55,14 @@ import java.util.stream.Collectors;
     @ResponseStatus(HttpStatus.OK)
     public List&lt;ParticipantDto&gt; getAllParticipants() {
         try {
-<span class="fc" id="L57">            var models = service.getAll();</span>
-<span class="fc" id="L58">            return models.stream().map(model -&gt; mapper.map(model, ParticipantDto.class)).toList();</span>
+<span class="fc" id="L58">            var models = service.getAll();</span>
+<span class="fc" id="L59">            return models.stream().map(model -&gt; mapper.map(model, ParticipantDto.class)).toList();</span>
         }
-<span class="nc" id="L60">        catch(NoResultException e) {</span>
-<span class="nc" id="L61">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
+<span class="fc" id="L61">        catch(NoResultException e) {</span>
+<span class="fc" id="L62">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
         }
-<span class="nc" id="L63">        catch (Exception e) {</span>
-<span class="nc" id="L64">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des participants.&quot;);</span>
+<span class="fc" id="L64">        catch (Exception e) {</span>
+<span class="fc" id="L65">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des participants.&quot;);</span>
         }
     }
     /**
@@ -73,14 +74,14 @@ import java.util.stream.Collectors;
     @ResponseStatus(HttpStatus.OK)
     public ParticipantDto getParticipantById(@PathVariable(&quot;id&quot;) Long id) {
         try{
-<span class="fc" id="L76">            var model = service.getById(id);</span>
-<span class="fc" id="L77">            return mapper.map(model, ParticipantDto.class);</span>
+<span class="fc" id="L77">            var model = service.getById(id);</span>
+<span class="fc" id="L78">            return mapper.map(model, ParticipantDto.class);</span>
         }
-<span class="nc" id="L79">        catch(NoResultException e) {</span>
-<span class="nc" id="L80">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
+<span class="fc" id="L80">        catch(NoResultException e) {</span>
+<span class="fc" id="L81">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
         }
-<span class="fc" id="L82">        catch (Exception e) {</span>
-<span class="fc" id="L83">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du participant.&quot;);</span>
+<span class="fc" id="L83">        catch (Exception e) {</span>
+<span class="fc" id="L84">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du participant.&quot;);</span>
         }
     }
 
@@ -93,20 +94,23 @@ import java.util.stream.Collectors;
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
     public ParticipantDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody ParticipantDto participantDto) {
-<span class="pc bpc" id="L96" title="2 of 4 branches missed.">        if(StringUtils.isNullOrEmpty(participantDto.getNom()) &amp;&amp; StringUtils.isNullOrEmpty(participantDto.getPrenom()))</span>
-<span class="fc" id="L97">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez au moins un nom ou un prénom.&quot;);</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">        if(StringUtils.isNullOrEmpty(participantDto.getNom()) &amp;&amp; StringUtils.isNullOrEmpty(participantDto.getPrenom()))</span>
+<span class="fc" id="L98">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez au moins un nom ou un prénom.&quot;);</span>
         try {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">            if (mapper.map(service.getById(id), ParticipantDto.class).equals(participantDto))</span>
-<span class="nc" id="L100">                throw new ResponseStatusException(HttpStatus.NO_CONTENT, &quot;Le participant n'a pas été modifié.&quot;);</span>
-<span class="nc" id="L101">            var model = mapper.map(participantDto, Participant.class);</span>
-<span class="nc" id="L102">            var result = service.update(id, model);</span>
-<span class="nc" id="L103">            return mapper.map(result, ParticipantDto.class);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (mapper.map(service.getById(id), ParticipantDto.class).equals(participantDto))</span>
+<span class="fc" id="L101">                throw new NoUpdateException(&quot;Le participant n'a pas été modifié.&quot;);</span>
+<span class="fc" id="L102">            var model = mapper.map(participantDto, Participant.class);</span>
+<span class="fc" id="L103">            var result = service.update(id, model);</span>
+<span class="fc" id="L104">            return mapper.map(result, ParticipantDto.class);</span>
         }
-<span class="nc" id="L105">        catch(NoSuchElementException e){</span>
-<span class="nc" id="L106">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L106">        catch(NoUpdateException e) {</span>
+<span class="fc" id="L107">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="nc" id="L108">        catch (Exception e) {</span>
-<span class="nc" id="L109">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la mise à jour du commentaire.&quot;);</span>
+<span class="fc" id="L109">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L110">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+        }
+<span class="fc" id="L112">        catch (Exception e) {</span>
+<span class="fc" id="L113">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la mise à jour du participant.&quot;);</span>
         }
     }
 
@@ -118,14 +122,14 @@ import java.util.stream.Collectors;
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L121">            service.delete(id);</span>
+<span class="fc" id="L125">            service.delete(id);</span>
         }
-<span class="fc" id="L123">        catch(NoSuchElementException e){</span>
-<span class="fc" id="L124">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L127">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L128">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="nc" id="L126">        catch (Exception e) {</span>
-<span class="nc" id="L127">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du commentaire.&quot;);</span>
-<span class="fc" id="L128">        }</span>
-<span class="fc" id="L129">    }</span>
+<span class="fc" id="L130">        catch (Exception e) {</span>
+<span class="fc" id="L131">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du commentaire.&quot;);</span>
+<span class="fc" id="L132">        }</span>
+<span class="fc" id="L133">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
