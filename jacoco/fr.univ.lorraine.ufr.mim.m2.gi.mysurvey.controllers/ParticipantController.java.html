@@ -109,8 +109,8 @@ import java.util.NoSuchElementException;
 <span class="fc" id="L109">        catch(NoUpdateException e) {</span>
 <span class="fc" id="L110">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="nc" id="L112">        catch(NoResultException e){</span>
-<span class="nc" id="L113">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
+<span class="fc" id="L112">        catch(NoResultException e){</span>
+<span class="fc" id="L113">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
         }
 <span class="fc" id="L115">        catch(NoSuchElementException e){</span>
 <span class="fc" id="L116">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
