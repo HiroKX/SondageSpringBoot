@@ -172,6 +172,7 @@ class DateSondageServiceUnitTest {
         assertThrows(DateSondageAlreadyExistsException.class, () -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
 
         verify(sondageService, times(1)).exists(same(sondageId));
+        verify(repository, times(1)).getAllBySondage(same(sondageId));
     }
 
     @Test

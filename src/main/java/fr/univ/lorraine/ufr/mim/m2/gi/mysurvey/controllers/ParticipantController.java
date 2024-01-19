@@ -106,6 +106,9 @@ public class ParticipantController {
         catch(NoUpdateException e) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         }
+        catch(NoResultException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
         catch(NoSuchElementException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

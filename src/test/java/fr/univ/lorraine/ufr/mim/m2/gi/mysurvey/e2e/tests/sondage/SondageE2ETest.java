@@ -234,6 +234,9 @@ class SondageE2ETest {
         requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
         response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
         assertEquals(400, response.statusCode()); //TODO : Devrait être 400
+
+        response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
+        assertEquals(204, response.statusCode());
     }
 
     @Test
