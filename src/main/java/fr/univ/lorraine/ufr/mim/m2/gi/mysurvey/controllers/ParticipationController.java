@@ -33,7 +33,7 @@ public class ParticipationController {
      */
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Créer une participant", description = "Retourne l'objet DateSondee créé correspondant à la participation créée.")
+    @Operation(summary = "Créer un vote d'un participant sur une date", description = "Retourne l'objet DateSondee créé correspondant à la participation créée.")
     public DateSondeeDto create(@PathVariable("id") Long id, @RequestBody DateSondeeDto dto) {
         if(dto.getParticipant() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un participant.");
