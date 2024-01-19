@@ -69,4 +69,4 @@ Pour lancer les tests unitaires du projet, il vous suffit d'exécuter la command
 
 # Accès au projet en ligne :
 
-Vous pouvez accéder à notre projet directement en ligne, en cliquant [ici](https://sondage.ronde-lingons.fr/swagger-ui.html) ! 
+Vous pouvez accéder à notre projet directement en ligne, en cliquant [ici](https://sondage.hirokx.dev/swagger-ui.html) ! 
