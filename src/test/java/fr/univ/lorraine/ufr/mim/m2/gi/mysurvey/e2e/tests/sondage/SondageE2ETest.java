@@ -89,7 +89,7 @@ class SondageE2ETest {
         Sondage sondage2 = new Sondage(4L,
                 "P'tit bowling",
                 "Allez venez les copains",
-                new Date(),
+                new Date(futureDate.getTime()),
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
