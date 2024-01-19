@@ -233,7 +233,7 @@ class DateSondageControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetAllDatesBySondageIdButDateDoesNotExist_thenReturnNotFound() throws Exception {
+    void givenValidParameters_whenGetAllDatesBySondageIdButDateDoesNotExist_thenReturnNoContent() throws Exception {
         when(service.getBySondageId(id)).thenThrow(NoResultException.class);
         MockHttpServletResponse response = mvc.perform(
                         get("/api/datesondage/" + id)
@@ -243,7 +243,7 @@ class DateSondageControllerUnitTest {
         verify(service, times(1)).getBySondageId(id);
         verify(mapper, never()).map(dateSondage, DateSondageDto.class);
         assertThat(response.getContentAsString()).isEmpty();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
