@@ -1,5 +1,10 @@
 # Setup du projet
 
+## Documentation
+La documentation est disponible sur le Wiki du repo Git, nous avons estimé qu'elle était plus simple d'accès là dessus et que beaucoup de projets font de même.
+De plus, les pdf et Markdown sont dédoublés dans le dossier `doc` du projet avec le schéma de la BDD
+
+
 ## Local
 ### Prérequis 
 * **Base de données**
@@ -53,7 +58,7 @@ ADMINER_PORTS= # Ex : 8081 Optionnel si vous ne souhaitez pas que votre interfac
 DB_PORTS= # Ex : 5432 Optionnel si vous ne souhaitez pas que votre base de données soit accessible de l'extérieur.
 ```
 > - DB_USERNAME : Le login avec lequel vous accèderez à la base.
->  - DB_PASSWORD : Le mot de passe avec lequel vous accèderez à la base.
+> - DB_PASSWORD : Le mot de passe avec lequel vous accèderez à la base.
 > - DB_NAME : Le nom de la base.
 > - ADMINER_PORTS : Le port d'entrée de l'interface Adminer.
 > - DB_PORTS : Le port d'entrée de la base PostGreSQL.
