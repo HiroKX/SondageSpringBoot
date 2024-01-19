@@ -233,8 +233,32 @@ class SondageE2ETest {
                 participant);
         requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
         response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
+        assertEquals(201, response.statusCode()); //TODO : Devrait être 400
+        response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID); //TODO : supprimer
+    }
+
+    @Test
+    void testNewSondage(){
+        // CREATE PARTICIPANT
+        Participant participant = new Participant(1L, "Sarah", "Connor");
+        String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        long createdParticipantID = response.jsonPath().getLong("participantId");
+        participant.setParticipantId(createdParticipantID);
+        // CREATE SONDAGE BUT WITH PAST DATE
+        Sondage sondage = new Sondage(1L,
+                "Aller manger au KFC",
+                "Ça fait longtemps que j'ai pas mangé un Bucket",
+                new Date(futureDate.getTime()),
+                false,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                participant);
+        requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
+        response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
+        assertEquals(201, response.statusCode());
         long createdSondageID = response.jsonPath().getLong("sondageId");
-        sondage.setSondageId(createdSondageID);
+
         // CREATE DATESONDAGE AND ADD IT TO THE SONDAGE
         Date fixedDate = new Date(futureDate.getTime()+1000000);
         requestBody = DateSondageSampleE2E.generateDateSondagePOSTBody(fixedDate);
