@@ -72,7 +72,7 @@ import java.util.TimeZone;
 <span class="fc" id="L72">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
 <span class="fc" id="L74">        catch(NoResultException e) {</span>
-<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
+<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
 <span class="fc" id="L77">        catch (Exception e) {</span>
 <span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des dates.&quot;);</span>
