@@ -163,7 +163,7 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenGetAllParticipantsButNoParticipantExist_thenReturnNotFound() throws Exception {
+    void givenValidParameters_whenGetAllParticipantsButNoParticipantExist_thenReturnNoContent() throws Exception {
         when(service.getAll()).thenThrow(NoResultException.class);
 
         MockHttpServletResponse response = mvc.perform(get("/api/participant/"))
@@ -172,7 +172,7 @@ class ParticipantControllerUnitTest {
         verify(service, times(1)).getAll();
         verify(mapper, never()).map(participant, ParticipantDto.class);
         assertThat(response.getContentAsString()).isEmpty();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
     @Test
