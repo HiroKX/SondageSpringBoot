@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,12 @@ public class SondageController {
 
     /**
      * Create a sondage
-     * @param sondageDto sondage
-     * @return sondage
+     * @param sondageDto sondage à créer
+     * @return sondage créé
      */
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Créer un sondage", description = "Retourne le sondage créé.")
     public SondageDto create(@RequestBody SondageDto sondageDto) {
         if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
@@ -62,10 +64,11 @@ public class SondageController {
 
     /**
      * Get ALl sondages
-     * @return List de sondage
+     * @return Liste des sondages existants
      */
     @GetMapping(value = "/")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer tous les sondages", description = "Retourne tous les sondages existants.")
     public List<SondageDto> getAllSondages() {
         try {
             var models = service.getAll();
@@ -81,11 +84,12 @@ public class SondageController {
 
     /**
      * Get sondage by id
-     * @param id sondage
-     * @return sondage
+     * @param id du sondage
+     * @return Sondage correspondant à l'id
      */
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer un sondage par son id", description = "Retourne le sondage correspondant.")
     public SondageDto getSondageById(@PathVariable("id") Long id) {
         try{
             var model = service.getById(id);
@@ -101,11 +105,12 @@ public class SondageController {
 
     /**
      * Get Meilleur date d'un sondage
-     * @param id sondage
-     * @return List des meilleures dates
+     * @param id du sondage
+     * @return Liste des meilleures dates
      */
     @GetMapping(value = "/{id}/best")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer les meilleures dates pour un sondage", description = "Retourne la liste des meilleures dates pour un sondage donné.")
     public List<Date> getBestDateBySondageId(@PathVariable("id") Long id) {
         try {
             return request.getBestDateBySondageId(id);
@@ -120,11 +125,12 @@ public class SondageController {
 
     /**
      * Get Possible meilleur date d'un sondage
-     * @param id sondage
+     * @param id du sondage
      * @return Liste des potentielles meilleures dates
      */
     @GetMapping(value = "/{id}/maybe")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Récupérer les potentielles meilleures dates d'un sondage", description = "Retourne la liste des potentielles meilleures dates pour un sondage donné.")
     public List<Date> getMaybeBestBySondageId(@PathVariable("id") Long id) {
         try {
             return request.getMaybeBestDateBySondageId(id);
@@ -139,12 +145,13 @@ public class SondageController {
 
     /**
      * Update a sondage
-     * @param id id du sondage
-     * @param sondageDto sondageDto
-     * @return SondageDto
+     * @param id du sondage à modifier
+     * @param sondageDto sondage à modifier
+     * @return sondage modifié
      */
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Modifier un sondage", description = "Retourne le sondage modifié.")
     public SondageDto update(@PathVariable("id") Long id, @RequestBody SondageDto sondageDto) {
         if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
@@ -168,10 +175,11 @@ public class SondageController {
 
     /**
      * Delete a sondage
-     * @param id du sondage
+     * @param id du sondage à supprimer
      */
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Supprimer un sondage", description = "Ne retourne rien.")
     public void delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);

@@ -6,6 +6,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedExceptio
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Choix;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.apache.commons.lang3.EnumUtils;
 import org.modelmapper.ModelMapper;
@@ -26,13 +27,13 @@ public class ParticipationController {
 
     /**
      * Ajout d'un participant (A utiliser sans dateSondeeId)
-     * Verifier
-     * @param id DateSondage
-     * @param dto DateSondeeDto
-     * @return DateSondeeDto
+     * @param id de la DateSondage
+     * @param dto DateSondeeDto de la participation
+     * @return DateSondee créée
      */
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Créer une participant", description = "Retourne l'objet DateSondee créé correspondant à la participation créée.")
     public DateSondeeDto create(@PathVariable("id") Long id, @RequestBody DateSondeeDto dto) {
         if(dto.getParticipant() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un participant.");
