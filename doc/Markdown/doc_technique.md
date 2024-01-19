@@ -122,8 +122,8 @@ Nous avons fait le choix d'utiliser Swagger afin de fournir à l'utilisateur une
 Celle-ci est dite "RESTFUL" puisque les méthodes suivent la norme [RFC2616](https://www.rfc-editor.org/rfc/rfc2616) GET permettent d'obtenir, POST de créer, PUT de modifier et DELETE de supprimer.
 
 Afin de pouvoir comprendre comment l'api fonctionne, le descriptif des routes est dispnibles dans [Routes HTTP](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#routes-http) et egalement sur :
-* La documentation de l'API REST est disponible via : https://sondage.ronde-lingons.fr/v3/api-docs
-* La documentation de l'API REST lisible est disponible via Swagger : https://sondage.ronde-lingons.fr/swagger-ui/index.html
+* La documentation de l'API REST est disponible via : https://sondage.hirokx.dev/v3/api-docs
+* La documentation de l'API REST lisible est disponible via Swagger : https://sondage.hirokx.dev/swagger-ui/index.html
 
 ## Routes HTTP
 ### Sondage
