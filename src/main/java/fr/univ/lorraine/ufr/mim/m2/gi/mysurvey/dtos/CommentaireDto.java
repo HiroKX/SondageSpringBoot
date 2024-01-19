@@ -37,8 +37,7 @@ public class CommentaireDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CommentaireDto)) return false;
-        CommentaireDto that = (CommentaireDto) o;
+        if (!(o instanceof CommentaireDto that)) return false;
         return Objects.equals(getCommentaireId(), that.getCommentaireId()) && Objects.equals(getCommentaire(), that.getCommentaire()) && Objects.equals(getParticipant(), that.getParticipant());
     }
 

@@ -13,6 +13,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>MySurvey</name>
     <description>MySurvey</description>
+    <scm>
+        <connection>scm:git:https://github.com/HiroKX/SondageSpringBoot</connection>
+        <developerConnection>scm:git:https://thomas-felker@github.com/HiroKX/SondageSpringBoot</developerConnection>
+        <url>https://github.com/HiroKX/SondageSpringBoot</url>
+    </scm>
     <properties>
         <java.version>19</java.version>
         <jacoco.version>0.8.11</jacoco.version>
@@ -44,6 +49,24 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
@@ -69,4 +92,76 @@
             <version>0.2.6</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/mysurvey/utils/**</exclude>
+                        <exclude>**/mysurvey/configurations/**</exclude>
+                        <exclude>**/mysurvey/MySurveyApplication.class</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>generate-code-coverage-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/coverage/jacoco</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.15.3</version>
+                <configuration>
+                    <reportsDirectory>target/coverage/pitest</reportsDirectory>
+                    <mutationThreshold>65</mutationThreshold>
+                    <excludedClasses>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.configurations.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.**</excludedClass>
+                        <excludedClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.**</excludedClass>
+                    </excludedClasses>
+                    <excludedTestClasses>
+                        <excludedTestClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.*</excludedTestClass>
+                    </excludedTestClasses>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>LATEST</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.MySurveyApplication</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

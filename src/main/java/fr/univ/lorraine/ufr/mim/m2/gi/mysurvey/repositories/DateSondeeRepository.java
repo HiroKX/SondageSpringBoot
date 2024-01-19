@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,11 @@ import java.util.List;
 
 @Repository
 public interface DateSondeeRepository extends JpaRepository<DateSondee, Long> {
+
+    @Query("SELECT d FROM DateSondee d " +
+            "WHERE d.dateSondage.dateSondageId= :dateSondageId " +
+            "AND d.participant.participantId = :participantId")
+    List<DateSondee> getAllByDateSondageAndParticipant(Long dateSondageId, Long participantId);
 
     @Query(value = "select d.date " +
             "FROM (SELECT max(nb) " +

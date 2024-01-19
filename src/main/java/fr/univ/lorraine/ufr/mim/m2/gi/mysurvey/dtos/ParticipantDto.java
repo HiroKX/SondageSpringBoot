@@ -37,8 +37,7 @@ public class ParticipantDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ParticipantDto)) return false;
-        ParticipantDto that = (ParticipantDto) o;
+        if (!(o instanceof ParticipantDto that)) return false;
         return Objects.equals(getParticipantId(), that.getParticipantId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getPrenom(), that.getPrenom());
     }
 
