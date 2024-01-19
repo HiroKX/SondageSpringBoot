@@ -80,5 +80,5 @@ Pour lancer le projet, il faut exécuter la classe compilée ``MySurveyApplicati
 # Accès en ligne
 
 Voici un lien pour y accéder : 
-* Swagger : https://sondage.ronde-lingons.fr/swagger-ui.html
-* Documentation : https://sondage.ronde-lingons.fr/v3/api-docs
+* Swagger : https://sondage.hirokx.dev/swagger-ui.html
+* Documentation : https://sondage.hirokx.dev/v3/api-docs
