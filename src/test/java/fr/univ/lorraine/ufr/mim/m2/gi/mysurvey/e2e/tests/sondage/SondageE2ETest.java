@@ -42,8 +42,7 @@ class SondageE2ETest {
 
         // GET ALL WHEN NO SONDAGE
         response = CrudRestAssured.dbGET("api/sondage/");
-        assertEquals(200, response.statusCode());
-        assertEquals("[]", response.getBody().print());
+        assertEquals(404, response.statusCode());
 
         // GET DATE CLOTURE WHEN NO SONDAGE
         response = CrudRestAssured.dbGET("api/sondage/99/dates");
@@ -138,11 +137,11 @@ class SondageE2ETest {
 
         // SUPPRESSION PARTICIPANT
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
-        assertEquals(200, response.statusCode());
+        assertEquals(204, response.statusCode());
 
         // SUPPRESSION SONDAGE
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
-        assertEquals(200, response.statusCode());
+        assertEquals(404, response.statusCode());
     }
     @Test
     void testDateSondageOnSondage() {
@@ -156,11 +155,11 @@ class SondageE2ETest {
                 new ArrayList<>(),
                 participant);
         // CREATE PARTICIPANT
-        // CREATE SONDAGE
         String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
         Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
         long createdParticipantID = response.jsonPath().getLong("participantId");
         participant.setParticipantId(createdParticipantID);
+        // CREATE SONDAGE
         sondage.setCreateBy(participant);
         requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
         response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
@@ -189,13 +188,12 @@ class SondageE2ETest {
         // TEST ADD DATE ALREADY EXISTING
         requestBody = DateSondageSampleE2E.generateDateSondagePOSTBody(fixedDate);
         response = CrudRestAssured.dbPOST("/api/datesondage/"+createdSondageID, requestBody);
-        assertEquals(500, response.statusCode());
+        assertEquals(400, response.statusCode());
 
         // TEST ADD DATE IN THE PAST
-        //requestBody = DateSondageSample.generateDateSondagePOSTBody(pastDate);
-        //response = CrudRestAssured.addToDB("/api/datesondage/"+createdSondageID, requestBody);
-        //assertEquals(201, response.statusCode()); // TODO : Repassage en 400
-        //assertEquals("Vérifier la date", response.getBody().print());
+        requestBody = DateSondageSampleE2E.generateDateSondagePOSTBody(pastDate);
+        response = CrudRestAssured.dbPOST("/api/datesondage/"+createdSondageID, requestBody);
+        assertEquals(400, response.statusCode());
 
         // TEST POST DATESONDAGE FAKE SONDAGE
         response = CrudRestAssured.dbPOST("/api/datesondage/999", requestBody);
@@ -203,7 +201,7 @@ class SondageE2ETest {
 
         // TEST SUPPRESSION DE DATESONDAGE
         response = CrudRestAssured.dbDELETE("/api/datesondage/"+createdDateSondageID);
-        assertEquals(200, response.statusCode());
+        assertEquals(204, response.statusCode());
 
         // TEST GET DES DATES DU SONDAGE
         response = CrudRestAssured.dbGET("/api/datesondage/"+createdSondageID);
@@ -213,7 +211,7 @@ class SondageE2ETest {
 
         // DELETE PARTICIPANT AND SONDAGE
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
-        response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
+        assertEquals(204, response.statusCode());
     }
     @Test
     void testVoteSondagePastFinDate() {
@@ -251,7 +249,6 @@ class SondageE2ETest {
 
         // DELETE PARTICIPANT AND SONDAGE
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
-        response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
     }
     @Test
     void testVoteSondageShouldWork() {
@@ -289,9 +286,7 @@ class SondageE2ETest {
         assertEquals(Choix.INDISPONIBLE.name(), response.jsonPath().getString("choix"));
         // DELETE PARTICIPANT AND SONDAGE
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
-        response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
     }
-
     @Test
     void crudCommentaireOnSondage() {
         // CREATE PARTICIPANT

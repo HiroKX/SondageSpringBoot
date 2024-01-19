@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping(value = "/api/datesondage")
@@ -34,8 +35,12 @@ public class DateSondageController {
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public DateSondageDto create(@PathVariable("id") Long id, @RequestBody DateSondageDto dto) {
-        if(dto.getDate() == null || dto.getDate().before(new Date()))
+        TimeZone tz = TimeZone.getDefault();        // pour enlever le fuseau horaire set par le système local
+        if (dto.getDate() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez une date valide.");
+        Date localDTO = new Date(dto.getDate().getTime() - tz.getRawOffset());
+        if(localDTO.before(new Date()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Vous ne pouvez pas donner une date dans le passé");
         try{
             service.checkIfDateAlreadyExists(id, dto);
             var model = mapper.map(dto, DateSondage.class);

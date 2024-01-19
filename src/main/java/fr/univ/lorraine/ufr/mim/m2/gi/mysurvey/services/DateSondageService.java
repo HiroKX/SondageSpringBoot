@@ -9,6 +9,7 @@ import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -55,8 +56,16 @@ public class DateSondageService {
 
     public void checkIfDateAlreadyExists(Long sondageId, DateSondageDto dto) throws DateSondageAlreadyExistsException {
         List<DateSondage> datesSondages = repository.getAllBySondage(sondageId);
+        Calendar calendarDTO = Calendar.getInstance();
+        calendarDTO.setTime(dto.getDate());
+        Calendar calendarCheck = Calendar.getInstance();
         for (DateSondage dateSondage : datesSondages) {
-            if (dateSondage.getDate().equals(dto.getDate()))
+            calendarCheck.setTime(dateSondage.getDate());
+            if (calendarDTO.getWeekYear() == calendarCheck.getWeekYear() &&
+                    calendarDTO.get(Calendar.MONTH) == calendarCheck.get(Calendar.MONTH) &&
+                    calendarDTO.get(Calendar.DAY_OF_MONTH) == calendarCheck.get(Calendar.DAY_OF_MONTH) &&
+                    calendarDTO.get(Calendar.HOUR) == calendarCheck.get(Calendar.HOUR) &&
+                    calendarDTO.get(Calendar.MINUTE) == calendarCheck.get(Calendar.MINUTE))
                 throw new DateSondageAlreadyExistsException();
         }
     }
