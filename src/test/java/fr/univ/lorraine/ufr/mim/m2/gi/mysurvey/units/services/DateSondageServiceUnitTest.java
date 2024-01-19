@@ -10,9 +10,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import java.util.*;
 
@@ -29,6 +27,7 @@ class DateSondageServiceUnitTest {
 
     @InjectMocks
     private DateSondageService service;
+
 
     @BeforeEach
     void setUp() {
@@ -191,18 +190,27 @@ class DateSondageServiceUnitTest {
         DateSondageDto dateSondageDto = new DateSondageDto();
         Date d = new Date();
         dateSondageDto.setDate(d);
+        Calendar calendarDto = mock(Calendar.class);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 1);
+        Date dateDansUnAn = calendar.getTime();
 
-        Calendar calendar = Calendar.getInstance(); // Obtient une instance de Calendar représentant la date/heure actuelle
-        calendar.add(Calendar.YEAR, 1); // Ajoute un an à la date/heure actuelle
-
-        Date dateDansUnAn = calendar.getTime(); // Convertit le Calendar en Date
         DateSondage ds = new DateSondage();
         ds.setDate(dateDansUnAn);
         List<DateSondage> dateSondages = List.of(ds);
         when(sondageService.exists(sondageId)).thenReturn(true);
+
         when(repository.getAllBySondage(sondageId)).thenReturn(dateSondages);
 
+        when(calendarDto.getWeekYear()).thenReturn(Calendar.WEEK_OF_YEAR);
+        when(calendarDto.get(Calendar.MONTH)).thenReturn(Calendar.MONTH);
+        when(calendarDto.get(Calendar.DAY_OF_MONTH)).thenReturn(Calendar.DAY_OF_MONTH);
+        when(calendarDto.get(Calendar.HOUR)).thenReturn(Calendar.HOUR);
+        when(calendarDto.get(Calendar.MINUTE)).thenReturn(Calendar.MINUTE);
+
         assertDoesNotThrow(() -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
-        verify(sondageService, times(1)).exists(same(sondageId));
+
+        verify(sondageService, times(1)).exists(same(sondageId)); // Utilisez same pour vérifier l'égalité de l'argument
+
     }
 }
