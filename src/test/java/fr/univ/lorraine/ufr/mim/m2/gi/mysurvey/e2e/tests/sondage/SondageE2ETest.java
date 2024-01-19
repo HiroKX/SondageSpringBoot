@@ -150,7 +150,7 @@ class SondageE2ETest {
         Sondage sondage = new Sondage(8L,
                 "Aller en cours de Production Logicielle",
                 "Il y a la soutenance !",
-                new Date(),
+                new Date(futureDate.getTime()),
                 false,
                 new ArrayList<>(),
                 new ArrayList<>(),
