@@ -9,8 +9,11 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.e2e.dataset.sondage.SondageSample
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -321,7 +324,7 @@ class SondageE2ETest {
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
     }
     @Test
-    void testVoteDatesBest_VoteDatesMaybe() {
+    void testVoteDatesBest_VoteDatesMaybe() throws JSONException {
         // CREATE 3 PARTICIPANTS
         Participant participant = new Participant(1L, "Potter", "Harry");
         String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
@@ -417,10 +420,11 @@ class SondageE2ETest {
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage3, requestBody);
         assertEquals(201, response.statusCode());
 
-        // TEST BEST DATE -> Devrait return date2 et date3
+        // TEST BEST DATE -> Devrait return date2 et date3 OU date3 et date2
         response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/best");
         assertEquals(200, response.statusCode());
         assertEquals("[\""+recieveDate(fixedDate2)+"\",\""+ recieveDate(fixedDate3)+"\"]", response.getBody().print());
+        JSONAssert.assertEquals("[\""+recieveDate(fixedDate2)+"\",\""+ recieveDate(fixedDate3)+"\"]", response.getBody().print(), JSONCompareMode.LENIENT);
 
         // DELETE PARTICIPANTS AND THE SONDAGE
         response = CrudRestAssured.dbDELETE("/api/participant/"+participant.getParticipantId());
