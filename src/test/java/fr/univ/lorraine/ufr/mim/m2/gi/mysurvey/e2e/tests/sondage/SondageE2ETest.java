@@ -234,7 +234,7 @@ class SondageE2ETest {
                 participant);
         requestBody = SondageSampleE2E.generateSondagePostBody(sondage);
         response = CrudRestAssured.dbPOST("/api/sondage/", requestBody);
-        assertEquals(400, response.statusCode()); //TODO : Devrait être 400
+        assertEquals(400, response.statusCode());
 
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
         assertEquals(204, response.statusCode());
@@ -431,10 +431,10 @@ class SondageE2ETest {
         requestBody = ParticiperSondageSampleE2E.generateParticiper(participant.getParticipantId(), Choix.valueOf(Choix.DISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage2, requestBody);
         assertEquals(201, response.statusCode());
-        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant2.getParticipantId(), Choix.valueOf(Choix.PEUTETRE.name()));
+        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant2.getParticipantId(), Choix.valueOf(Choix.DISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage2, requestBody);
         assertEquals(201, response.statusCode());
-        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant3.getParticipantId(), Choix.valueOf(Choix.PEUTETRE.name()));
+        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant3.getParticipantId(), Choix.valueOf(Choix.INDISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage2, requestBody);
         assertEquals(201, response.statusCode());
 
@@ -452,10 +452,10 @@ class SondageE2ETest {
         requestBody = ParticiperSondageSampleE2E.generateParticiper(participant.getParticipantId(), Choix.valueOf(Choix.DISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage3, requestBody);
         assertEquals(201, response.statusCode());
-        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant2.getParticipantId(), Choix.valueOf(Choix.PEUTETRE.name()));
+        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant2.getParticipantId(), Choix.valueOf(Choix.DISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage3, requestBody);
         assertEquals(201, response.statusCode());
-        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant3.getParticipantId(), Choix.valueOf(Choix.PEUTETRE.name()));
+        requestBody = ParticiperSondageSampleE2E.generateParticiper(participant3.getParticipantId(), Choix.valueOf(Choix.INDISPONIBLE.name()));
         response = CrudRestAssured.dbPOST("/api/participer/"+createdDateSondage3, requestBody);
         assertEquals(201, response.statusCode());
 
