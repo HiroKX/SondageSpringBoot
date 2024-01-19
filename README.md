@@ -1,5 +1,9 @@
 [![Test Coverage](https://github.com/HiroKX/SondageSpringBoot/blob/gh-pages/jacoco/jacoco.svg)](https://hirokx.github.io/SondageSpringBoot/jacoco)
 
+# Documentation 
+La documentation est disponible sur le Wiki du repo Git, nous avons estimé qu'elle était plus simple d'accès là dessus et que beaucoup de projets font de même.
+De plus, les pdf et Markdown sont dédoublés dans le dossier `doc` du projet avec le schéma de la BDD
+
 # Setup et lancement du projet
 Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker.
 Vous devrez créer un fichier ".env" (plus d'informations dans la partie Docker) qui vous permettra d'instancier un conteneur hébergeant une base de données **PostGreSQL**, une interface **Adminer** (qui est un gestionnaire de database simple en php), ainsi que l'application entière.
