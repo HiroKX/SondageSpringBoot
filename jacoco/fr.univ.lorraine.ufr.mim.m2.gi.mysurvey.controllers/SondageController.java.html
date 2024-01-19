@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = &quot;/api/sondage&quot;)
-<span class="fc" id="L21">public class SondageController {</span>
+<span class="fc" id="L22">public class SondageController {</span>
 
     @Autowired
     private SondageService service;
@@ -31,157 +32,164 @@ import java.util.NoSuchElementException;
 
     /**
      * Create a sondage
-     * @param sondageDto sondage
-     * @return sondage
+     * @param sondageDto sondage à créer
+     * @return sondage créé
      */
     @PostMapping(value = &quot;/&quot;)
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = &quot;Créer un sondage&quot;, description = &quot;Retourne le sondage créé.&quot;)
     public SondageDto create(@RequestBody SondageDto sondageDto) {
-<span class="fc bfc" id="L40" title="All 4 branches covered.">        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span>
-<span class="fc" id="L41">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;La date de fin doit être supérieure à la date de début.&quot;);</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(sondageDto.getCreateBy() == null)</span>
-<span class="fc" id="L43">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir un créateur.&quot;);</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if(sondageDto.getNom() == null)</span>
-<span class="fc" id="L45">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir un nom.&quot;);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(sondageDto.getDescription() == null)</span>
-<span class="fc" id="L47">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir une description.&quot;);</span>
-<span class="fc bfc" id="L48" title="All 4 branches covered.">        if(sondageDto.getCloture() == null || sondageDto.getCloture())</span>
-<span class="fc" id="L49">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit être ouvert.&quot;);</span>
+<span class="fc bfc" id="L42" title="All 4 branches covered.">        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span>
+<span class="fc" id="L43">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;La date de fin doit être supérieure à la date de début.&quot;);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if(sondageDto.getCreateBy() == null)</span>
+<span class="fc" id="L45">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir un créateur.&quot;);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(sondageDto.getNom() == null)</span>
+<span class="fc" id="L47">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir un nom.&quot;);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(sondageDto.getDescription() == null)</span>
+<span class="fc" id="L49">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit avoir une description.&quot;);</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">        if(sondageDto.getCloture() == null || sondageDto.getCloture())</span>
+<span class="fc" id="L51">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Le sondage doit être ouvert.&quot;);</span>
         try {
-<span class="fc" id="L51">            var model = mapper.map(sondageDto, Sondage.class);</span>
-<span class="fc" id="L52">            var result = service.create(sondageDto.getCreateBy(), model);</span>
-<span class="fc" id="L53">            return mapper.map(result, SondageDto.class);</span>
+<span class="fc" id="L53">            var model = mapper.map(sondageDto, Sondage.class);</span>
+<span class="fc" id="L54">            var result = service.create(sondageDto.getCreateBy(), model);</span>
+<span class="fc" id="L55">            return mapper.map(result, SondageDto.class);</span>
         }
-<span class="fc" id="L55">        catch(NoSuchElementException e) {</span>
-<span class="fc" id="L56">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L57">        catch(NoSuchElementException e) {</span>
+<span class="fc" id="L58">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L58">        catch (Exception e) {</span>
-<span class="fc" id="L59">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du sondage.&quot;);</span>
+<span class="fc" id="L60">        catch (Exception e) {</span>
+<span class="fc" id="L61">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du sondage.&quot;);</span>
         }
     }
 
     /**
      * Get ALl sondages
-     * @return List de sondage
+     * @return Liste des sondages existants
      */
     @GetMapping(value = &quot;/&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer tous les sondages&quot;, description = &quot;Retourne tous les sondages existants.&quot;)
     public List&lt;SondageDto&gt; getAllSondages() {
         try {
-<span class="fc" id="L71">            var models = service.getAll();</span>
-<span class="fc" id="L72">            return models.stream().map(model -&gt; mapper.map(model, SondageDto.class)).toList();</span>
+<span class="fc" id="L74">            var models = service.getAll();</span>
+<span class="fc" id="L75">            return models.stream().map(model -&gt; mapper.map(model, SondageDto.class)).toList();</span>
         }
-<span class="fc" id="L74">        catch(NoResultException e) {</span>
-<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
+<span class="fc" id="L77">        catch(NoResultException e) {</span>
+<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="fc" id="L77">        catch(Exception e) {</span>
-<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des sondages.&quot;);</span>
+<span class="fc" id="L80">        catch(Exception e) {</span>
+<span class="fc" id="L81">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des sondages.&quot;);</span>
         }
     }
 
     /**
      * Get sondage by id
-     * @param id sondage
-     * @return sondage
+     * @param id du sondage
+     * @return Sondage correspondant à l'id
      */
     @GetMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer un sondage par son id&quot;, description = &quot;Retourne le sondage correspondant.&quot;)
     public SondageDto getSondageById(@PathVariable(&quot;id&quot;) Long id) {
         try{
-<span class="fc" id="L91">            var model = service.getById(id);</span>
-<span class="fc" id="L92">            return mapper.map(model, SondageDto.class);</span>
+<span class="fc" id="L95">            var model = service.getById(id);</span>
+<span class="fc" id="L96">            return mapper.map(model, SondageDto.class);</span>
         }
-<span class="fc" id="L94">        catch(NoResultException e) {</span>
-<span class="fc" id="L95">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
+<span class="fc" id="L98">        catch(NoResultException e) {</span>
+<span class="fc" id="L99">            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span>
         }
-<span class="fc" id="L97">        catch (Exception e) {</span>
-<span class="fc" id="L98">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
+<span class="fc" id="L101">        catch (Exception e) {</span>
+<span class="fc" id="L102">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
         }
     }
 
     /**
      * Get Meilleur date d'un sondage
-     * @param id sondage
-     * @return List des meilleures dates
+     * @param id du sondage
+     * @return Liste des meilleures dates
      */
     @GetMapping(value = &quot;/{id}/best&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer les meilleures dates pour un sondage&quot;, description = &quot;Retourne la liste des meilleures dates pour un sondage donné.&quot;)
     public List&lt;Date&gt; getBestDateBySondageId(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L111">            return request.getBestDateBySondageId(id);</span>
+<span class="fc" id="L116">            return request.getBestDateBySondageId(id);</span>
         }
-<span class="fc" id="L113">        catch(NoSuchElementException e) {</span>
-<span class="fc" id="L114">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L118">        catch(NoSuchElementException e) {</span>
+<span class="fc" id="L119">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L116">        catch (Exception e) {</span>
-<span class="fc" id="L117">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
+<span class="fc" id="L121">        catch (Exception e) {</span>
+<span class="fc" id="L122">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
         }
     }
 
     /**
      * Get Possible meilleur date d'un sondage
-     * @param id sondage
+     * @param id du sondage
      * @return Liste des potentielles meilleures dates
      */
     @GetMapping(value = &quot;/{id}/maybe&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer les potentielles meilleures dates d'un sondage&quot;, description = &quot;Retourne la liste des potentielles meilleures dates pour un sondage donné.&quot;)
     public List&lt;Date&gt; getMaybeBestBySondageId(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L130">            return request.getMaybeBestDateBySondageId(id);</span>
+<span class="fc" id="L136">            return request.getMaybeBestDateBySondageId(id);</span>
         }
-<span class="fc" id="L132">        catch(NoSuchElementException e) {</span>
-<span class="fc" id="L133">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L138">        catch(NoSuchElementException e) {</span>
+<span class="fc" id="L139">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L135">        catch (Exception e) {</span>
-<span class="fc" id="L136">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
+<span class="fc" id="L141">        catch (Exception e) {</span>
+<span class="fc" id="L142">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération du sondage.&quot;);</span>
         }
     }
 
     /**
      * Update a sondage
-     * @param id id du sondage
-     * @param sondageDto sondageDto
-     * @return SondageDto
+     * @param id du sondage à modifier
+     * @param sondageDto sondage à modifier
+     * @return sondage modifié
      */
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Modifier un sondage&quot;, description = &quot;Retourne le sondage modifié.&quot;)
     public SondageDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody SondageDto sondageDto) {
-<span class="fc bfc" id="L149" title="All 4 branches covered.">        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span>
-<span class="fc" id="L150">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;La date de fin doit être supérieure à la date de début.&quot;);</span>
+<span class="fc bfc" id="L156" title="All 4 branches covered.">        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span>
+<span class="fc" id="L157">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;La date de fin doit être supérieure à la date de début.&quot;);</span>
         try {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">            if (service.getById(id).equals(mapper.map(sondageDto, Sondage.class)))</span>
-<span class="fc" id="L153">                throw new NoUpdateException(&quot;Le sondage n'a pas été modifié.&quot;);</span>
-<span class="fc" id="L154">            Sondage model = mapper.map(sondageDto, Sondage.class);</span>
-<span class="fc" id="L155">            var result = service.update(id, model);</span>
-<span class="fc" id="L156">            return mapper.map(result, SondageDto.class);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (service.getById(id).equals(mapper.map(sondageDto, Sondage.class)))</span>
+<span class="fc" id="L160">                throw new NoUpdateException(&quot;Le sondage n'a pas été modifié.&quot;);</span>
+<span class="fc" id="L161">            Sondage model = mapper.map(sondageDto, Sondage.class);</span>
+<span class="fc" id="L162">            var result = service.update(id, model);</span>
+<span class="fc" id="L163">            return mapper.map(result, SondageDto.class);</span>
         }
-<span class="fc" id="L158">        catch(NoUpdateException e) {</span>
-<span class="fc" id="L159">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
+<span class="fc" id="L165">        catch(NoUpdateException e) {</span>
+<span class="fc" id="L166">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="fc" id="L161">        catch(NoResultException e){</span>
-<span class="fc" id="L162">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L168">        catch(NoResultException e){</span>
+<span class="fc" id="L169">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L164">        catch (Exception e) {</span>
-<span class="fc" id="L165">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la mise à jour du sondage.&quot;);</span>
+<span class="fc" id="L171">        catch (Exception e) {</span>
+<span class="fc" id="L172">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la mise à jour du sondage.&quot;);</span>
         }
     }
 
     /**
      * Delete a sondage
-     * @param id du sondage
+     * @param id du sondage à supprimer
      */
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = &quot;Supprimer un sondage&quot;, description = &quot;Ne retourne rien.&quot;)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L177">            service.delete(id);</span>
+<span class="fc" id="L185">            service.delete(id);</span>
         }
-<span class="fc" id="L179">        catch(NoSuchElementException e) {</span>
-<span class="fc" id="L180">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L187">        catch(NoSuchElementException e) {</span>
+<span class="fc" id="L188">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L182">        catch (Exception e) {</span>
-<span class="fc" id="L183">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du sondage.&quot;);</span>
-<span class="fc" id="L184">        }</span>
-<span class="fc" id="L185">    }</span>
+<span class="fc" id="L190">        catch (Exception e) {</span>
+<span class="fc" id="L191">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du sondage.&quot;);</span>
+<span class="fc" id="L192">        }</span>
+<span class="fc" id="L193">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

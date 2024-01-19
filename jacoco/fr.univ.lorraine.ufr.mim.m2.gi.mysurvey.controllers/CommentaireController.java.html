@@ -5,6 +5,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.StringUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = &quot;/api/commentaire&quot;)
-<span class="fc" id="L20">public class CommentaireController {</span>
+<span class="fc" id="L21">public class CommentaireController {</span>
 
     @Autowired
     private CommentaireService service;
@@ -28,99 +29,103 @@ import java.util.NoSuchElementException;
     /**
      *
      * @param id du sondage
-     * @param commentaireDto
-     * @return
+     * @param commentaireDto à créer
+     * @return commentaire créé
      */
     @PostMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = &quot;Créer un commentaire&quot;, description = &quot;Retourne le commentaire créé.&quot;)
     public CommentaireDto create(@PathVariable(&quot;id&quot;) Long id, @RequestBody CommentaireDto commentaireDto) {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
-<span class="fc" id="L38">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(commentaireDto.getParticipant() == null)</span>
-<span class="fc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
+<span class="fc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(commentaireDto.getParticipant() == null)</span>
+<span class="fc" id="L42">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
         try{
-<span class="fc" id="L42">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
-<span class="fc" id="L43">            var result = service.create(id, commentaireDto.getParticipant(), model);</span>
-<span class="fc" id="L44">            return mapper.map(result, CommentaireDto.class);</span>
+<span class="fc" id="L44">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
+<span class="fc" id="L45">            var result = service.create(id, commentaireDto.getParticipant(), model);</span>
+<span class="fc" id="L46">            return mapper.map(result, CommentaireDto.class);</span>
         }
-<span class="fc" id="L46">        catch(NoSuchElementException e){</span>
-<span class="fc" id="L47">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L48">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L49">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L49">        catch (Exception e) {</span>
-<span class="fc" id="L50">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire.&quot;);</span>
+<span class="fc" id="L51">        catch (Exception e) {</span>
+<span class="fc" id="L52">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création du commentaire.&quot;);</span>
         }
     }
 
     /**
      * Récupération des commentaires d'un sondage
-     * @param id
-     * @return
+     * @param id du sondage
+     * @return la liste des commentaires récupérés
      */
     @GetMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer tous les commentaires d'un sondage&quot;, description = &quot;Retourne la liste des commentaires récupérés.&quot;)
     public List&lt;CommentaireDto&gt; getAllCommentairesBySondageId(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L63">            var models = service.getBySondageId(id);</span>
-<span class="fc" id="L64">            return models.stream()</span>
-<span class="fc" id="L65">                    .map(model -&gt; mapper.map(model, CommentaireDto.class))</span>
-<span class="fc" id="L66">                    .toList();</span>
+<span class="fc" id="L66">            var models = service.getBySondageId(id);</span>
+<span class="fc" id="L67">            return models.stream()</span>
+<span class="fc" id="L68">                    .map(model -&gt; mapper.map(model, CommentaireDto.class))</span>
+<span class="fc" id="L69">                    .toList();</span>
         }
-<span class="fc" id="L68">        catch (NoSuchElementException e) {</span>
-<span class="fc" id="L69">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L71">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L72">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L71">        catch (NoResultException e) {</span>
-<span class="fc" id="L72">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
+<span class="fc" id="L74">        catch (NoResultException e) {</span>
+<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="fc" id="L74">        catch (Exception e) {</span>
-<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des commentaires.&quot;);</span>
+<span class="fc" id="L77">        catch (Exception e) {</span>
+<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des commentaires.&quot;);</span>
         }
     }
 
     /**
      * Modifier un commentaire
      * @param id du commentaire
-     * @param commentaireDto
-     * @return
+     * @param commentaireDto à modifier
+     * @return commentaire modifié
      */
     @PutMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Modifier un commentaire&quot;, description = &quot;Retourne le commentaire modifié.&quot;)
     public CommentaireDto update(@PathVariable(&quot;id&quot;) Long id, @RequestBody CommentaireDto commentaireDto) {
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
-<span class="fc" id="L89">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span>
+<span class="fc" id="L93">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un commentaire.&quot;);</span>
         try {
-<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))</span>
-<span class="fc" id="L92">                throw new NoUpdateException(&quot;Le commentaire n'a pas été modifié.&quot;);</span>
-<span class="fc" id="L93">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
-<span class="fc" id="L94">            var result = service.update(id, model);</span>
-<span class="fc" id="L95">            return mapper.map(result, CommentaireDto.class);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))</span>
+<span class="fc" id="L96">                throw new NoUpdateException(&quot;Le commentaire n'a pas été modifié.&quot;);</span>
+<span class="fc" id="L97">            var model = mapper.map(commentaireDto, Commentaire.class);</span>
+<span class="fc" id="L98">            var result = service.update(id, model);</span>
+<span class="fc" id="L99">            return mapper.map(result, CommentaireDto.class);</span>
         }
-<span class="fc" id="L97">        catch (NoSuchElementException e) {</span>
-<span class="fc" id="L98">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L101">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L102">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L100">        catch (NoUpdateException e) {</span>
-<span class="fc" id="L101">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
+<span class="fc" id="L104">        catch (NoUpdateException e) {</span>
+<span class="fc" id="L105">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="fc" id="L103">        catch (Exception e) {</span>
-<span class="fc" id="L104">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la modification du commentaire.&quot;);</span>
+<span class="fc" id="L107">        catch (Exception e) {</span>
+<span class="fc" id="L108">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la modification du commentaire.&quot;);</span>
         }
     }
 
     /**
      * Suppression d'un commentaire
-     * @param id
+     * @param id du commentaire
      */
+    @Operation(summary = &quot;Supprimer un commentaire&quot;, description = &quot;Ne retourne rien.&quot;)
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L116">            service.delete(id);</span>
+<span class="fc" id="L121">            service.delete(id);</span>
         }
-<span class="fc" id="L118">        catch (NoSuchElementException e) {</span>
-<span class="fc" id="L119">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L123">        catch (NoSuchElementException e) {</span>
+<span class="fc" id="L124">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L121">        catch (Exception e) {</span>
-<span class="fc" id="L122">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du commentaire.&quot;);</span>
-<span class="fc" id="L123">        }</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L126">        catch (Exception e) {</span>
+<span class="fc" id="L127">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression du commentaire.&quot;);</span>
+<span class="fc" id="L128">        }</span>
+<span class="fc" id="L129">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

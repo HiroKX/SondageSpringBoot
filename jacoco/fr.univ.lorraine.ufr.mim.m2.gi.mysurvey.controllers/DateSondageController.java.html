@@ -4,6 +4,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.TimeZone;
 
 @RestController
 @RequestMapping(value = &quot;/api/datesondage&quot;)
-<span class="fc" id="L21">public class DateSondageController {</span>
+<span class="fc" id="L22">public class DateSondageController {</span>
 
     @Autowired
     private DateSondageService service;
@@ -29,72 +30,75 @@ import java.util.TimeZone;
     /**
      * Création d'une date de sondage pour un sondage
      * @param id d'un sondage
-     * @param dto
-     * @return
+     * @param dto du sondage à créer
+     * @return sondage créé
      */
     @PostMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = &quot;Créer un sondage&quot;, description = &quot;Retourne le sondage créé.&quot;)
     public DateSondageDto create(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondageDto dto) {
-<span class="fc" id="L38">        TimeZone tz = TimeZone.getDefault();        // pour enlever le fuseau horaire set par le système local</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (dto.getDate() == null)</span>
-<span class="fc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez une date valide.&quot;);</span>
-<span class="fc" id="L41">        Date localDTO = new Date(dto.getDate().getTime() - tz.getRawOffset());</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(localDTO.before(new Date()))</span>
-<span class="fc" id="L43">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vous ne pouvez pas donner une date dans le passé&quot;);</span>
+<span class="fc" id="L40">        TimeZone tz = TimeZone.getDefault();        // pour enlever le fuseau horaire set par le système local</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (dto.getDate() == null)</span>
+<span class="fc" id="L42">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez une date valide.&quot;);</span>
+<span class="fc" id="L43">        Date localDTO = new Date(dto.getDate().getTime() - tz.getRawOffset());</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if(localDTO.before(new Date()))</span>
+<span class="fc" id="L45">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Vous ne pouvez pas donner une date dans le passé&quot;);</span>
         try{
-<span class="fc" id="L45">            service.checkIfDateAlreadyExists(id, dto);</span>
-<span class="fc" id="L46">            var model = mapper.map(dto, DateSondage.class);</span>
-<span class="fc" id="L47">            var result = service.create(id, model);</span>
-<span class="fc" id="L48">            return mapper.map(result, DateSondageDto.class);</span>
-<span class="fc" id="L49">        } catch(DateSondageAlreadyExistsException | NoSuchElementException e){</span>
-<span class="fc" id="L50">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L47">            service.checkIfDateAlreadyExists(id, dto);</span>
+<span class="fc" id="L48">            var model = mapper.map(dto, DateSondage.class);</span>
+<span class="fc" id="L49">            var result = service.create(id, model);</span>
+<span class="fc" id="L50">            return mapper.map(result, DateSondageDto.class);</span>
+<span class="fc" id="L51">        } catch(DateSondageAlreadyExistsException | NoSuchElementException e){</span>
+<span class="fc" id="L52">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L52">        catch (Exception e) {</span>
-<span class="fc" id="L53">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création de la date.&quot;);</span>
+<span class="fc" id="L54">        catch (Exception e) {</span>
+<span class="fc" id="L55">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création de la date.&quot;);</span>
         }
     }
 
     /**
-     * Récupération d'une date d'un sondage
-     * @param id
-     * @return
+     * Récupération des dates d'un sondage
+     * @param id du sondage
+     * @return liste des dates récupérées
      */
     @GetMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = &quot;Récupérer la liste des dates d'un sondage&quot;, description = &quot;Retourne la liste récupérée.&quot;)
     public List&lt;DateSondageDto&gt; getAllDatesBySondageId(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L66">            var models = service.getBySondageId(id);</span>
-<span class="fc" id="L67">            return models.stream()</span>
-<span class="fc" id="L68">                    .map(model -&gt; mapper.map(model, DateSondageDto.class))</span>
-<span class="fc" id="L69">                    .toList();</span>
+<span class="fc" id="L69">            var models = service.getBySondageId(id);</span>
+<span class="fc" id="L70">            return models.stream()</span>
+<span class="fc" id="L71">                    .map(model -&gt; mapper.map(model, DateSondageDto.class))</span>
+<span class="fc" id="L72">                    .toList();</span>
         }
-<span class="fc" id="L71">        catch(NoSuchElementException e){</span>
-<span class="fc" id="L72">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L74">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L74">        catch(NoResultException e) {</span>
-<span class="fc" id="L75">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
+<span class="fc" id="L77">        catch(NoResultException e) {</span>
+<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span>
         }
-<span class="fc" id="L77">        catch (Exception e) {</span>
-<span class="fc" id="L78">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des dates.&quot;);</span>
+<span class="fc" id="L80">        catch (Exception e) {</span>
+<span class="fc" id="L81">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la récupération des dates.&quot;);</span>
         }
     }
 
     /**
      * Suppression d'une date d'un sondage
-     * @param id
+     * @param id de la date à supprimer
      */
     @DeleteMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = &quot;Supprimer une date de sondage&quot;, description = &quot;Ne retourne rien.&quot;)
     public void delete(@PathVariable(&quot;id&quot;) Long id) {
         try {
-<span class="fc" id="L90">            service.delete(id);</span>
+<span class="fc" id="L94">            service.delete(id);</span>
         }
-<span class="fc" id="L92">        catch(NoSuchElementException e){</span>
-<span class="fc" id="L93">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L96">        catch(NoSuchElementException e){</span>
+<span class="fc" id="L97">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
         }
-<span class="fc" id="L95">        catch (Exception e) {</span>
-<span class="fc" id="L96">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression de la date.&quot;);</span>
-<span class="fc" id="L97">        }</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L99">        catch (Exception e) {</span>
+<span class="fc" id="L100">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la suppression de la date.&quot;);</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

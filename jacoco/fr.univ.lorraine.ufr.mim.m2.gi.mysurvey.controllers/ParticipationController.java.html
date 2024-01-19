@@ -6,6 +6,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedExceptio
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Choix;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.NoResultException;
 import org.apache.commons.lang3.EnumUtils;
 import org.modelmapper.ModelMapper;
@@ -16,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(value = &quot;/api/participer&quot;)
-<span class="fc" id="L19">public class ParticipationController {</span>
+<span class="fc" id="L20">public class ParticipationController {</span>
 
     @Autowired
     private DateSondeeService dateSondeeService;
@@ -26,28 +27,28 @@ import org.springframework.web.server.ResponseStatusException;
 
     /**
      * Ajout d'un participant (A utiliser sans dateSondeeId)
-     * Verifier
-     * @param id DateSondage
-     * @param dto DateSondeeDto
-     * @return DateSondeeDto
+     * @param id de la DateSondage
+     * @param dto DateSondeeDto de la participation
+     * @return DateSondee créée
      */
     @PostMapping(value = &quot;/{id}&quot;)
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = &quot;Créer une participant&quot;, description = &quot;Retourne l'objet DateSondee créé correspondant à la participation créée.&quot;)
     public DateSondeeDto create(@PathVariable(&quot;id&quot;) Long id, @RequestBody DateSondeeDto dto) {
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        if(dto.getParticipant() == null)</span>
-<span class="fc" id="L38">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if(!EnumUtils.isValidEnum(Choix.class, dto.getChoix()))</span>
-<span class="fc" id="L40">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un choix valide.&quot;);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(dto.getParticipant() == null)</span>
+<span class="fc" id="L39">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un participant.&quot;);</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if(!EnumUtils.isValidEnum(Choix.class, dto.getChoix()))</span>
+<span class="fc" id="L41">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Précisez un choix valide.&quot;);</span>
         try {
-<span class="fc" id="L42">            DateSondee model = mapper.map(dto, DateSondee.class);</span>
-<span class="fc" id="L43">            var result = dateSondeeService.create(id, dto.getParticipant(), model);</span>
-<span class="fc" id="L44">            return mapper.map(result, DateSondeeDto.class);</span>
-<span class="fc" id="L45">        } catch (DateSondageAlreadyExistsException | SondageCloturedException e) {</span>
-<span class="fc" id="L46">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
-<span class="fc" id="L47">        } catch (NoResultException e){</span>
-<span class="fc" id="L48">            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span>
-<span class="fc" id="L49">        } catch (Exception e) {</span>
-<span class="fc" id="L50">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création de la participation.&quot;);</span>
+<span class="fc" id="L43">            DateSondee model = mapper.map(dto, DateSondee.class);</span>
+<span class="fc" id="L44">            var result = dateSondeeService.create(id, dto.getParticipant(), model);</span>
+<span class="fc" id="L45">            return mapper.map(result, DateSondeeDto.class);</span>
+<span class="fc" id="L46">        } catch (DateSondageAlreadyExistsException | SondageCloturedException e) {</span>
+<span class="fc" id="L47">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span>
+<span class="fc" id="L48">        } catch (NoResultException e){</span>
+<span class="fc" id="L49">            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span>
+<span class="fc" id="L50">        } catch (Exception e) {</span>
+<span class="fc" id="L51">            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &quot;Erreur lors de la création de la participation.&quot;);</span>
         }
     }
 }

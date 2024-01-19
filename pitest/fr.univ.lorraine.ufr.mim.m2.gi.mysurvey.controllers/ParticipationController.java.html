@@ -145,7 +145,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import io.swagger.v3.oas.annotations.Operation;</span></pre></td></tr>
 
 
 <tr>
@@ -160,7 +160,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.apache.commons.lang3.EnumUtils;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
 
 
 <tr>
@@ -175,7 +175,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.apache.commons.lang3.EnumUtils;</span></pre></td></tr>
 
 
 <tr>
@@ -190,7 +190,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
 
 
 <tr>
@@ -205,7 +205,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
 
 
 <tr>
@@ -220,7 +220,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
 
 
 <tr>
@@ -235,7 +235,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
 
 
 <tr>
@@ -250,7 +250,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
 
 
 <tr>
@@ -265,7 +265,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -280,11 +280,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/participer&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_19'/>
 19
 </td>
@@ -295,11 +295,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>public class ParticipationController {</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/participer&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_20'/>
 20
 </td>
@@ -310,7 +310,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>public class ParticipationController {</span></pre></td></tr>
 
 
 <tr>
@@ -325,7 +325,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -340,7 +340,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private DateSondeeService dateSondeeService;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -355,7 +355,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private DateSondeeService dateSondeeService;</span></pre></td></tr>
 
 
 <tr>
@@ -370,7 +370,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -385,7 +385,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -400,7 +400,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
 
 
 <tr>
@@ -415,7 +415,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -430,7 +430,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Ajout d&#39;un participant (A utiliser sans dateSondeeId)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -445,7 +445,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Verifier</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Ajout d&#39;un participant (A utiliser sans dateSondeeId)</span></pre></td></tr>
 
 
 <tr>
@@ -460,7 +460,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id DateSondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id de la DateSondage</span></pre></td></tr>
 
 
 <tr>
@@ -475,7 +475,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param dto DateSondeeDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param dto DateSondeeDto de la participation</span></pre></td></tr>
 
 
 <tr>
@@ -490,7 +490,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return DateSondeeDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return DateSondee cr&#233;&#233;e</span></pre></td></tr>
 
 
 <tr>
@@ -550,17 +550,32 @@
 </span>
 </span>
 </td>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Cr&#233;er une participant&#34;, description = &#34;Retourne l&#39;objet DateSondee cr&#233;&#233; correspondant &#224; la participation cr&#233;&#233;e.&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_37'></a>
+<span>
+</span>
+</span>
+</td>
 <td class=''><pre><span  class=''>    public DateSondeeDto create(@PathVariable(&#34;id&#34;) Long id, @RequestBody DateSondeeDto dto) {</span></pre></td></tr>
 
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_37'/>
-37
+<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_38'/>
+38
 </td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_37'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_38'>1</a>
 <span>
 1. create : negated conditional &rarr; KILLED<br/>
 
@@ -572,12 +587,12 @@
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_38'/>
-38
+<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_39'/>
+39
 </td>
 <td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_38'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_39'></a>
 <span>
 </span>
 </span>
@@ -587,12 +602,12 @@
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_39'/>
-39
+<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_40'/>
+40
 </td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_39'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_40'>1</a>
 <span>
 1. create : negated conditional &rarr; KILLED<br/>
 
@@ -604,21 +619,6 @@
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_40'/>
-40
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_40'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un choix valide.&#34;);</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_41'/>
 41
 </td>
@@ -629,11 +629,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un choix valide.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_42'/>
 42
 </td>
@@ -644,7 +644,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            DateSondee model = mapper.map(dto, DateSondee.class);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -659,7 +659,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var result = dateSondeeService.create(id, dto.getParticipant(), model);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            DateSondee model = mapper.map(dto, DateSondee.class);</span></pre></td></tr>
 
 
 <tr>
@@ -667,16 +667,14 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_44'/>
 44
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_44'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_44'></a>
 <span>
-1. create : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/ParticipationController::create &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return mapper.map(result, DateSondeeDto.class);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var result = dateSondeeService.create(id, dto.getParticipant(), model);</span></pre></td></tr>
 
 
 <tr>
@@ -684,14 +682,16 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_45'/>
 45
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_45'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_45'>1</a>
 <span>
+1. create : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/ParticipationController::create &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        } catch (DateSondageAlreadyExistsException | SondageCloturedException e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            return mapper.map(result, DateSondeeDto.class);</span></pre></td></tr>
 
 
 <tr>
@@ -706,7 +706,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        } catch (DateSondageAlreadyExistsException | SondageCloturedException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -721,7 +721,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        } catch (NoResultException e){</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -736,7 +736,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        } catch (NoResultException e){</span></pre></td></tr>
 
 
 <tr>
@@ -751,7 +751,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        } catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -766,11 +766,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation de la participation.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        } catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_51'/>
 51
 </td>
@@ -781,7 +781,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation de la participation.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -796,7 +796,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -811,6 +811,21 @@
 </span>
 </span>
 </td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e162a35_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_54'></a>
+<span>
+</span>
+</span>
+</td>
 <td class=''><pre><span  class=''>}</span></pre></td></tr>
 
 
@@ -818,31 +833,31 @@
 <tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
 
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_37'>37</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_38'>38</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_37'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_38'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenParticipantNull_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_39'>39</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_40'>40</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_39'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_40'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenInvalidChoice_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_44'>44</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e162a35_45'>45</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_44'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e162a35_45'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreate_thenReturnCreated()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/ParticipationController::create &rarr; KILLED</p> 
 </td>
@@ -869,7 +884,7 @@
 
 <h2>Tests examined</h2>
 <ul>
-<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenParticipantNull_whenCreate_thenReturnBadRequest()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenInvalidChoice_whenCreate_thenReturnBadRequest()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButSondageCloture_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButServerError_thenReturnInternalServerError()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreate_thenReturnCreated()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButSondageOrParticipantDoesntExist_thenReturnNotFound()] (39 ms)</li>
+<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenInvalidChoice_whenCreate_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenParticipantNull_whenCreate_thenReturnBadRequest()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButServerError_thenReturnInternalServerError()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButSondageCloture_thenReturnBadRequest()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreate_thenReturnCreated()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.ParticipationControllerUnitTest]/[method:givenValidParameter_whenCreateButSondageOrParticipantDoesntExist_thenReturnNotFound()] (38 ms)</li>
 </ul>
 
 <br/>

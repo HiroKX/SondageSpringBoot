@@ -130,7 +130,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import io.swagger.v3.oas.annotations.Operation;</span></pre></td></tr>
 
 
 <tr>
@@ -145,7 +145,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
 
 
 <tr>
@@ -160,7 +160,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
 
 
 <tr>
@@ -175,7 +175,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
 
 
 <tr>
@@ -190,7 +190,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
 
 
 <tr>
@@ -205,7 +205,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
 
 
 <tr>
@@ -220,7 +220,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
 
 
 <tr>
@@ -235,7 +235,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import java.util.Date;</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -250,7 +250,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import java.util.Date;</span></pre></td></tr>
 
 
 <tr>
@@ -265,7 +265,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import java.util.NoSuchElementException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
 
 
 <tr>
@@ -280,7 +280,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>import java.util.NoSuchElementException;</span></pre></td></tr>
 
 
 <tr>
@@ -295,7 +295,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -310,11 +310,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/sondage&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_21'/>
 21
 </td>
@@ -325,11 +325,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>public class SondageController {</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/sondage&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_22'/>
 22
 </td>
@@ -340,7 +340,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>public class SondageController {</span></pre></td></tr>
 
 
 <tr>
@@ -355,7 +355,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -370,7 +370,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private SondageService service;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -385,7 +385,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private SondageService service;</span></pre></td></tr>
 
 
 <tr>
@@ -400,7 +400,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -415,7 +415,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private DateSondeeService request;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -430,7 +430,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private DateSondeeService request;</span></pre></td></tr>
 
 
 <tr>
@@ -445,7 +445,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -460,7 +460,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -475,7 +475,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
 
 
 <tr>
@@ -490,7 +490,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -505,7 +505,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Create a sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -520,7 +520,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param sondageDto sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Create a sondage</span></pre></td></tr>
 
 
 <tr>
@@ -535,7 +535,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param sondageDto sondage &#224; cr&#233;er</span></pre></td></tr>
 
 
 <tr>
@@ -550,7 +550,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return sondage cr&#233;&#233;</span></pre></td></tr>
 
 
 <tr>
@@ -565,7 +565,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @PostMapping(value = &#34;/&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -580,7 +580,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.CREATED)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @PostMapping(value = &#34;/&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -595,29 +595,26 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public SondageDto create(@RequestBody SondageDto sondageDto) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.CREATED)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_40'/>
 40
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_40'>2</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_40'></a>
 <span>
-1. create : negated conditional &rarr; KILLED<br/>
-2. create : negated conditional &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Cr&#233;er un sondage&#34;, description = &#34;Retourne le sondage cr&#233;&#233;.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_41'/>
 41
 </td>
@@ -628,7 +625,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;La date de fin doit &#234;tre sup&#233;rieure &#224; la date de d&#233;but.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public SondageDto create(@RequestBody SondageDto sondageDto) {</span></pre></td></tr>
 
 
 <tr>
@@ -638,14 +635,15 @@
 </td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_42'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_42'>2</a>
 <span>
 1. create : negated conditional &rarr; KILLED<br/>
+2. create : negated conditional &rarr; KILLED<br/>
 
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getCreateBy() == null)</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span></pre></td></tr>
 
 
 <tr>
@@ -660,7 +658,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir un cr&#233;ateur.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;La date de fin doit &#234;tre sup&#233;rieure &#224; la date de d&#233;but.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -677,7 +675,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getNom() == null)</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getCreateBy() == null)</span></pre></td></tr>
 
 
 <tr>
@@ -692,7 +690,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir un nom.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir un cr&#233;ateur.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -709,7 +707,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getDescription() == null)</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getNom() == null)</span></pre></td></tr>
 
 
 <tr>
@@ -724,7 +722,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir une description.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir un nom.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -734,15 +732,14 @@
 </td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_48'>2</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_48'>1</a>
 <span>
 1. create : negated conditional &rarr; KILLED<br/>
-2. create : negated conditional &rarr; KILLED<br/>
 
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getCloture() == null || sondageDto.getCloture())</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getDescription() == null)</span></pre></td></tr>
 
 
 <tr>
@@ -757,22 +754,25 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit &#234;tre ouvert.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit avoir une description.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_50'/>
 50
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_50'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_50'>2</a>
 <span>
+1. create : negated conditional &rarr; KILLED<br/>
+2. create : negated conditional &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getCloture() == null || sondageDto.getCloture())</span></pre></td></tr>
 
 
 <tr>
@@ -787,11 +787,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var model = mapper.map(sondageDto, Sondage.class);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Le sondage doit &#234;tre ouvert.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_52'/>
 52
 </td>
@@ -802,7 +802,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var result = service.create(sondageDto.getCreateBy(), model);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -810,9 +810,39 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_53'/>
 53
 </td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            var model = mapper.map(sondageDto, Sondage.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            var result = service.create(sondageDto.getCreateBy(), model);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_55'/>
+55
+</td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_53'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_55'>1</a>
 <span>
 1. create : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::create &rarr; KILLED<br/>
 
@@ -824,36 +854,6 @@
 
 <tr>
 <td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_54'/>
-54
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_54'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_55'/>
-55
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_55'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_56'/>
 56
 </td>
@@ -864,11 +864,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_57'/>
 57
 </td>
@@ -879,7 +879,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -894,11 +894,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_59'/>
 59
 </td>
@@ -909,11 +909,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation du sondage.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_60'/>
 60
 </td>
@@ -924,11 +924,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_61'/>
 61
 </td>
@@ -939,7 +939,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation du sondage.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -954,7 +954,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -969,7 +969,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -984,7 +984,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Get ALl sondages</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -999,7 +999,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return List de sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1014,7 +1014,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Get ALl sondages</span></pre></td></tr>
 
 
 <tr>
@@ -1029,7 +1029,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return Liste des sondages existants</span></pre></td></tr>
 
 
 <tr>
@@ -1044,7 +1044,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -1059,7 +1059,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public List&#60;SondageDto&#62; getAllSondages() {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -1074,11 +1074,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_71'/>
 71
 </td>
@@ -1089,25 +1089,22 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var models = service.getAll();</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;R&#233;cup&#233;rer tous les sondages&#34;, description = &#34;Retourne tous les sondages existants.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_72'/>
 72
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_72'>2</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_72'></a>
 <span>
-1. getAllSondages : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getAllSondages &rarr; KILLED<br/>
-2. lambda$getAllSondages$0 : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::lambda$getAllSondages$0 &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return models.stream().map(model -&#62; mapper.map(model, SondageDto.class)).toList();</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public List&#60;SondageDto&#62; getAllSondages() {</span></pre></td></tr>
 
 
 <tr>
@@ -1122,7 +1119,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -1137,7 +1134,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoResultException e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var models = service.getAll();</span></pre></td></tr>
 
 
 <tr>
@@ -1145,14 +1142,17 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_75'/>
 75
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_75'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_75'>2</a>
 <span>
+1. getAllSondages : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getAllSondages &rarr; KILLED<br/>
+2. lambda$getAllSondages$0 : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::lambda$getAllSondages$0 &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            return models.stream().map(model -&#62; mapper.map(model, SondageDto.class)).toList();</span></pre></td></tr>
 
 
 <tr>
@@ -1182,7 +1182,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoResultException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -1197,7 +1197,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration des sondages.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1216,7 +1216,7 @@
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_80'/>
 80
 </td>
@@ -1227,11 +1227,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_81'/>
 81
 </td>
@@ -1242,7 +1242,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration des sondages.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1257,7 +1257,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1272,7 +1272,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Get sondage by id</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -1287,7 +1287,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -1302,7 +1302,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1317,7 +1317,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Get sondage by id</span></pre></td></tr>
 
 
 <tr>
@@ -1332,7 +1332,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
 
 
 <tr>
@@ -1347,7 +1347,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return Sondage correspondant &#224; l&#39;id</span></pre></td></tr>
 
 
 <tr>
@@ -1362,7 +1362,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public SondageDto getSondageById(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -1377,11 +1377,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try{</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_91'/>
 91
 </td>
@@ -1392,24 +1392,22 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var model = service.getById(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_92'/>
 92
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_92'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_92'></a>
 <span>
-1. getSondageById : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getSondageById &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return mapper.map(model, SondageDto.class);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;R&#233;cup&#233;rer un sondage par son id&#34;, description = &#34;Retourne le sondage correspondant.&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -1424,11 +1422,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public SondageDto getSondageById(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_94'/>
 94
 </td>
@@ -1439,7 +1437,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoResultException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try{</span></pre></td></tr>
 
 
 <tr>
@@ -1454,26 +1452,28 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_96'/>
-96
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_96'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var model = service.getById(id);</span></pre></td></tr>
 
 
 <tr>
 <td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_96'>1</a>
+<span>
+1. getSondageById : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getSondageById &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return mapper.map(model, SondageDto.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_97'/>
 97
 </td>
@@ -1484,7 +1484,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1499,11 +1499,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoResultException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_99'/>
 99
 </td>
@@ -1514,7 +1514,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1529,11 +1529,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_101'/>
 101
 </td>
@@ -1544,11 +1544,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_102'/>
 102
 </td>
@@ -1559,7 +1559,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1574,7 +1574,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Get Meilleur date d&#39;un sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1589,7 +1589,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -1604,7 +1604,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return List des meilleures dates</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -1619,7 +1619,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1634,7 +1634,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}/best&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Get Meilleur date d&#39;un sondage</span></pre></td></tr>
 
 
 <tr>
@@ -1649,7 +1649,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
 
 
 <tr>
@@ -1664,7 +1664,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public List&#60;Date&#62; getBestDateBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return Liste des meilleures dates</span></pre></td></tr>
 
 
 <tr>
@@ -1679,24 +1679,22 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_111'/>
 111
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_111'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_111'></a>
 <span>
-1. getBestDateBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getBestDateBySondageId &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return request.getBestDateBySondageId(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}/best&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -1711,11 +1709,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_113'/>
 113
 </td>
@@ -1726,11 +1724,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;R&#233;cup&#233;rer les meilleures dates pour un sondage&#34;, description = &#34;Retourne la liste des meilleures dates pour un sondage donn&#233;.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_114'/>
 114
 </td>
@@ -1741,7 +1739,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public List&#60;Date&#62; getBestDateBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
@@ -1756,7 +1754,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -1764,18 +1762,20 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_116'/>
 116
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_116'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_116'>1</a>
 <span>
+1. getBestDateBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getBestDateBySondageId &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            return request.getBestDateBySondageId(id);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_117'/>
 117
 </td>
@@ -1786,11 +1786,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_118'/>
 118
 </td>
@@ -1801,11 +1801,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_119'/>
 119
 </td>
@@ -1816,7 +1816,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1831,11 +1831,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_121'/>
 121
 </td>
@@ -1846,11 +1846,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_122'/>
 122
 </td>
@@ -1861,7 +1861,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Get Possible meilleur date d&#39;un sondage</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1876,7 +1876,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1891,7 +1891,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return Liste des potentielles meilleures dates</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -1906,7 +1906,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -1921,7 +1921,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}/maybe&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1936,7 +1936,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Get Possible meilleur date d&#39;un sondage</span></pre></td></tr>
 
 
 <tr>
@@ -1951,7 +1951,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public List&#60;Date&#62; getMaybeBestBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
 
 
 <tr>
@@ -1966,24 +1966,22 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return Liste des potentielles meilleures dates</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_130'/>
 130
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_130'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_130'></a>
 <span>
-1. getMaybeBestBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getMaybeBestBySondageId &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return request.getMaybeBestDateBySondageId(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -1998,11 +1996,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}/maybe&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_132'/>
 132
 </td>
@@ -2013,11 +2011,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_133'/>
 133
 </td>
@@ -2028,7 +2026,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;R&#233;cup&#233;rer les potentielles meilleures dates d&#39;un sondage&#34;, description = &#34;Retourne la liste des potentielles meilleures dates pour un sondage donn&#233;.&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -2043,11 +2041,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public List&#60;Date&#62; getMaybeBestBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_135'/>
 135
 </td>
@@ -2058,7 +2056,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -2066,14 +2064,16 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_136'/>
 136
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_136'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_136'>1</a>
 <span>
+1. getMaybeBestBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getMaybeBestBySondageId &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            return request.getMaybeBestDateBySondageId(id);</span></pre></td></tr>
 
 
 <tr>
@@ -2092,7 +2092,7 @@
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_138'/>
 138
 </td>
@@ -2103,11 +2103,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_139'/>
 139
 </td>
@@ -2118,7 +2118,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -2133,11 +2133,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_141'/>
 141
 </td>
@@ -2148,11 +2148,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Update a sondage</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_142'/>
 142
 </td>
@@ -2163,7 +2163,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id id du sondage</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration du sondage.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -2178,7 +2178,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param sondageDto sondageDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -2193,7 +2193,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return SondageDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -2208,7 +2208,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -2223,7 +2223,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @PutMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -2238,7 +2238,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Update a sondage</span></pre></td></tr>
 
 
 <tr>
@@ -2253,29 +2253,26 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public SondageDto update(@PathVariable(&#34;id&#34;) Long id, @RequestBody SondageDto sondageDto) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage &#224; modifier</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_149'/>
 149
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_149'>2</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_149'></a>
 <span>
-1. update : negated conditional &rarr; KILLED<br/>
-2. update : negated conditional &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param sondageDto sondage &#224; modifier</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_150'/>
 150
 </td>
@@ -2286,7 +2283,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;La date de fin doit &#234;tre sup&#233;rieure &#224; la date de d&#233;but.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return sondage modifi&#233;</span></pre></td></tr>
 
 
 <tr>
@@ -2301,17 +2298,125 @@
 </span>
 </span>
 </td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_152'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @PutMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_153'/>
+153
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_153'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_154'/>
+154
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_154'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Modifier un sondage&#34;, description = &#34;Retourne le sondage modifi&#233;.&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_155'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public SondageDto update(@PathVariable(&#34;id&#34;) Long id, @RequestBody SondageDto sondageDto) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_156'/>
+156
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_156'>2</a>
+<span>
+1. update : negated conditional &rarr; KILLED<br/>
+2. update : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_157'/>
+157
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_157'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;La date de fin doit &#234;tre sup&#233;rieure &#224; la date de d&#233;but.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_158'/>
+158
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_158'></a>
+<span>
+</span>
+</span>
+</td>
 <td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_152'/>
-152
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_159'/>
+159
 </td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_152'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_159'>1</a>
 <span>
 1. update : negated conditional &rarr; KILLED<br/>
 
@@ -2323,113 +2428,6 @@
 
 <tr>
 <td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_153'/>
-153
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_153'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>                throw new NoUpdateException(&#34;Le sondage n&#39;a pas &#233;t&#233; modifi&#233;.&#34;);</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_154'/>
-154
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_154'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>            Sondage model = mapper.map(sondageDto, Sondage.class);</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_155'/>
-155
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_155'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>            var result = service.update(id, model);</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_156'/>
-156
-</td>
-<td class='killed'>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_156'>1</a>
-<span>
-1. update : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::update &rarr; KILLED<br/>
-
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class='killed'>            return mapper.map(result, SondageDto.class);</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_157'/>
-157
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_157'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_158'/>
-158
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_158'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>        catch(NoUpdateException e) {</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_159'/>
-159
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_159'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_160'/>
 160
 </td>
@@ -2440,7 +2438,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>                throw new NoUpdateException(&#34;Le sondage n&#39;a pas &#233;t&#233; modifi&#233;.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -2455,7 +2453,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoResultException e){</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            Sondage model = mapper.map(sondageDto, Sondage.class);</span></pre></td></tr>
 
 
 <tr>
@@ -2470,26 +2468,28 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_163'/>
-163
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_163'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var result = service.update(id, model);</span></pre></td></tr>
 
 
 <tr>
 <td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_163'/>
+163
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_163'>1</a>
+<span>
+1. update : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::update &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return mapper.map(result, SondageDto.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_164'/>
 164
 </td>
@@ -2500,7 +2500,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -2515,11 +2515,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la mise &#224; jour du sondage.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoUpdateException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_166'/>
 166
 </td>
@@ -2530,7 +2530,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -2545,11 +2545,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_168'/>
 168
 </td>
@@ -2560,11 +2560,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoResultException e){</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_169'/>
 169
 </td>
@@ -2575,7 +2575,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -2590,11 +2590,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Delete a sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_171'/>
 171
 </td>
@@ -2605,11 +2605,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_172'/>
 172
 </td>
@@ -2620,7 +2620,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la mise &#224; jour du sondage.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -2635,7 +2635,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @DeleteMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -2650,7 +2650,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.NO_CONTENT)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -2665,7 +2665,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public void delete(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -2680,24 +2680,22 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_177'/>
 177
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_177'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_177'></a>
 <span>
-1. delete : removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/SondageService::delete &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            service.delete(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Delete a sondage</span></pre></td></tr>
 
 
 <tr>
@@ -2712,11 +2710,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage &#224; supprimer</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_179'/>
 179
 </td>
@@ -2727,11 +2725,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_180'/>
 180
 </td>
@@ -2742,7 +2740,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @DeleteMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -2757,11 +2755,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.NO_CONTENT)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_182'/>
 182
 </td>
@@ -2772,11 +2770,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Supprimer un sondage&#34;, description = &#34;Ne retourne rien.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_183'/>
 183
 </td>
@@ -2787,11 +2785,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la suppression du sondage.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public void delete(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_184'/>
 184
 </td>
@@ -2802,7 +2800,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -2810,14 +2808,16 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@faec277_185'/>
 185
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_185'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_185'>1</a>
 <span>
+1. delete : removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/SondageService::delete &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            service.delete(id);</span></pre></td></tr>
 
 
 <tr>
@@ -2832,6 +2832,126 @@
 </span>
 </span>
 </td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_187'/>
+187
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_187'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_188'/>
+188
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_188'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_189'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_190'/>
+190
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_190'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_191'/>
+191
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_191'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la suppression du sondage.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_192'/>
+192
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_192'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_193'/>
+193
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_193'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@faec277_194'/>
+194
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@faec277_194'></a>
+<span>
+</span>
+</span>
+</td>
 <td class=''><pre><span  class=''>}</span></pre></td></tr>
 
 
@@ -2839,23 +2959,13 @@
 <tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
 
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_40'>40</a></td> 
-<td></td>
-<td>
-
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_40'/> 
-
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
-</td>
-</tr>
-<tr>
 <td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_42'>42</a></td> 
 <td></td>
 <td>
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_42'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2875,7 +2985,7 @@
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_46'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidNom_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2885,77 +2995,67 @@
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_48'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidClotureTrue_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDescription_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_53'>53</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_50'>50</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_53'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidCloture_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidClotureTrue_whenCreate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_55'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::create &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_72'>72</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_75'>75</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_72'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_75'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAllSondages<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetAllSondages_thenReturnOk()]</span></span> replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getAllSondages &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$getAllSondages$0<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetAllSondages_thenReturnOk()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::lambda$getAllSondages$0 &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_92'>92</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_96'>96</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_92'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_96'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSondageById<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetSondageById_thenReturnOk()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getSondageById &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_111'>111</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_116'>116</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_111'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_116'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getBestDateBySondageId<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetBestDateBySondageId_thenReturnOk()]</span></span> replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getBestDateBySondageId &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_130'>130</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_136'>136</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_130'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_136'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMaybeBestBySondageId<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk()]</span></span> replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::getMaybeBestBySondageId &rarr; KILLED</p> 
-</td>
-</tr>
-<tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_149'>149</a></td> 
-<td></td>
-<td>
-
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_149'/> 
-
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> 
-</td>
-</tr>
-<tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_152'>152</a></td> 
-<td></td>
-<td>
-
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_152'/> 
-
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2965,15 +3065,35 @@
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_156'/> 
 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent()]</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenUpdate_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_159'>159</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_159'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_163'>163</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_163'/> 
+
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/SondageController::update &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_177'>177</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@faec277_185'>185</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_177'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@faec277_185'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>delete<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()]</span></span> removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/SondageService::delete &rarr; KILLED</p> 
 </td>
@@ -3000,7 +3120,7 @@
 
 <h2>Tests examined</h2>
 <ul>
-<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenCreate_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenCreate_thenReturnBadRequest()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidClotureTrue_whenCreate_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButParticipantDoesNotExist_thenReturnBadRequest()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidNom_whenCreate_thenReturnBadRequest()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidCloture_whenCreate_thenReturnBadRequest()] (13 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDescription_whenCreate_thenReturnBadRequest()] (14 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidCreatedBy_whenCreate_thenReturnBadRequest()] (16 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetAllSondages_thenReturnOk()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDeleteButSondageDoesNotExist_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetBestDateBySondageId_thenReturnOk()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent()] (18 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetSondageById_thenReturnOk()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenUpdate_thenReturnBadRequest()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest()] (12 ms)</li>
+<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenCreate_thenReturnBadRequest()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidCloture_whenCreate_thenReturnBadRequest()] (8 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDescription_whenCreate_thenReturnBadRequest()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenCreate_thenReturnBadRequest()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidNom_whenCreate_thenReturnBadRequest()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidClotureTrue_whenCreate_thenReturnBadRequest()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreateButParticipantDoesNotExist_thenReturnBadRequest()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidCreatedBy_whenCreate_thenReturnBadRequest()] (19 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetAllSondages_thenReturnOk()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()] (12 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()] (6 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenDeleteButSondageDoesNotExist_thenReturnBadRequest()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetBestDateBySondageId_thenReturnOk()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenGetSondageById_thenReturnOk()] (9 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFin_whenUpdate_thenReturnBadRequest()] (7 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest()] (14 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest()] (13 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.SondageControllerUnitTest]/[method:givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError()] (13 ms)</li>
 </ul>
 
 <br/>

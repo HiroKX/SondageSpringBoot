@@ -130,7 +130,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import io.swagger.v3.oas.annotations.Operation;</span></pre></td></tr>
 
 
 <tr>
@@ -145,7 +145,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import jakarta.persistence.NoResultException;</span></pre></td></tr>
 
 
 <tr>
@@ -160,7 +160,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.modelmapper.ModelMapper;</span></pre></td></tr>
 
 
 <tr>
@@ -175,7 +175,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Autowired;</span></pre></td></tr>
 
 
 <tr>
@@ -190,7 +190,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.http.HttpStatus;</span></pre></td></tr>
 
 
 <tr>
@@ -205,7 +205,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.bind.annotation.*;</span></pre></td></tr>
 
 
 <tr>
@@ -220,7 +220,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>import org.springframework.web.server.ResponseStatusException;</span></pre></td></tr>
 
 
 <tr>
@@ -235,7 +235,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -250,7 +250,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>import java.util.NoSuchElementException;</span></pre></td></tr>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
 
 
 <tr>
@@ -265,7 +265,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>import java.util.NoSuchElementException;</span></pre></td></tr>
 
 
 <tr>
@@ -280,7 +280,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -295,11 +295,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/commentaire&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RestController</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_20'/>
 20
 </td>
@@ -310,11 +310,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>public class CommentaireController {</span></pre></td></tr>
+<td class=''><pre><span  class=''>@RequestMapping(value = &#34;/api/commentaire&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_21'/>
 21
 </td>
@@ -325,7 +325,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>public class CommentaireController {</span></pre></td></tr>
 
 
 <tr>
@@ -340,7 +340,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -355,7 +355,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private CommentaireService service;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -370,7 +370,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private CommentaireService service;</span></pre></td></tr>
 
 
 <tr>
@@ -385,7 +385,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -400,7 +400,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Autowired</span></pre></td></tr>
 
 
 <tr>
@@ -415,7 +415,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>    private ModelMapper mapper;</span></pre></td></tr>
 
 
 <tr>
@@ -430,7 +430,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -445,7 +445,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -460,7 +460,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
 
 
 <tr>
@@ -475,7 +475,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param commentaireDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
 
 
 <tr>
@@ -490,7 +490,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param commentaireDto &#224; cr&#233;er</span></pre></td></tr>
 
 
 <tr>
@@ -505,7 +505,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return commentaire cr&#233;&#233;</span></pre></td></tr>
 
 
 <tr>
@@ -520,7 +520,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @PostMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -535,7 +535,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.CREATED)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @PostMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -550,28 +550,26 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public CommentaireDto create(@PathVariable(&#34;id&#34;) Long id, @RequestBody CommentaireDto commentaireDto) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.CREATED)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_37'/>
 37
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_37'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_37'></a>
 <span>
-1. create : negated conditional &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Cr&#233;er un commentaire&#34;, description = &#34;Retourne le commentaire cr&#233;&#233;.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_38'/>
 38
 </td>
@@ -582,7 +580,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un commentaire.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public CommentaireDto create(@PathVariable(&#34;id&#34;) Long id, @RequestBody CommentaireDto commentaireDto) {</span></pre></td></tr>
 
 
 <tr>
@@ -599,7 +597,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(commentaireDto.getParticipant() == null)</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span></pre></td></tr>
 
 
 <tr>
@@ -614,22 +612,24 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un participant.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un commentaire.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_41'/>
 41
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_41'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_41'>1</a>
 <span>
+1. create : negated conditional &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try{</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(commentaireDto.getParticipant() == null)</span></pre></td></tr>
 
 
 <tr>
@@ -644,11 +644,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var model = mapper.map(commentaireDto, Commentaire.class);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un participant.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_43'/>
 43
 </td>
@@ -659,7 +659,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var result = service.create(id, commentaireDto.getParticipant(), model);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try{</span></pre></td></tr>
 
 
 <tr>
@@ -667,9 +667,39 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_44'/>
 44
 </td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            var model = mapper.map(commentaireDto, Commentaire.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            var result = service.create(id, commentaireDto.getParticipant(), model);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'/>
+46
+</td>
 <td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_44'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'>1</a>
 <span>
 1. create : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::create &rarr; KILLED<br/>
 
@@ -681,36 +711,6 @@
 
 <tr>
 <td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_45'/>
-45
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_45'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'/>
-46
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'></a>
-<span>
-</span>
-</span>
-</td>
-<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e){</span></pre></td></tr>
-
-
-<tr>
-<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_47'/>
 47
 </td>
@@ -721,11 +721,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_48'/>
 48
 </td>
@@ -736,7 +736,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch(NoSuchElementException e){</span></pre></td></tr>
 
 
 <tr>
@@ -751,11 +751,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_50'/>
 50
 </td>
@@ -766,11 +766,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation du commentaire.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_51'/>
 51
 </td>
@@ -781,11 +781,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_52'/>
 52
 </td>
@@ -796,7 +796,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la cr&#233;ation du commentaire.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -811,7 +811,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -826,7 +826,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -841,7 +841,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * R&#233;cup&#233;ration des commentaires d&#39;un sondage</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -856,7 +856,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -871,7 +871,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * R&#233;cup&#233;ration des commentaires d&#39;un sondage</span></pre></td></tr>
 
 
 <tr>
@@ -886,7 +886,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du sondage</span></pre></td></tr>
 
 
 <tr>
@@ -901,7 +901,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return la liste des commentaires r&#233;cup&#233;r&#233;s</span></pre></td></tr>
 
 
 <tr>
@@ -916,7 +916,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
@@ -931,7 +931,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public List&#60;CommentaireDto&#62; getAllCommentairesBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @GetMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -946,11 +946,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_63'/>
 63
 </td>
@@ -961,41 +961,37 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var models = service.getBySondageId(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;R&#233;cup&#233;rer tous les commentaires d&#39;un sondage&#34;, description = &#34;Retourne la liste des commentaires r&#233;cup&#233;r&#233;s.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_64'/>
 64
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_64'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_64'></a>
 <span>
-1. getAllCommentairesBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::getAllCommentairesBySondageId &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return models.stream()</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public List&#60;CommentaireDto&#62; getAllCommentairesBySondageId(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_65'/>
 65
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_65'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_65'></a>
 <span>
-1. lambda$getAllCommentairesBySondageId$0 : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::lambda$getAllCommentairesBySondageId$0 &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>                    .map(model -&#62; mapper.map(model, CommentaireDto.class))</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -1010,22 +1006,24 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>                    .toList();</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var models = service.getBySondageId(id);</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_67'/>
 67
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_67'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_67'>1</a>
 <span>
+1. getAllCommentairesBySondageId : replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::getAllCommentairesBySondageId &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            return models.stream()</span></pre></td></tr>
 
 
 <tr>
@@ -1033,14 +1031,16 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_68'/>
 68
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_68'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_68'>1</a>
 <span>
+1. lambda$getAllCommentairesBySondageId$0 : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::lambda$getAllCommentairesBySondageId$0 &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>                    .map(model -&#62; mapper.map(model, CommentaireDto.class))</span></pre></td></tr>
 
 
 <tr>
@@ -1055,7 +1055,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>                    .toList();</span></pre></td></tr>
 
 
 <tr>
@@ -1085,7 +1085,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (NoResultException e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -1100,7 +1100,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1130,7 +1130,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (NoResultException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -1145,7 +1145,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration des commentaires.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1164,7 +1164,7 @@
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_77'/>
 77
 </td>
@@ -1175,11 +1175,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_78'/>
 78
 </td>
@@ -1190,7 +1190,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la r&#233;cup&#233;ration des commentaires.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1205,7 +1205,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1220,7 +1220,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Modifier un commentaire</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -1235,7 +1235,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id du commentaire</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -1250,7 +1250,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param commentaireDto</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1265,7 +1265,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @return</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Modifier un commentaire</span></pre></td></tr>
 
 
 <tr>
@@ -1280,7 +1280,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du commentaire</span></pre></td></tr>
 
 
 <tr>
@@ -1295,7 +1295,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @PutMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param commentaireDto &#224; modifier</span></pre></td></tr>
 
 
 <tr>
@@ -1310,7 +1310,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @return commentaire modifi&#233;</span></pre></td></tr>
 
 
 <tr>
@@ -1325,28 +1325,26 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public CommentaireDto update(@PathVariable(&#34;id&#34;) Long id, @RequestBody CommentaireDto commentaireDto) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_88'/>
 88
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_88'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_88'></a>
 <span>
-1. update : negated conditional &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @PutMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_89'/>
 89
 </td>
@@ -1357,7 +1355,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un commentaire.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.OK)</span></pre></td></tr>
 
 
 <tr>
@@ -1372,24 +1370,22 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Modifier un commentaire&#34;, description = &#34;Retourne le commentaire modifi&#233;.&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_91'/>
 91
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_91'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_91'></a>
 <span>
-1. update : negated conditional &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public CommentaireDto update(@PathVariable(&#34;id&#34;) Long id, @RequestBody CommentaireDto commentaireDto) {</span></pre></td></tr>
 
 
 <tr>
@@ -1397,14 +1393,16 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_92'/>
 92
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_92'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_92'>1</a>
 <span>
+1. update : negated conditional &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>                throw new NoUpdateException(&#34;Le commentaire n&#39;a pas &#233;t&#233; modifi&#233;.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>        if(StringUtils.isNullOrEmpty(commentaireDto.getCommentaire()))</span></pre></td></tr>
 
 
 <tr>
@@ -1419,11 +1417,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var model = mapper.map(commentaireDto, Commentaire.class);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &#34;Pr&#233;cisez un commentaire.&#34;);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_94'/>
 94
 </td>
@@ -1434,7 +1432,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            var result = service.update(id, model);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -1446,16 +1444,16 @@
 <span class='pop'>
 <a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_95'>1</a>
 <span>
-1. update : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::update &rarr; KILLED<br/>
+1. update : negated conditional &rarr; KILLED<br/>
 
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            return mapper.map(result, CommentaireDto.class);</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            if (mapper.map(service.getById(id), CommentaireDto.class).equals(commentaireDto))</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_96'/>
 96
 </td>
@@ -1466,7 +1464,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>                throw new NoUpdateException(&#34;Le commentaire n&#39;a pas &#233;t&#233; modifi&#233;.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1481,7 +1479,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var model = mapper.map(commentaireDto, Commentaire.class);</span></pre></td></tr>
 
 
 <tr>
@@ -1496,26 +1494,28 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
-
-
-<tr>
-<td class='na'>
-<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'/>
-99
-</td>
-<td class=''>
-<span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'></a>
-<span>
-</span>
-</span>
-</td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            var result = service.update(id, model);</span></pre></td></tr>
 
 
 <tr>
 <td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'/>
+99
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'>1</a>
+<span>
+1. update : replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::update &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return mapper.map(result, CommentaireDto.class);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_100'/>
 100
 </td>
@@ -1526,7 +1526,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (NoUpdateException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1541,11 +1541,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_102'/>
 102
 </td>
@@ -1556,11 +1556,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_103'/>
 103
 </td>
@@ -1571,7 +1571,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1586,11 +1586,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la modification du commentaire.&#34;);</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (NoUpdateException e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_105'/>
 105
 </td>
@@ -1601,7 +1601,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1616,11 +1616,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_107'/>
 107
 </td>
@@ -1631,11 +1631,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''></span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
 
 
 <tr>
-<td class='na'>
+<td class='covered'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_108'/>
 108
 </td>
@@ -1646,7 +1646,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la modification du commentaire.&#34;);</span></pre></td></tr>
 
 
 <tr>
@@ -1661,7 +1661,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * Suppression d&#39;un commentaire</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1676,7 +1676,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     * @param id</span></pre></td></tr>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
 
 
 <tr>
@@ -1691,7 +1691,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+<td class=''><pre><span  class=''></span></pre></td></tr>
 
 
 <tr>
@@ -1706,7 +1706,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @DeleteMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
 
 
 <tr>
@@ -1721,7 +1721,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.NO_CONTENT)</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * Suppression d&#39;un commentaire</span></pre></td></tr>
 
 
 <tr>
@@ -1736,7 +1736,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>    public void delete(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     * @param id du commentaire</span></pre></td></tr>
 
 
 <tr>
@@ -1751,24 +1751,22 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_116'/>
 116
 </td>
-<td class='killed'>
+<td class=''>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_116'>1</a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_116'></a>
 <span>
-1. delete : removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/CommentaireService::delete &rarr; KILLED<br/>
-
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class='killed'>            service.delete(id);</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @Operation(summary = &#34;Supprimer un commentaire&#34;, description = &#34;Ne retourne rien.&#34;)</span></pre></td></tr>
 
 
 <tr>
@@ -1783,11 +1781,11 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @DeleteMapping(value = &#34;/{id}&#34;)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_118'/>
 118
 </td>
@@ -1798,11 +1796,11 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
+<td class=''><pre><span  class=''>    @ResponseStatus(HttpStatus.NO_CONTENT)</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_119'/>
 119
 </td>
@@ -1813,7 +1811,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
+<td class=''><pre><span  class=''>    public void delete(@PathVariable(&#34;id&#34;) Long id) {</span></pre></td></tr>
 
 
 <tr>
@@ -1828,7 +1826,7 @@
 </span>
 </span>
 </td>
-<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+<td class=''><pre><span  class=''>        try {</span></pre></td></tr>
 
 
 <tr>
@@ -1836,18 +1834,20 @@
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_121'/>
 121
 </td>
-<td class=''>
+<td class='killed'>
 <span class='pop'>
-<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_121'></a>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_121'>1</a>
 <span>
+1. delete : removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/CommentaireService::delete &rarr; KILLED<br/>
+
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+<td class='covered'><pre><span  class='killed'>            service.delete(id);</span></pre></td></tr>
 
 
 <tr>
-<td class='covered'>
+<td class='na'>
 <a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_122'/>
 122
 </td>
@@ -1858,7 +1858,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la suppression du commentaire.&#34;);</span></pre></td></tr>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
 
 
 <tr>
@@ -1873,7 +1873,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>        catch (NoSuchElementException e) {</span></pre></td></tr>
 
 
 <tr>
@@ -1888,7 +1888,7 @@
 </span>
 </span>
 </td>
-<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());</span></pre></td></tr>
 
 
 <tr>
@@ -1903,22 +1903,87 @@
 </span>
 </span>
 </td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_126'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        catch (Exception e) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_127'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, &#34;Erreur lors de la suppression du commentaire.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_128'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_129'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_130'></a>
+<span>
+</span>
+</span>
+</td>
 <td class=''><pre><span  class=''>}</span></pre></td></tr>
 
 
 
 <tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
 
-<tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_37'>37</a></td> 
-<td></td>
-<td>
-
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_37'/> 
-
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> 
-</td>
-</tr>
 <tr>
 <td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_39'>39</a></td> 
 <td></td>
@@ -1930,53 +1995,53 @@
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_44'>44</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_41'>41</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_44'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_41'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_46'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>create<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::create &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_64'>64</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_67'>67</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_64'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_67'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAllCommentairesBySondageId<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenGetAllCommentairesBySondageId_thenReturnOk()]</span></span> replaced return value with Collections.emptyList for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::getAllCommentairesBySondageId &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_65'>65</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_68'>68</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_65'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_68'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$getAllCommentairesBySondageId$0<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenGetAllCommentairesBySondageId_thenReturnOk()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::lambda$getAllCommentairesBySondageId$0 &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_88'>88</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_92'>92</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_88'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_92'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidCommentaire_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
-</td>
-</tr>
-<tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_91'>91</a></td> 
-<td></td>
-<td>
-
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_91'/> 
-
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()]</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -1986,15 +2051,25 @@
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_95'/> 
 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButNoChange_thenReturnNoContent()]</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'>99</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_99'/> 
+
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>update<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()]</span></span> replaced return value with null for fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/controllers/CommentaireController::update &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
-<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_116'>116</a></td> 
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@2d24cdd9_121'>121</a></td> 
 <td></td>
 <td>
 
-<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_116'/> 
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@2d24cdd9_121'/> 
 
 <p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>delete<br/><b>Killed by : </b>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()]</span></span> removed call to fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/services/CommentaireService::delete &rarr; KILLED</p> 
 </td>
@@ -2021,7 +2096,7 @@
 
 <h2>Tests examined</h2>
 <ul>
-<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenGetAllCommentairesBySondageId_thenReturnOk()] (14 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()] (36 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError()] (18 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDeleteButCommentaireDoesNotExist_thenReturnBadRequest()] (1394 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()] (11 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButSondageOrParticipantDoesNotExist_thenReturnBadRequest()] (21 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidParticipant_whenCreate_thenReturnBadRequest()] (78 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButNoChange_thenReturnNoContent()] (12 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()] (15 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidCommentaire_whenCreate_thenReturnBadRequest()] (15 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidCommentaire_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()] (9 ms)</li>
+<li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenGetAllCommentairesBySondageId_thenReturnOk()] (16 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreate_thenReturnCreated()] (42 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDelete_thenReturnNoContent()] (15 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError()] (18 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenDeleteButCommentaireDoesNotExist_thenReturnBadRequest()] (1505 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButServerError_thenReturnInternalServerError()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenCreateButSondageOrParticipantDoesNotExist_thenReturnBadRequest()] (21 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidParticipant_whenCreate_thenReturnBadRequest()] (102 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButNoChange_thenReturnNoContent()] (10 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()] (12 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError()] (13 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenValidParameters_whenUpdate_thenReturnOk()] (18 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidCommentaire_whenCreate_thenReturnBadRequest()] (14 ms)</li><li>fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest.[engine:junit-jupiter]/[class:fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers.CommentaireControllerUnitTest]/[method:givenInvalidCommentaire_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest()] (8 ms)</li>
 </ul>
 
 <br/>
