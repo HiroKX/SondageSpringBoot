@@ -1,5 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepository;
@@ -12,10 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,7 +39,7 @@ class DateSondageServiceUnitTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         DateSondage expectedDateSondage = new DateSondage();
-        when(service.exists(id)).thenReturn(true);
+        when(repository.existsById(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(expectedDateSondage);
 
         DateSondage result = service.getById(id);
@@ -52,7 +51,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatDoesNotExist_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoResultException.class, () -> service.getById(id));
 
@@ -72,6 +71,20 @@ class DateSondageServiceUnitTest {
         verify(repository, times(1)).getAllBySondage(same(sondageId));
         assertEquals(expectedDateSondages, result);
     }
+
+    @Test
+    void givenASondageId_whenGetBySondageIdDateSondagesEmpty_thenRepositoryIsCalled() {
+        Long sondageId = 1L;
+        List<DateSondage> expectedDateSondages = new ArrayList<DateSondage>();
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(repository.getAllBySondage(sondageId)).thenReturn(expectedDateSondages);
+
+        assertThrows(NoResultException.class, () -> service.getBySondageId(sondageId));
+
+        verify(sondageService, times(1)).exists(sondageId);
+        verify(repository, times(1)).getAllBySondage(same(sondageId));
+    }
+
 
     @Test
     void givenAnIdAndADateSondage_whenCreate_thenSondageServiceAndRepositoryAreCalled() {
@@ -113,7 +126,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatExists_whenDelete_thenRepositoryIsCalledTwoTimes() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(true);
+        when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(Optional.of(new DateSondage()));
 
         service.delete(id);
@@ -125,11 +138,61 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatDoesNotExists_whenDelete_thenThrowNoSuchElementException() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> service.delete(id));
 
         verify(repository, times(1)).existsById(same(id));
         verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenThrowSondageNotExist() {
+        Long sondageId = 1L;
+        DateSondageDto dateSondageDto = new DateSondageDto();
+        when(sondageService.exists(sondageId)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class, () -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
+
+        verify(sondageService, times(1)).exists(same(sondageId));
+    }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenThrowDateSondageAlreadyExist() {
+        Long sondageId = 1L;
+        DateSondageDto dateSondageDto = new DateSondageDto();
+        Date d = new Date();
+        dateSondageDto.setDate(d);
+        DateSondage ds = new DateSondage();
+        ds.setDate(d);
+        List<DateSondage> dateSondages = Arrays.asList(ds, ds);
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(repository.getAllBySondage(sondageId)).thenReturn(dateSondages);
+
+        assertThrows(DateSondageAlreadyExistsException.class, () -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
+
+        verify(sondageService, times(1)).exists(same(sondageId));
+        verify(repository, times(1)).getAllBySondage(same(sondageId));
+    }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenDoNothing() {
+        Long sondageId = 1L;
+        DateSondageDto dateSondageDto = new DateSondageDto();
+        Date d = new Date();
+        dateSondageDto.setDate(d);
+
+        Calendar calendar = Calendar.getInstance(); // Obtient une instance de Calendar représentant la date/heure actuelle
+        calendar.add(Calendar.YEAR, 1); // Ajoute un an à la date/heure actuelle
+
+        Date dateDansUnAn = calendar.getTime(); // Convertit le Calendar en Date
+        DateSondage ds = new DateSondage();
+        ds.setDate(dateDansUnAn);
+        List<DateSondage> dateSondages = List.of(ds);
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(repository.getAllBySondage(sondageId)).thenReturn(dateSondages);
+
+        assertDoesNotThrow(() -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
+        verify(sondageService, times(1)).exists(same(sondageId));
     }
 }

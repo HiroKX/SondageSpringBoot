@@ -55,6 +55,9 @@ public class DateSondageService {
     }
 
     public void checkIfDateAlreadyExists(Long sondageId, DateSondageDto dto) throws DateSondageAlreadyExistsException {
+        sondageService.exists(sondageId);
+        if(dto.getDate()==null)
+            throw new NoSuchElementException(ErrorMessages.DATE_DOES_NOT_EXISTS);
         List<DateSondage> datesSondages = repository.getAllBySondage(sondageId);
         Calendar calendarDTO = Calendar.getInstance();
         calendarDTO.setTime(dto.getDate());

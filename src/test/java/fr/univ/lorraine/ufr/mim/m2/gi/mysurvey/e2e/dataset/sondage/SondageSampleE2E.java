@@ -21,5 +21,5 @@ public class SondageSampleE2E {
     public final static Date todayDate = new Date();
     public final static Date futureDate = new Date(todayDate.getTime()+864000);
 
-    public final static Date pastDate = new Date(todayDate.getTime()-864000);
+    public final static Date pastDate = new Date(todayDate.getTime()-86400000);
 }

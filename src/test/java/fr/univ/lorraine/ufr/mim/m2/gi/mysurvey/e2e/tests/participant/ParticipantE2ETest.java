@@ -73,7 +73,7 @@ class ParticipantE2ETest {
 
         // TEST PUT PARTICIPANT WHEN NO ID MATCH
         response = CrudRestAssured.dbPUT("/api/participant/99", requestBody);
-        assertEquals(400, response.statusCode());
+        assertEquals(404, response.statusCode());
 
         // TEST INCOMPLETE POST PARTICIPANT - no name
         requestBody = "[{\"participantId\":" + ",\"nom\":" + ",\"prenom\":\"" + participant.getPrenom() + "\"}]";

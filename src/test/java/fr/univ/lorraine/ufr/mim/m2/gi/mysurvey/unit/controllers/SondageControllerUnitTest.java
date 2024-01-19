@@ -119,6 +119,23 @@ public class SondageControllerUnitTest {
     }
 
     @Test
+    public void givenInvalidDateFinNull_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setFin(null);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     public void givenInvalidCreatedBy_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setCreateBy(null);
         MockHttpServletResponse response = mvc.perform(
@@ -134,6 +151,7 @@ public class SondageControllerUnitTest {
         assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
+
 
     @Test
     public void givenInvalidNom_whenCreate_thenReturnBadRequest() throws Exception {
@@ -172,6 +190,23 @@ public class SondageControllerUnitTest {
     @Test
     public void givenInvalidCloture_whenCreate_thenReturnBadRequest() throws Exception {
         dto.setCloture(null);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenInvalidClotureTrue_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setCloture(true);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -394,6 +429,22 @@ public class SondageControllerUnitTest {
     public void givenInvalidDateFin_whenUpdate_thenReturnBadRequest() throws Exception {
         SondageDto dto = new SondageDto();
         dto.setFin(new Date());
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenInvalidDateFinNull_whenUpdate_thenReturnBadRequest() throws Exception {
+        SondageDto dto = new SondageDto();
+        dto.setFin(null);
         MockHttpServletResponse response = mvc.perform(
                         put("/api/sondage/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
