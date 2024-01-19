@@ -43,4 +43,5 @@ jobs:
           docker-compose up -d --build
 
       - name: Testing E2E
+        run: |
           mvn test -Dtest=*E2ETest -DfailIfNoTests=true
