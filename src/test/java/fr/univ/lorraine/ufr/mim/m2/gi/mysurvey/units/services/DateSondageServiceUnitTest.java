@@ -173,4 +173,25 @@ class DateSondageServiceUnitTest {
 
         verify(sondageService, times(1)).exists(same(sondageId));
     }
+
+    @Test
+    void givenAnIdAndDateSondage_whenCheckIfDateAlreadyExists_thenDoNothing() {
+        Long sondageId = 1L;
+        DateSondageDto dateSondageDto = new DateSondageDto();
+        Date d = new Date();
+        dateSondageDto.setDate(d);
+
+        Calendar calendar = Calendar.getInstance(); // Obtient une instance de Calendar représentant la date/heure actuelle
+        calendar.add(Calendar.YEAR, 1); // Ajoute un an à la date/heure actuelle
+
+        Date dateDansUnAn = calendar.getTime(); // Convertit le Calendar en Date
+        DateSondage ds = new DateSondage();
+        ds.setDate(dateDansUnAn);
+        List<DateSondage> dateSondages = Arrays.asList(ds);
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(repository.getAllBySondage(sondageId)).thenReturn(dateSondages);
+
+        assertDoesNotThrow(() -> service.checkIfDateAlreadyExists(sondageId, dateSondageDto));
+        verify(sondageService, times(1)).exists(same(sondageId));
+    }
 }

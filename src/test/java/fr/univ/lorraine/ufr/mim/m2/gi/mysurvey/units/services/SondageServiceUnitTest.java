@@ -81,16 +81,16 @@ class SondageServiceUnitTest {
     @Test
     void givenAnIdAndASondage_whenCreate_thenParticipantServiceAndSondageRepositoryAreCalled() {
         Long participantId = 1L;
-        Sondage sondageToCreate = new Sondage();
+        Sondage sondageToCreate = mock(Sondage.class);
         Participant participant = new Participant();
         when(participantService.getById(participantId)).thenReturn(participant);
         when(sondageRepository.save(sondageToCreate)).thenReturn(sondageToCreate);
 
         Sondage result = sondageService.create(participantId, sondageToCreate);
 
+        verify(sondageToCreate, times(1)).setCreateBy(participant);
         verify(participantService, times(1)).getById(same(participantId));
         verify(sondageRepository, times(1)).save(same(sondageToCreate));
-        assertEquals(participant, sondageToCreate.getCreateBy());
         assertEquals(sondageToCreate, result);
     }
 
@@ -98,16 +98,12 @@ class SondageServiceUnitTest {
     void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledTwoTimes() {
         Long sondageId = 1L;
         Date d = new Date();
-        Sondage existingSondage = new Sondage();
-        existingSondage.setFin(d);
-        existingSondage.setNom("nom");
-        existingSondage.setDescription("description");
-        existingSondage.setCloture(false);
+        Sondage existingSondage = mock(Sondage.class);
         Sondage updatedSondage = new Sondage();
-        existingSondage.setFin(d);
-        existingSondage.setNom("nom");
-        existingSondage.setDescription("description");
-        existingSondage.setCloture(false);
+        updatedSondage.setFin(d);
+        updatedSondage.setNom("nom");
+        updatedSondage.setDescription("description");
+        updatedSondage.setCloture(false);
         updatedSondage.setSondageId(sondageId);
         when(sondageService.exists(sondageId)).thenReturn(true);
         when(sondageRepository.getReferenceById(sondageId)).thenReturn(existingSondage);
@@ -115,6 +111,10 @@ class SondageServiceUnitTest {
 
         Sondage result = sondageService.update(sondageId, updatedSondage);
 
+        verify(existingSondage, times(1)).setFin(d);
+        verify(existingSondage, times(1)).setNom("nom");
+        verify(existingSondage, times(1)).setDescription("description");
+        verify(existingSondage, times(1)).setCloture(false);
         verify(sondageRepository, times(1)).getReferenceById(same(sondageId));
         verify(sondageRepository, times(1)).save(same(existingSondage));
         assertNotNull(result);

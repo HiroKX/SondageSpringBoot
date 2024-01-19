@@ -38,9 +38,9 @@ public class ParticipantService {
         try {
             Participant participant = getById(id);
             if (!StringUtils.isNullOrEmpty(newParticipant.getNom()))
-                participant.setNom(participant.getNom());
+                participant.setNom(newParticipant.getNom());
             if (!StringUtils.isNullOrEmpty(newParticipant.getPrenom()))
-                participant.setPrenom(participant.getPrenom());
+                participant.setPrenom(newParticipant.getPrenom());
             return repository.save(participant);
         }
         catch (NoResultException e) {

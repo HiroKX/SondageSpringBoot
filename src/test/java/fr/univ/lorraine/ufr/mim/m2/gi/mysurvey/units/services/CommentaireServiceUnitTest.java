@@ -7,16 +7,14 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.CommentaireRepositor
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.CommentaireService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -54,6 +52,18 @@ class CommentaireServiceUnitTest {
     }
 
     @Test
+    void givenASondageIdThatDoesNotExist_whenGetBySondageIdReturnEmpty_thenThrowNoSuchElementException() {
+        Long sondageId = 1L;
+        List<Commentaire> expectedCommentaires = new ArrayList<>();
+        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(repository.getAllBySondage(sondageId)).thenReturn(expectedCommentaires);
+
+        assertThrows(NoResultException.class, () -> commentaireService.getBySondageId(sondageId));
+
+        verify(repository, times(1)).getAllBySondage(same(sondageId));
+    }
+
+    @Test
     void givenASondageIdThatDoesNotExist_whenGetBySondageId_thenThrowNoSuchElementException() {
         Long sondageId = 1L;
         when(sondageService.exists(sondageId)).thenReturn(false);
@@ -71,7 +81,7 @@ class CommentaireServiceUnitTest {
 
         Sondage expectedSondage = new Sondage(); // Créer une instance de Sondage attendue
         Participant expectedParticipant = new Participant(); // Créer une instance de Participant attendue
-
+        expectedParticipant.setParticipantId(1L);
         // Simuler le comportement des services et du repository
         when(sondageService.exists(sondageId)).thenReturn(true);
         when(sondageService.getById(sondageId)).thenReturn(expectedSondage);
@@ -88,6 +98,7 @@ class CommentaireServiceUnitTest {
 
         // Vérifier que les propriétés du commentaire sont correctement définies
         assertEquals(expectedSondage, commentaire.getSondage());
+        assertEquals(expectedParticipant.getParticipantId(), commentaire.getParticipant().getParticipantId());
         assertEquals(expectedParticipant, commentaire.getParticipant());
         assertEquals(commentaire, result);
     }
@@ -138,17 +149,19 @@ class CommentaireServiceUnitTest {
     void givenAnIdAndACommentaire_whenUpdate_thenRepositoryIsCalled() {
         Long id = 1L;
         Commentaire commentaire = new Commentaire();
+        commentaire.setCommentaireId(id);
+        commentaire.setCommentaire("Test");
+        Commentaire commentaire1 = mock(Commentaire.class);
+
         when(commentaireService.exists(id)).thenReturn(true);
-        when(repository.getReferenceById(id)).thenReturn(commentaire);
-        Commentaire commentaire1 = new Commentaire();
-        commentaire1.setCommentaireId(id);
-        when(repository.save(commentaire)).thenReturn(commentaire1);
+        when(repository.getReferenceById(id)).thenReturn(commentaire1);
+        when(repository.save(commentaire1)).thenReturn(commentaire1);
 
         Commentaire result = commentaireService.update(id, commentaire);
-        verify(repository, times(1)).existsById(same(id));
-        verify(repository, times(1)).save(same(commentaire));
-        assertEquals(id, result.getCommentaireId());
 
+        verify(commentaire1, times(1)).setCommentaire(commentaire.getCommentaire());
+        verify(repository, times(1)).existsById(id);
+        verify(repository, times(1)).save(commentaire1);
         assertNotNull(result);
     }
 
