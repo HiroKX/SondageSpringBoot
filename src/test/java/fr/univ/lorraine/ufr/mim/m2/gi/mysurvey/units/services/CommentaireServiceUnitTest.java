@@ -159,6 +159,7 @@ class CommentaireServiceUnitTest {
 
         Commentaire result = commentaireService.update(id, commentaire);
 
+
         verify(commentaire1, times(1)).setCommentaire(commentaire.getCommentaire());
         verify(repository, times(1)).existsById(id);
         verify(repository, times(1)).save(commentaire1);
