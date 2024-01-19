@@ -324,6 +324,21 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
+    void givenValidParameters_whenUpdateButParticipantDoesNotExist_thenReturnNoContent() throws Exception {
+        when(service.getById(id)).thenThrow(NoResultException.class);
+
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(participantDto).getJson())).andReturn().getResponse();
+
+        verify(service, times(1)).getById(id);
+        verify(service, never()).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getById(id)).thenReturn(new Participant());
         when(service.update(id, participant)).thenThrow(NullPointerException.class);

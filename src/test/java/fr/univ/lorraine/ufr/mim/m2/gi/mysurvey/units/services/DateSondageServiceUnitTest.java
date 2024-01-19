@@ -73,7 +73,7 @@ class DateSondageServiceUnitTest {
     }
 
     @Test
-    void givenASondageId_whenGetBySondageIdDateSondagesEmpty_thenRepositoryIsCalled() {
+    void givenASondageId_whenGetBySondageIdDateSondagesEmpty_thenThrowNoResultException() {
         Long sondageId = 1L;
         List<DateSondage> expectedDateSondages = new ArrayList<>();
         when(sondageService.exists(sondageId)).thenReturn(true);
@@ -83,6 +83,17 @@ class DateSondageServiceUnitTest {
 
         verify(sondageService, times(1)).exists(sondageId);
         verify(repository, times(1)).getAllBySondage(same(sondageId));
+    }
+
+    @Test
+    void givenASondageId_whenGetBySondageId_thenThrowNoSuchElementException() {
+        Long sondageId = 1L;
+        when(sondageService.exists(sondageId)).thenReturn(false);
+
+        assertThrows(NoSuchElementException.class, () -> service.getBySondageId(sondageId));
+
+        verify(sondageService, times(1)).exists(sondageId);
+        verify(repository, times(0)).getAllBySondage(same(sondageId));
     }
 
     @Test
