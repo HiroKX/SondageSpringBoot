@@ -285,7 +285,7 @@ class SondageE2ETest {
         Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
         long createdParticipantID = response.jsonPath().getLong("participantId");
         participant.setParticipantId(createdParticipantID);
-        // CREATE SONDAGE BUT WITH PAST DATE
+        // CREATE SONDAGE
         Sondage sondage = new Sondage(1L,
                 "Aller manger au McDonalds",
                 "Ça fait longtemps que j'ai pas mangé un Big Mac",
@@ -359,5 +359,31 @@ class SondageE2ETest {
         // DELETE PARTICIPANT AND SONDAGE
         response = CrudRestAssured.dbDELETE("/api/participant/"+createdParticipantID);
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
+    }
+
+    @Test
+    void testBestDatesMaybeDates() {
+        // CREATE 3 PARTICIPANTS
+        Participant participant = new Participant(1L, "Potter", "Harry");
+        String requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        long createdParticipantID = response.jsonPath().getLong("participantId");
+        participant.setParticipantId(createdParticipantID);
+        Participant participant2 = new Participant(1L, "Granger", "Hermionne");
+        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        createdParticipantID = response.jsonPath().getLong("participantId");
+        participant2.setParticipantId(createdParticipantID);
+        Participant participant3 = new Participant(1L, "Weasley", "Ron");
+        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        createdParticipantID = response.jsonPath().getLong("participantId");
+        participant3.setParticipantId(createdParticipantID);
+
+        // DELETE PARTICIPANTS
+        response = CrudRestAssured.dbDELETE("/api/participant/"+participant.getParticipantId());
+        response = CrudRestAssured.dbDELETE("/api/participant/"+participant.getParticipantId());
+        response = CrudRestAssured.dbDELETE("/api/participant/"+participant.getParticipantId());
+
     }
 }
