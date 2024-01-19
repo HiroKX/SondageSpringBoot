@@ -5,38 +5,44 @@
 Afin de faciliter l'utilisation de l'application, nous avons mis en place un conteneur docker.
 Un fichier ".env" que vous créerez va instancier un conteneur avec une base de données **PostgreSQL**, **adminer**, un gestionnaire de database simple en php et héberger l'application entière.
 
-##Local
-###Prérequis :
+## Local
+### Prérequis :
 1. Base de donnée
 Il faut posséder une Base de donnée, ici nous vous conseillons d'utiliser Postgres : https://www.postgresql.org/
 
 2. Java 19
 Pour installer Java 19 : https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html
 
-###Installation : 
+### Installation : 
 Dans le fichier [application-local.properties](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/test/resources/application.properties), il faut changer les variables de connexion à votre base de donnée.
 Il s'agit du port, du nom d'utilisateur, du mot de passe et du nom de la base de donnée.
 
 Une fois que tout ceci est fait, il vous suffit de lancer le programme [MySurveyApplication](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/main/java/fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/MySurveyApplication.java).
 
-##Docker
+## Docker
+Nous recommandons l'utilisation de Docker car il permet de contenir votre application dans un environnement qui n'atteint pas votre machine.
+Il est tout de même recommander d'utiliser JAVA19 si vous voulez modifier le projet.
+
+Il est possible d'augmenter la sécurité de votre application lors du déploiement du conteneur en refusant les connexions à la base de donnée pour chaque requête provenant de l'exterieur du conteneur.
+Pour ce faire, il suffit de retirer ces [ligne](https://github.com/HiroKX/SondageSpringBoot/blob/develop/docker-compose.yml#L25-L26) dans votre docker-compose.ml.
+
 Pour déployer ce conteneur : 
-* Installer docker.
-* Créer un fichier .env dans le root du projet et éditer la configuration : 
+1. Installer docker.
+2. Créer un fichier .env dans le root du projet et éditer la configuration : 
 ```bash
 SPRING_PROFILES_ACTIVE=local
 DB_USERNAME= # Ex : postgres
 DB_PASSWORD= # Ex : admin
 DB_NAME= # Ex : MySurvey
 DB_URL="jdbc:postgresql://db:5432"
-ADMINER_PORTS= # Ex : 8081
-DB_PORTS= # Ex : 5432
 SERVER_PORT= # Ex : 8090
+ADMINER_PORTS= # Ex : 8081 Optionnel si vous ne voulez pas de adminer soit accessible de l'exterieur.
+DB_PORTS= # Ex : 5432 Optionnel si vous ne voulez pas que votre database soit accessible de l'exterieur.
 ```
 
 Il vous faut également dans le fichier Dockerfile, changer la variable d'environnement **EXPOSE** (Ligne 21) par votre port.
 
-* Ouvrer un **CMD** dans le root du projet et effectuer la commande : 
+3. Ouvrer un **CMD** dans le root du projet et effectuer la commande : 
 ``` docker-compose up --build```
 
 # Lancement du projet
