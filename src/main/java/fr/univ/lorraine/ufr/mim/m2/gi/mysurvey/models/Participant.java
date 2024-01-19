@@ -37,7 +37,7 @@ public class Participant {
         this.prenom = prenom;
     }
 
-    public Long getParticipantId() {
+    public long getParticipantId() {
         return participantId;
     }
 
