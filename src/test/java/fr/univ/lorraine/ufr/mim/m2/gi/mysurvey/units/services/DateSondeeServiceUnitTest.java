@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataIntegrityViolationException;
+
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +48,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
+    void givenIdAndParticipantIdAndDateSondee_whenCreate_thenServicesAndRepositoryAreCalled() throws SondageCloturedException, DateSondageAlreadyExistsException {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -67,7 +69,6 @@ class DateSondeeServiceUnitTest {
         assertEquals(dateSondee, result);
         assertEquals(dateSondee.getDateSondage(),dateSondage);
         assertEquals(dateSondee.getParticipant().getNom(),p.getNom());
-
     }
 
 
@@ -88,6 +89,25 @@ class DateSondeeServiceUnitTest {
         verify(dateSondageService, times(1)).getById(id);
         verify(participantService, times(0)).getById(participantId);
         verify(repository, times(0)).save(dateSondee);
+    }
+    @Test
+    void givenIdAndParticipantIdAndDateSondee_whenDateSondeeAlreadyExists_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
+        Long id = 1L;
+        Long participantId = 1L;
+        DateSondee dateSondee = new DateSondee();
+
+        DateSondage dateSondage = new DateSondage();
+        dateSondage.setSondage(new Sondage()); // Créer et configurer une instance de DateSondage
+        dateSondage.getSondage().setCloture(false);
+
+        when(dateSondageService.getById(id)).thenReturn(dateSondage);
+        when(repository.save(dateSondee)).thenThrow(DataIntegrityViolationException.class);
+
+        assertThrows(DateSondageAlreadyExistsException.class, () -> dateSondeeService.create(id, participantId, dateSondee));
+
+        verify(dateSondageService, times(1)).getById(id);
+        verify(participantService, times(1)).getById(participantId);
+        verify(repository, times(1)).save(dateSondee);
     }
 
     @Test

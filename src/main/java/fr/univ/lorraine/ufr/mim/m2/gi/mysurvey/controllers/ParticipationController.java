@@ -1,7 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Choix;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondee;
@@ -39,11 +39,10 @@ public class ParticipationController {
         if(!EnumUtils.isValidEnum(Choix.class, dto.getChoix()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez un choix valide.");
         try {
-            dateSondeeService.checkIfDateSondeeAlreadyExists(id, dto.getParticipant());
             DateSondee model = mapper.map(dto, DateSondee.class);
             var result = dateSondeeService.create(id, dto.getParticipant(), model);
             return mapper.map(result, DateSondeeDto.class);
-        } catch (DateSondeeAlreadyExistsException | SondageCloturedException e) {
+        } catch (DateSondageAlreadyExistsException | SondageCloturedException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (NoResultException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
