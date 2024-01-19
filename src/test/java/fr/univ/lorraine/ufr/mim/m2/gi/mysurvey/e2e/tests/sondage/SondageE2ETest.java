@@ -42,7 +42,7 @@ class SondageE2ETest {
 
         // GET ALL WHEN NO SONDAGE
         response = CrudRestAssured.dbGET("api/sondage/");
-        assertEquals(404, response.statusCode());
+        assertEquals(204, response.statusCode());
 
         // GET DATE CLOTURE WHEN NO SONDAGE
         response = CrudRestAssured.dbGET("api/sondage/99/dates");
