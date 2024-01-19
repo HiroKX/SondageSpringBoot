@@ -102,11 +102,11 @@ public class ParticipantController {
             var result = service.update(id, model);
             return mapper.map(result, ParticipantDto.class);
         }
-        catch(NoSuchElementException e){
+        catch(NoSuchElementException | NoResultException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du commentaire.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du participant.");
         }
     }
 
