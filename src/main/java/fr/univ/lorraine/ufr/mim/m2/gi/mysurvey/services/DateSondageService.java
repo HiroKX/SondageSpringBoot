@@ -64,11 +64,12 @@ public class DateSondageService {
         Calendar calendarCheck = Calendar.getInstance();
         for (DateSondage dateSondage : datesSondages) {
             calendarCheck.setTime(dateSondage.getDate());
-            if (calendarDTO.getWeekYear() == calendarCheck.getWeekYear() &&
+            if (!calendarDTO.getTime().equals(dto.getDate()) || (
+                    calendarDTO.getWeekYear() == calendarCheck.getWeekYear() &&
                     calendarDTO.get(Calendar.MONTH) == calendarCheck.get(Calendar.MONTH) &&
                     calendarDTO.get(Calendar.DAY_OF_MONTH) == calendarCheck.get(Calendar.DAY_OF_MONTH) &&
                     calendarDTO.get(Calendar.HOUR) == calendarCheck.get(Calendar.HOUR) &&
-                    calendarDTO.get(Calendar.MINUTE) == calendarCheck.get(Calendar.MINUTE))
+                    calendarDTO.get(Calendar.MINUTE) == calendarCheck.get(Calendar.MINUTE)))
                 throw new DateSondageAlreadyExistsException();
         }
     }

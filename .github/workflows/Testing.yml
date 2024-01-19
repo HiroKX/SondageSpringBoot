@@ -10,7 +10,7 @@ name: Java CI (Unit & Integration) and coverage deployments
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "master" ]
 
 jobs:
   build:
