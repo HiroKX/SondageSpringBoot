@@ -13,10 +13,10 @@ Nous vous conseillons d'utiliser une base de données [PostGreSQL](https://www.p
 Téléchargeable [ici](https://www.oracle.com/java/technologies/javase/jdk19-archive-downloads.html).
 
 ### Installation 
-Dans le fichier [application-local.properties](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/test/resources/application.properties), il vous faut renseigner les variables de connexion propres à votre base de données.
+Dans le fichier [application-local.properties](https://github.com/HiroKX/SondageSpringBoot/blob/master/src/main/resources/application-local.properties), il vous faut renseigner les variables de connexion propres à votre base de données.
 Il s'agit du port, du nom d'utilisateur, du mot de passe et du nom de la base de données.
 
-Une fois que tout ceci est fait, il vous suffit de lancer le programme [MySurveyApplication](https://github.com/HiroKX/SondageSpringBoot/blob/56-fix-du-readme/src/main/java/fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/MySurveyApplication.java).
+Une fois que tout ceci est fait, il vous suffit de lancer le programme [MySurveyApplication](https://github.com/HiroKX/SondageSpringBoot/blob/master/src/main/java/fr/univ/lorraine/ufr/mim/m2/gi/mysurvey/MySurveyApplication.java).
 
 ## Docker
 Nous recommandons l'utilisation de Docker car il permet de contenir votre application dans un environnement qui n'atteint pas votre machine.

@@ -5,7 +5,7 @@ Pour ce faire, certains packages sont disponibles sur internet, voici ceux que n
 * [JUnit 5](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#junit-5)
 * [REST Assured](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#rest-assured)
 * [Checkstyle](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#checkstyle)
-* [Adminer]((https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#adminer)
+* [Adminer](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#adminer)
 * [JaCoCo](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#jacoco)
 * [PiTest](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#pitest)
 * [Swagger](https://github.com/HiroKX/SondageSpringBoot/wiki/Documentation-technique#swagger)
