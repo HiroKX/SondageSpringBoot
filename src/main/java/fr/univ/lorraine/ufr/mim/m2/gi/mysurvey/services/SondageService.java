@@ -23,8 +23,13 @@ public class SondageService {
     private ParticipantService participantService;
 
     public Sondage create(Long idParticipant, Sondage sondage) {
-        sondage.setCreateBy(participantService.getById(idParticipant));
-        return repository.save(sondage);
+        try {
+            sondage.setCreateBy(participantService.getById(idParticipant));
+            return repository.save(sondage);
+        }
+        catch (NoResultException e) {
+            throw new NoSuchElementException(ErrorMessages.PARTICIPANT_DOES_NOT_EXISTS);
+        }
     }
 
     public Sondage getById(Long id) {

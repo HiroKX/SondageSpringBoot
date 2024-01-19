@@ -169,8 +169,11 @@ class CommentaireControllerUnitTest {
     @Test
     void givenValidParameters_whenGetAllCommentairesBySondageId_thenReturnOk() throws Exception {
         ArrayList<Commentaire> commentaires = new ArrayList<>();
-        commentaires.add(new Commentaire());
+        Commentaire com = new Commentaire();
+        commentaires.add(com);
         when(service.getBySondageId(id)).thenReturn(commentaires);
+        when(mapper.map(com,CommentaireDto.class)).thenReturn(new CommentaireDto());
+
         MockHttpServletResponse response = mvc.perform(
                         get("/api/commentaire/" + id)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -178,9 +181,13 @@ class CommentaireControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        verify(service, times(1)).getBySondageId(eq(id));
+        verify(mapper, times(1)).map(com, CommentaireDto.class);
+        verify(service, times(1)).getBySondageId(id);
+        assertThat(response.getContentAsString()).isEqualTo("[" + jsonCommentaire.write(new CommentaireDto()).getJson() + "]");
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
+
+
 
     @Test
     void givenValidParameters_whenGetAllCommentairesBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
@@ -279,7 +286,22 @@ class CommentaireControllerUnitTest {
     }
 
     @Test
-    void givenValidParameters_whenUpdateButCommentaireDoesNotExists_thenReturnInternalServerError() throws Exception {
+    void givenInvalidCommentaire_whenUpdateButCommentaireDoesNotExists_thenReturnBadRequest() throws Exception {
+
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/commentaire/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonCommentaire.write(new CommentaireDto()).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+        verify(service, times(0)).getById(eq(id));
+        verify(service, times(0)).update(eq(id), eq(commentaire));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
         when(service.getById(id)).thenReturn(new Commentaire());
         when(service.update(id, commentaire)).thenThrow(NullPointerException.class);
 
