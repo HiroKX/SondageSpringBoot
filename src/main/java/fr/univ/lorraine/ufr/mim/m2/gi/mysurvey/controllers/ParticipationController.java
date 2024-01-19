@@ -48,7 +48,7 @@ public class ParticipationController {
         } catch (NoResultException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erreur lors de la création de la participation.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création de la participation.");
         }
     }
 }

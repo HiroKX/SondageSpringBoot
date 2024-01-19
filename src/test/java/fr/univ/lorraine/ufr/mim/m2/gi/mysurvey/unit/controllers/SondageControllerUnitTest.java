@@ -3,11 +3,13 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.SondageController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +24,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,131 +83,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void testGetAll() throws Exception {
-        when(service.getAll()).thenReturn(List.of(sondage));
-        when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"))
-                .andReturn().getResponse();
-
-        verify(service,times(1)).getAll();
-        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
-        assertThat(response.getContentAsString()).isEqualTo("[" + jsonSondage.write(dto).getJson() + "]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetAllEmpty() throws Exception {
-        when(service.getAll()).thenReturn(List.of());
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"))
-                .andReturn().getResponse();
-
-        verify(service,times(1)).getAll();
-        assertThat(response.getContentAsString()).isEqualTo("[]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetById() throws Exception {
-        when(service.getById(id)).thenReturn(sondage);
-        when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id))
-                .andReturn().getResponse();
-
-        verify(service,times(1)).getById(eq(id));
-        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
-        assertThat(response.getContentAsString()).isEqualTo(jsonSondage.write(dto).getJson());
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetByIdFailed() throws Exception {
-        when(service.getById(id)).thenThrow(EntityNotFoundException.class);
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id))
-                .andReturn().getResponse();
-
-        verify(service,times(1)).getById(eq(id));
-        assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @Test
-    public void testGetBest() throws Exception {
-        Date d = new Date();
-        when(request.getBestDateBySondageId(id)).thenReturn(List.of(d));
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/best"))
-                .andReturn().getResponse();
-
-        verify(request,times(1)).getBestDateBySondageId(id);
-        assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetBestEmpty() throws Exception {
-        when(request.getBestDateBySondageId(id)).thenReturn(List.of());
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/best"))
-                .andReturn().getResponse();
-
-        verify(request,times(1)).getBestDateBySondageId(id);
-        assertThat(response.getContentAsString()).isEqualTo("[]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetBestNotFound() throws Exception {
-        when(request.getBestDateBySondageId(id)).thenThrow(EntityNotFoundException.class);
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/best"))
-                .andReturn().getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-
-    @Test
-    public void testGetMaybeBest() throws Exception {
-        Date d = new Date();
-        when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of(d));
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/maybe"))
-                .andReturn().getResponse();
-
-        verify(request,times(1)).getMaybeBestDateBySondageId(id);
-        assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetMaybeBestEmpty() throws Exception {
-        when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of());
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/maybe"))
-                .andReturn().getResponse();
-
-        verify(request,times(1)).getMaybeBestDateBySondageId(id);
-        assertThat(response.getContentAsString()).isEqualTo("[]");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    }
-
-    @Test
-    public void testGetMaybeBestNotFound() throws Exception {
-        when(request.getMaybeBestDateBySondageId(id)).thenThrow(EntityNotFoundException.class);
-        MockHttpServletResponse response = mvc.perform(
-                        get("/api/sondage/"+id+"/maybe"))
-                .andReturn().getResponse();
-
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-
-    @Test
-    public void testCreate() throws Exception {
+    public void givenValidParameters_whenCreate_thenReturnCreated() throws Exception {
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.create(id, sondage)).thenReturn(sondage);
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
@@ -223,36 +102,279 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void testCreateWithoutInfo() throws Exception {
-        SondageDto s = new SondageDto();
-        s.setFin(dateDansUnAn);
+    public void givenInvalidDateFin_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setFin(new Date());
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonSondage.write(s).getJson())
+                                .content(jsonSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    public void testCreateDateBefore() throws Exception {
-        SondageDto s = new SondageDto();
-        s.setFin(new Date());
+    public void givenInvalidCreatedBy_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setCreateBy(null);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/sondage/")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonSondage.write(s).getJson())
+                                .content(jsonSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
-    public void testUpdate() throws Exception {
-        /*
+    public void givenInvalidNom_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setNom(null);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenInvalidDescription_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setDescription(null);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenInvalidCloture_whenCreate_thenReturnBadRequest() throws Exception {
+        dto.setCloture(null);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(0)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(0)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenCreateButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
+        when(service.create(id, sondage)).thenThrow(NoSuchElementException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(1)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(1)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
+        when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
+        when(service.create(id, sondage)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        post("/api/sondage/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(mapper,times(1)).map(eq(dto), eq(Sondage.class));
+        verify(service,times(1)).create(dto.getCreateBy(),sondage);
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetAllSondages_thenReturnOk() throws Exception {
+        when(service.getAll()).thenReturn(List.of(sondage));
+        when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getAll();
+        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEqualTo("[" + jsonSondage.write(dto).getJson() + "]");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetAllSondagesButNoSondageExist_thenReturnNotFound() throws Exception {
+        when(service.getAll()).thenThrow(NoResultException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getAll();
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetAllSondagesButErrorServer_thenReturnInternalServerError() throws Exception {
+        when(service.getAll()).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getAll();
+        verify(mapper,times(0)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetSondageById_thenReturnOk() throws Exception {
+        when(service.getById(id)).thenReturn(sondage);
+        when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getById(eq(id));
+        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
+        assertThat(response.getContentAsString()).isEqualTo(jsonSondage.write(dto).getJson());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetSondageByIdButSondageDoesNotExist_thenReturnNotFound() throws Exception {
+        when(service.getById(id)).thenThrow(NoResultException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getById(eq(id));
+        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetSondageByIdButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getById(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).getById(eq(id));
+        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetBestDateBySondageId_thenReturnOk() throws Exception {
+        Date d = new Date();
+        when(request.getBestDateBySondageId(id)).thenReturn(List.of(d));
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/best"))
+                .andReturn().getResponse();
+
+        verify(request,times(1)).getBestDateBySondageId(id);
+        assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(request.getBestDateBySondageId(id)).thenThrow(NoSuchElementException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/best"))
+                .andReturn().getResponse();
+
+        verify(request,times(1)).getBestDateBySondageId(id);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
+        when(request.getBestDateBySondageId(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/best"))
+                .andReturn().getResponse();
+
+        verify(request,times(1)).getBestDateBySondageId(id);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetMaybeBestDateBySondageId_thenReturnOk() throws Exception {
+        Date d = new Date();
+        when(request.getMaybeBestDateBySondageId(id)).thenReturn(List.of(d));
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/maybe"))
+                .andReturn().getResponse();
+
+        verify(request,times(1)).getMaybeBestDateBySondageId(id);
+        assertThat(response.getContentAsString()).isEqualTo("[" + d.getTime() + "]");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetMaybeBestDateBySondageIdButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(request.getMaybeBestDateBySondageId(id)).thenThrow(NoSuchElementException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/maybe"))
+                .andReturn().getResponse();
+
+        verify(request,times(1)).getMaybeBestDateBySondageId(id);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenGetMaybeBestDateBySondageIdButServerError_thenReturnInternalServerError() throws Exception {
+        when(request.getMaybeBestDateBySondageId(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        get("/api/sondage/"+id+"/maybe"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdate_thenReturnOk() throws Exception {
+        when(service.getById(id)).thenReturn(new Sondage());
         when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
         when(service.update(id, sondage)).thenReturn(sondage);
         when(mapper.map(sondage, SondageDto.class)).thenReturn(dto);
@@ -263,41 +385,75 @@ public class SondageControllerUnitTest {
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
 
-        verify(mapper,times(1)).map(eq(dto), eq(Sondage.class));
         verify(service,times(1)).update(eq(id), eq(sondage));
-        verify(mapper,times(1)).map(eq(sondage), eq(SondageDto.class));
         assertThat(response.getContentAsString()).isEqualTo(jsonSondage.write(dto).getJson());
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-         */
     }
 
     @Test
-    public void testUpdateFailedDueToLackOfInfo() throws Exception {
-        SondageDto s = new SondageDto();
-        s.setFin(dateDansUnAn);
-        MockHttpServletResponse response = mvc.perform(
-                        put("/api/sondage/"+id)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(jsonSondage.write(s).getJson())
-                                .characterEncoding("UTF-8"))
-                .andReturn().getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
-    }
-
-    @Test
-    public void testUpdateFailedNotFound() throws Exception {
-        when(mapper.map(dto, Sondage.class)).thenThrow(EntityNotFoundException.class);
+    public void givenInvalidDateFin_whenUpdate_thenReturnBadRequest() throws Exception {
+        SondageDto dto = new SondageDto();
+        dto.setFin(new Date());
         MockHttpServletResponse response = mvc.perform(
                         put("/api/sondage/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonSondage.write(dto).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButSondageHasNotChanged_thenReturnNoContent() throws Exception {
+        when(service.getById(id)).thenReturn(sondage);
+        when(mapper.map(dto, Sondage.class)).thenReturn(sondage);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
+        when(service.getById(id)).thenThrow(NoResultException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenUpdateButServerError_thenReturnInternalServerError() throws Exception {
+        when(service.getById(id)).thenThrow(NullPointerException.class);
+        MockHttpServletResponse response = mvc.perform(
+                        put("/api/sondage/"+id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(jsonSondage.write(dto).getJson())
+                                .characterEncoding("UTF-8"))
+                .andReturn().getResponse();
+
+        verify(service,times(0)).update(eq(id), eq(sondage));
+        assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void givenValidParameters_whenDelete_thenReturnNoContent() throws Exception {
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
                 .andReturn().getResponse();
@@ -308,7 +464,7 @@ public class SondageControllerUnitTest {
     }
 
     @Test
-    public void testDeleteFailed() throws Exception {
+    public void givenValidParameters_whenDeleteButSondageDoesNotExist_thenReturnBadRequest() throws Exception {
         doThrow(NoSuchElementException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/sondage/"+id))
@@ -316,7 +472,19 @@ public class SondageControllerUnitTest {
 
         verify(service,times(1)).delete(eq(id));
         assertThat(response.getContentAsString()).isEqualTo("");
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    public void givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError() throws Exception {
+        doThrow(NullPointerException.class).when(service).delete(id);
+        MockHttpServletResponse response = mvc.perform(
+                        delete("/api/sondage/"+id))
+                .andReturn().getResponse();
+
+        verify(service,times(1)).delete(eq(id));
+        assertThat(response.getContentAsString()).isEqualTo("");
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.value());
     }
 
 }

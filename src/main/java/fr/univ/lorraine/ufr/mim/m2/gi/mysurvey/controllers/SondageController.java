@@ -1,6 +1,7 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.SondageDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.NoUpdateException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondeeService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
@@ -36,7 +37,7 @@ public class SondageController {
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
     public SondageDto create(@RequestBody SondageDto sondageDto) {
-        if(sondageDto.getFin().before(new Date()))
+        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
         if(sondageDto.getCreateBy() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le sondage doit avoir un créateur.");
@@ -50,6 +51,9 @@ public class SondageController {
             var model = mapper.map(sondageDto, Sondage.class);
             var result = service.create(sondageDto.getCreateBy(), model);
             return mapper.map(result, SondageDto.class);
+        }
+        catch(NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du sondage.");
@@ -146,12 +150,15 @@ public class SondageController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
         try {
             if (service.getById(id).equals(mapper.map(sondageDto, Sondage.class)))
-                throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Le sondage n'a pas été modifié.");
+                throw new NoUpdateException("Le sondage n'a pas été modifié.");
             Sondage model = mapper.map(sondageDto, Sondage.class);
             var result = service.update(id, model);
             return mapper.map(result, SondageDto.class);
         }
-        catch(NoSuchElementException e){
+        catch(NoUpdateException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
+        }
+        catch(NoResultException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
@@ -170,7 +177,7 @@ public class SondageController {
             service.delete(id);
         }
         catch(NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du sondage.");
