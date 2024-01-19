@@ -6,12 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipantController;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.CommentaireDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Commentaire;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -346,7 +343,7 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
-    void testDelete() throws Exception {
+    void givenValidParameters_whenDelete_ReturnNoContent() throws Exception {
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
                 .andReturn().getResponse();
@@ -357,7 +354,7 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
-    void testDeleteFailedOtherException() throws Exception {
+    void givenValidParameters_whenDeleteButServerError_thenReturnInternalServerError() throws Exception {
         doThrow(NoResultException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))
@@ -369,7 +366,7 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
-    void testDeleteFailed() throws Exception {
+    void givenValidParameters_whenDeleteButParticipantDoesNotExist_thenReturnBadRequest() throws Exception {
         doThrow(NoSuchElementException.class).when(service).delete(id);
         MockHttpServletResponse response = mvc.perform(
                         delete("/api/participant/"+id))

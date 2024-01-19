@@ -1,6 +1,5 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.units.services;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondageDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
@@ -71,7 +70,6 @@ class DateSondeeServiceUnitTest {
         assertEquals(dateSondee.getParticipant().getNom(),p.getNom());
     }
 
-
     @Test
     void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
@@ -90,6 +88,7 @@ class DateSondeeServiceUnitTest {
         verify(participantService, times(0)).getById(participantId);
         verify(repository, times(0)).save(dateSondee);
     }
+
     @Test
     void givenIdAndParticipantIdAndDateSondee_whenDateSondeeAlreadyExists_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
         Long id = 1L;
@@ -175,5 +174,4 @@ class DateSondeeServiceUnitTest {
         when(repository.getAllByDateSondageAndParticipant(dateSondageId, participantId)).thenReturn(List.of(new DateSondee()));
         assertThrows(DateSondeeAlreadyExistsException.class,() -> dateSondeeService.checkIfDateSondeeAlreadyExists(dateSondageId,participantId));
     }
-
 }

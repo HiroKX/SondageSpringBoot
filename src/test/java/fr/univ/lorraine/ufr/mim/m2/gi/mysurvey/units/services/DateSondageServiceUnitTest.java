@@ -85,7 +85,6 @@ class DateSondageServiceUnitTest {
         verify(repository, times(1)).getAllBySondage(same(sondageId));
     }
 
-
     @Test
     void givenAnIdAndADateSondage_whenCreate_thenSondageServiceAndRepositoryAreCalled() {
         Long sondageId = 1L;

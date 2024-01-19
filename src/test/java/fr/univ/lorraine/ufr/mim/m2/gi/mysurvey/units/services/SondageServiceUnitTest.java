@@ -59,7 +59,7 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void whenGetAll_thenSondageRepositoryIsCalled() {
+    void givenNoParameter_whenGetAll_thenSondageRepositoryIsCalled() {
         when(sondageRepository.findAll()).thenReturn(Collections.singletonList(new Sondage()));
 
         List<Sondage> result = sondageService.getAll();
@@ -70,7 +70,7 @@ class SondageServiceUnitTest {
     }
 
     @Test
-    void whenGetAllEmpty_thenSondageRepositoryIsCalled() {
+    void givenNoParameter_whenGetAllReturnsEmpty_thenThrowNoResultException() {
         when(sondageRepository.findAll()).thenReturn(Collections.emptyList());
 
         assertThrows(NoResultException.class,()-> sondageService.getAll());
