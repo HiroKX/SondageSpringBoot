@@ -15,12 +15,12 @@ MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models,Participant,137,50,13,3,
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models,DateSondee,32,36,0,0,8,13,3,7,3,7
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models,Choix,0,21,0,0,0,2,0,1,0,1
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,SondageService,0,107,4,10,0,23,4,10,0,7
-MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,DateSondeeService,0,79,0,8,0,18,0,9,0,5
+MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,DateSondeeService,0,84,0,8,0,20,0,9,0,5
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,CommentaireService,0,120,0,12,0,27,0,13,0,7
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,ParticipantService,0,89,0,10,0,22,0,12,0,7
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services,DateSondageService,5,158,5,19,1,35,5,14,0,7
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,DateSondageController,0,140,0,4,0,32,0,7,0,5
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,CommentaireController,0,192,0,8,0,42,0,10,0,6
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,SondageController,0,291,0,20,0,60,0,19,0,9
-MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,ParticipationController,0,74,0,4,0,15,0,4,0,2
+MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,ParticipationController,0,68,0,4,0,14,0,4,0,2
 MySurvey,fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers,ParticipantController,8,198,0,10,2,40,0,12,0,7
