@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
@@ -9,6 +10,7 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondeeRepository
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.utils.ErrorMessages;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -30,14 +32,18 @@ public class DateSondeeService {
     @Autowired
     private ParticipantService participantService;
 
-    public DateSondee create(Long dateSondageId, Long participantId, DateSondee dateSondee) throws SondageCloturedException, NoResultException {
+    public DateSondee create(Long dateSondageId, Long participantId, DateSondee dateSondee) throws SondageCloturedException, NoResultException, DateSondageAlreadyExistsException {
         DateSondage date = dateSondageService.getById(dateSondageId);
         if(Boolean.TRUE.equals(date.getSondage().getCloture()))
             throw new SondageCloturedException();
         Participant participant = participantService.getById(participantId);
         dateSondee.setDateSondage(date);
         dateSondee.setParticipant(participant);
-        return repository.save(dateSondee);
+        try {
+            return repository.save(dateSondee);
+        }catch (DataIntegrityViolationException e){
+            throw new DateSondageAlreadyExistsException();
+        }
     }
 
     public List<Date> getBestDateBySondageId(Long id) {

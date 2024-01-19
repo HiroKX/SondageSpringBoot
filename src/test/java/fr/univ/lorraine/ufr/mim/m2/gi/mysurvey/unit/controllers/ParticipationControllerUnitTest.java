@@ -3,6 +3,7 @@ package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.unit.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.controllers.ParticipationController;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.DateSondeeDto;
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondageAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.DateSondeeAlreadyExistsException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.exception.SondageCloturedException;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.DateSondage;
@@ -119,7 +120,6 @@ public class ParticipationControllerUnitTest {
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,never()).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
         verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
@@ -136,7 +136,6 @@ public class ParticipationControllerUnitTest {
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,never()).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
         verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
@@ -146,17 +145,16 @@ public class ParticipationControllerUnitTest {
 
     @Test
     void givenValidParameter_whenCreateButParticipationAlreadyExists_thenReturnBadRequest() throws Exception {
-        doThrow(DateSondeeAlreadyExistsException.class).when(sds).checkIfDateSondeeAlreadyExists(id, id);
+        when(mapper.map(dtoDS, DateSondee.class)).thenReturn(dateSondee);
+        when(sds.create(id, id, dateSondee)).thenThrow(DateSondageAlreadyExistsException.class);
         MockHttpServletResponse response = mvc.perform(
                         post("/api/participer/"+id)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
-        verify(mapper,never()).map(eq(dtoDS), eq(DateSondee.class));
-        verify(sds,never()).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
-        verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
+        verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
+        verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         assertThat(response.getContentAsString()).isEmpty();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
@@ -171,7 +169,6 @@ public class ParticipationControllerUnitTest {
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
         verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
@@ -189,7 +186,6 @@ public class ParticipationControllerUnitTest {
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
         verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
@@ -207,7 +203,6 @@ public class ParticipationControllerUnitTest {
                                 .content(jsonDateSondee.write(dtoDS).getJson())
                                 .characterEncoding("UTF-8"))
                 .andReturn().getResponse();
-        verify(sds,times(1)).checkIfDateSondeeAlreadyExists(id, id);
         verify(mapper,times(1)).map(eq(dtoDS), eq(DateSondee.class));
         verify(sds,times(1)).create(eq(id),eq(dtoDS.getParticipant()), eq(dateSondee));
         verify(mapper,never()).map(eq(dateSondee), eq(DateSondeeDto.class));
