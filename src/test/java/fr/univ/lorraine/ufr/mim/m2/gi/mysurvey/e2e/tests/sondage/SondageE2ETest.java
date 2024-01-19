@@ -370,14 +370,16 @@ class SondageE2ETest {
         Response response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
         long createdParticipantID = response.jsonPath().getLong("participantId");
         participant.setParticipantId(createdParticipantID);
-        Participant participant2 = new Participant(1L, "Granger", "Hermionne");
-        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        Participant participant2 = new Participant(2L, "Granger", "Hermionne");
+        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant2);
         response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        assertEquals(201, response.statusCode());
         createdParticipantID = response.jsonPath().getLong("participantId");
         participant2.setParticipantId(createdParticipantID);
-        Participant participant3 = new Participant(1L, "Weasley", "Ron");
-        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant);
+        Participant participant3 = new Participant(3L, "Weasley", "Ron");
+        requestBody = ParticipantSampleE2E.generateParticipantPOSTBody(participant3);
         response = CrudRestAssured.dbPOST("/api/participant/", requestBody);
+        assertEquals(201, response.statusCode());
         createdParticipantID = response.jsonPath().getLong("participantId");
         participant3.setParticipantId(createdParticipantID);
 
@@ -437,12 +439,12 @@ class SondageE2ETest {
         assertEquals(201, response.statusCode());
 
         // GET BEST DATE
-        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/bestdate");
+        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/best");
         assertEquals(200, response.statusCode());
         assertEquals("[\""+recieveDate(fixedDate2)+"\"]", response.getBody().print());
 
         // GET MAYBE DATE
-        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/maybedate");
+        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/maybe");
         assertEquals(200, response.statusCode());
         assertEquals("[\""+recieveDate(fixedDate)+"\"]", response.getBody().print());
 
@@ -458,7 +460,7 @@ class SondageE2ETest {
         assertEquals(201, response.statusCode());
 
         // TEST BEST DATE -> Devrait return date2 et date3
-        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/bestdate");
+        response = CrudRestAssured.dbGET("/api/sondage/"+createdSondageID+"/best");
         assertEquals(200, response.statusCode());
         assertEquals("[\""+recieveDate(fixedDate2)+"\",\""+ recieveDate(fixedDate3)+"\"]", response.getBody().print());
 

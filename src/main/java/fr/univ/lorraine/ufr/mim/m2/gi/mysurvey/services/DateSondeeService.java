@@ -41,7 +41,7 @@ public class DateSondeeService {
         dateSondee.setParticipant(participant);
         try {
             return repository.save(dateSondee);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e){
             throw new DateSondageAlreadyExistsException();
         }
     }
