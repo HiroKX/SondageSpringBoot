@@ -52,7 +52,7 @@ public class Sondage {
         this.createBy = createBy;
     }
 
-    public Long getSondageId() {
+    public long getSondageId() {
         return sondageId;
     }
 
