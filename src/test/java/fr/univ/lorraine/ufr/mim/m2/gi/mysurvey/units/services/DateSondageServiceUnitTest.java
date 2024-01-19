@@ -39,7 +39,7 @@ class DateSondageServiceUnitTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         DateSondage expectedDateSondage = new DateSondage();
-        when(service.exists(id)).thenReturn(true);
+        when(repository.existsById(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(expectedDateSondage);
 
         DateSondage result = service.getById(id);
@@ -51,7 +51,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatDoesNotExist_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoResultException.class, () -> service.getById(id));
 
@@ -126,7 +126,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatExists_whenDelete_thenRepositoryIsCalledTwoTimes() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(true);
+        when(repository.existsById(id)).thenReturn(true);
         when(repository.findById(id)).thenReturn(Optional.of(new DateSondage()));
 
         service.delete(id);
@@ -138,7 +138,7 @@ class DateSondageServiceUnitTest {
     @Test
     void givenAnIdThatDoesNotExists_whenDelete_thenThrowNoSuchElementException() {
         Long id = 1L;
-        when(service.exists(id)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> service.delete(id));
 
@@ -187,7 +187,7 @@ class DateSondageServiceUnitTest {
         Date dateDansUnAn = calendar.getTime(); // Convertit le Calendar en Date
         DateSondage ds = new DateSondage();
         ds.setDate(dateDansUnAn);
-        List<DateSondage> dateSondages = Arrays.asList(ds);
+        List<DateSondage> dateSondages = List.of(ds);
         when(sondageService.exists(sondageId)).thenReturn(true);
         when(repository.getAllBySondage(sondageId)).thenReturn(dateSondages);
 

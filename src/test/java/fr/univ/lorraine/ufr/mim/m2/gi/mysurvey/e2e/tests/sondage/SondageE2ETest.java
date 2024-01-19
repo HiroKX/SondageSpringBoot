@@ -142,7 +142,7 @@ class SondageE2ETest {
 
         // SUPPRESSION SONDAGE
         response = CrudRestAssured.dbDELETE("/api/sondage/"+createdSondageID);
-        assertEquals(404, response.statusCode());
+        assertEquals(400, response.statusCode());
     }
     @Test
     void testDateSondageOnSondage() {

@@ -50,7 +50,7 @@ class SondageServiceUnitTest {
         Long sondageId = 1L;
         Sondage expectedSondage = new Sondage();
         when(sondageRepository.getReferenceById(sondageId)).thenReturn(expectedSondage);
-        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(sondageRepository.existsById(sondageId)).thenReturn(true);
 
         Sondage result = sondageService.getById(sondageId);
 
@@ -95,6 +95,19 @@ class SondageServiceUnitTest {
     }
 
     @Test
+    void givenAnIdThatDoesNotExist_whenCreate_thenThrowNoResultException() {
+        Long participantId = 1L;
+        Sondage sondageToCreate = mock(Sondage.class);
+        Participant participant = new Participant();
+        when(participantService.getById(participantId)).thenThrow(NoResultException.class);
+
+        assertThrows(NoSuchElementException.class, () -> sondageService.create(participantId, sondageToCreate));
+
+        verify(sondageToCreate, times(0)).setCreateBy(participant);
+        verify(participantService, times(1)).getById(same(participantId));
+    }
+
+    @Test
     void givenASondageIdThatExists_whenUpdate_thenSondageRepositoryIsCalledTwoTimes() {
         Long sondageId = 1L;
         Date d = new Date();
@@ -105,7 +118,7 @@ class SondageServiceUnitTest {
         updatedSondage.setDescription("description");
         updatedSondage.setCloture(false);
         updatedSondage.setSondageId(sondageId);
-        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(sondageRepository.existsById(sondageId)).thenReturn(true);
         when(sondageRepository.getReferenceById(sondageId)).thenReturn(existingSondage);
         when(sondageRepository.save(existingSondage)).thenReturn(updatedSondage);
 
@@ -125,7 +138,7 @@ class SondageServiceUnitTest {
     void givenASondageIdAThatDoesNotExists_whenUpdate_thenSondageRepositoryIsCalledOneTime() {
         Long sondageId = 1L;
         Sondage updatedSondage = new Sondage();
-        when(sondageService.exists(sondageId)).thenReturn(false);
+        when(sondageRepository.existsById(sondageId)).thenReturn(false);
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.empty());
 
         assertThrows(NoResultException.class, () -> sondageService.update(sondageId, updatedSondage));
@@ -138,7 +151,7 @@ class SondageServiceUnitTest {
     void givenASondageIdThatExists_whenDelete_thenSondageRepositoryIsCalledTwoTimes() {
         Long sondageId = 1L;
 
-        when(sondageService.exists(sondageId)).thenReturn(true);
+        when(sondageRepository.existsById(sondageId)).thenReturn(true);
         when(sondageRepository.findById(sondageId)).thenReturn(Optional.of(new Sondage()));
 
         sondageService.delete(sondageId);
@@ -150,7 +163,7 @@ class SondageServiceUnitTest {
     @Test
     void givenASondageIdAThatDoesNotExists_whenDelete_thenSondageRepositoryIsCalledOneTime() {
         Long sondageId = 1L;
-        when(sondageService.exists(sondageId)).thenReturn(false);
+        when(sondageRepository.existsById(sondageId)).thenReturn(false);
 
         assertThrows(NoSuchElementException.class, () -> sondageService.delete(sondageId));
 

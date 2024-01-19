@@ -55,9 +55,18 @@ public class DateSondageService {
     }
 
     public void checkIfDateAlreadyExists(Long sondageId, DateSondageDto dto) throws DateSondageAlreadyExistsException {
-        List<DateSondage> datesSondages = getBySondageId(sondageId);
-        for (DateSondage dateSondage : datesSondages)
-            if (dateSondage.getDate().equals(dto.getDate()))
+        List<DateSondage> datesSondages = repository.getAllBySondage(sondageId);
+        Calendar calendarDTO = Calendar.getInstance();
+        calendarDTO.setTime(dto.getDate());
+        Calendar calendarCheck = Calendar.getInstance();
+        for (DateSondage dateSondage : datesSondages) {
+            calendarCheck.setTime(dateSondage.getDate());
+            if (calendarDTO.getWeekYear() == calendarCheck.getWeekYear() &&
+                    calendarDTO.get(Calendar.MONTH) == calendarCheck.get(Calendar.MONTH) &&
+                    calendarDTO.get(Calendar.DAY_OF_MONTH) == calendarCheck.get(Calendar.DAY_OF_MONTH) &&
+                    calendarDTO.get(Calendar.HOUR) == calendarCheck.get(Calendar.HOUR) &&
+                    calendarDTO.get(Calendar.MINUTE) == calendarCheck.get(Calendar.MINUTE))
                 throw new DateSondageAlreadyExistsException();
+        }
     }
 }

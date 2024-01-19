@@ -146,7 +146,7 @@ public class SondageController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SondageDto update(@PathVariable("id") Long id, @RequestBody SondageDto sondageDto) {
-        if(sondageDto.getFin() != null && sondageDto.getFin().before(new Date()))
+        if(sondageDto.getFin() == null || sondageDto.getFin().before(new Date()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La date de fin doit être supérieure à la date de début.");
         try {
             if (service.getById(id).equals(mapper.map(sondageDto, Sondage.class)))

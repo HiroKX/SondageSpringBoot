@@ -32,7 +32,7 @@ class ParticipantServiceUnitTest {
     void givenAnId_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant expectedParticipant = new Participant();
-        when(service.exists(id)).thenReturn(true);
+        when(repository.existsById(id)).thenReturn(true);
         when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
 
         Participant result = service.getById(id);
@@ -46,7 +46,7 @@ class ParticipantServiceUnitTest {
     void givenAnIdNotExisting_whenGetById_thenRepositoryIsCalled() {
         Long id = 1L;
         Participant expectedParticipant = new Participant();
-        when(service.exists(id)).thenReturn(false);
+        when(repository.existsById(id)).thenReturn(false);
         when(repository.getReferenceById(id)).thenReturn(expectedParticipant);
 
         assertThrows(NoResultException.class,() -> service.getById(id));
@@ -98,8 +98,8 @@ class ParticipantServiceUnitTest {
         Participant participant2 = mock(Participant.class);
         participant2.setNom("Nom2");
         participant2.setPrenom("Prenom2");
-        when(service.exists(id)).thenReturn(true);
-        when(service.getById(id)).thenReturn(participant);
+        when(repository.existsById(id)).thenReturn(true);
+        when(repository.getReferenceById(id)).thenReturn(participant);
         when(repository.save(participant)).thenReturn(participant2);
 
         Participant result = service.update(id, participant);

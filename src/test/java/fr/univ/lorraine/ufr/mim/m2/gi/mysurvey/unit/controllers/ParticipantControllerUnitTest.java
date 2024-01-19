@@ -100,6 +100,38 @@ class ParticipantControllerUnitTest {
     }
 
     @Test
+    void givenInvalidParticipantName_whenCreate_thenReturnBadRequest() throws Exception {
+        ParticipantDto p = new ParticipantDto();
+        p.setNom("Test");
+        MockHttpServletResponse response = mvc.perform(post("/api/participant/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(p).getJson()))
+                .andReturn().getResponse();
+
+        verify(service, never()).create(participant);
+        verify(mapper, never()).map(participantDto, Participant.class);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenInvalidParticipantPrenom_whenCreate_thenReturnBadRequest() throws Exception {
+        ParticipantDto p = new ParticipantDto();
+        p.setPrenom("Test");
+        MockHttpServletResponse response = mvc.perform(post("/api/participant/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(p).getJson()))
+                .andReturn().getResponse();
+
+        verify(service, never()).create(participant);
+        verify(mapper, never()).map(participantDto, Participant.class);
+        verify(mapper, never()).map(participant, ParticipantDto.class);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void givenValidParameters_whenCreateButServerError_thenReturnInternalServerError() throws Exception {
         when(mapper.map(participantDto, Participant.class)).thenReturn(participant);
         when(service.create(participant)).thenThrow(NullPointerException.class);
@@ -238,6 +270,36 @@ class ParticipantControllerUnitTest {
                 put("/api/participant/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonParticipant.write(new ParticipantDto()).getJson())).andReturn().getResponse();
+
+        verify(service, times(0)).getById(id);
+        verify(service, times(0)).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenInvalidParticipantName_whenUpdateParticipant_thenReturnBadRequest() throws Exception {
+        ParticipantDto p = new ParticipantDto();
+        p.setNom("Test");
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(p).getJson())).andReturn().getResponse();
+
+        verify(service, times(0)).getById(id);
+        verify(service, times(0)).update(id, participant);
+        assertThat(response.getContentAsString()).isEmpty();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void givenInvalidParticipantPrenom_whenUpdateParticipant_thenReturnBadRequest() throws Exception {
+        ParticipantDto p = new ParticipantDto();
+        p.setPrenom("Test");
+        MockHttpServletResponse response = mvc.perform(
+                put("/api/participant/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonParticipant.write(p).getJson())).andReturn().getResponse();
 
         verify(service, times(0)).getById(id);
         verify(service, times(0)).update(id, participant);

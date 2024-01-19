@@ -94,7 +94,7 @@ public class ParticipantController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ParticipantDto update(@PathVariable("id") Long id, @RequestBody ParticipantDto participantDto) {
-        if(StringUtils.isNullOrEmpty(participantDto.getNom()) && StringUtils.isNullOrEmpty(participantDto.getPrenom()))
+        if(StringUtils.isNullOrEmpty(participantDto.getNom()) || StringUtils.isNullOrEmpty(participantDto.getPrenom()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Précisez au moins un nom ou un prénom.");
         try {
             if (mapper.map(service.getById(id), ParticipantDto.class).equals(participantDto))
