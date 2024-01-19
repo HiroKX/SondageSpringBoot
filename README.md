@@ -56,7 +56,7 @@ ADMINER_PORTS= # Ex : 8081 Optionnel si vous ne souhaitez pas que votre interfac
 DB_PORTS= # Ex : 5432 Optionnel si vous ne souhaitez pas que votre database soit accessible de l'exterieur.
 ```
 
-Il vous faut également, dans le fichier Dockerfile, modifier la variable d'environnement **EXPOSE** (Ligne 21) en y affectant votre SERVER_PORT.
+Il vous faut également, dans le fichier Dockerfile, modifier la variable d'environnement **EXPOSE** [ici](https://github.com/HiroKX/SondageSpringBoot/blob/develop/Dockerfile#L21) en y affectant votre SERVER_PORT.
 
 3. Ouvrez un **CMD** dans le root du projet et exécutez la commande suivante :
 ``` docker-compose up --build```
