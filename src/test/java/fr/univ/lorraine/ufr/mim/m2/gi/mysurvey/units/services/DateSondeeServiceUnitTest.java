@@ -71,7 +71,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
+    void givenIdAndParticipantIdAndDateSondee_whenCreateSondageIsClosed_thenServicesAndRepositoryAreCalled() {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();
@@ -90,7 +90,7 @@ class DateSondeeServiceUnitTest {
     }
 
     @Test
-    void givenIdAndParticipantIdAndDateSondee_whenDateSondeeAlreadyExists_thenServicesAndRepositoryAreCalled() throws SondageCloturedException {
+    void givenIdAndParticipantIdAndDateSondee_whenDateSondeeAlreadyExists_thenServicesAndRepositoryAreCalled() {
         Long id = 1L;
         Long participantId = 1L;
         DateSondee dateSondee = new DateSondee();

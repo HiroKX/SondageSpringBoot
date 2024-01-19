@@ -35,7 +35,7 @@ class SondageServiceUnitTest {
 
     @Test
     void givenAnId_whenGetAll_thenSondageRepositoryIsCalled() {
-        ArrayList<Sondage> expectedSondage = new ArrayList<Sondage>();
+        ArrayList<Sondage> expectedSondage = new ArrayList<>();
         expectedSondage.add(new Sondage());
         when(sondageRepository.findAll()).thenReturn(expectedSondage);
 
@@ -66,7 +66,7 @@ class SondageServiceUnitTest {
 
         verify(sondageRepository, times(1)).findAll();
         assertNotNull(result);
-        assertNotEquals(result, Collections.emptyList());
+        assertNotEquals(Collections.emptyList(), result);
     }
 
     @Test

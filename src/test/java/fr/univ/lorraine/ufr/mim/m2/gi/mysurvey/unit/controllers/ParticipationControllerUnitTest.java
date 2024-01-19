@@ -33,9 +33,9 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ExtendWith(MockitoExtension.class)
-public class ParticipationControllerUnitTest {
-    protected MockMvc mvc;
+class ParticipationControllerUnitTest {
 
+    protected MockMvc mvc;
 
     @Mock
     private DateSondeeService sds;
